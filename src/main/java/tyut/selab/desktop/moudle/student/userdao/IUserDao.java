@@ -1,22 +1,30 @@
 package tyut.selab.desktop.moudle.student.userdao;
 
+import tyut.selab.desktop.moudle.student.domain.Role;
 import tyut.selab.desktop.moudle.student.domain.User;
 
 import java.util.List;
 
 public interface IUserDao {
     /**
-     * 查询全部用户
+     * 查询全部用户(包括角色)
      * @return
      */
     List<User> queryUser();
 
     /**
-     * 通过学号查询用户
+     * 通过学号查询用户(包括角色)
      * @param studentNumber
      * @return
      */
-    User queryUserByStudentNumber(int studentNumber);
+    User queryUserByStudentNumber(Integer studentNumber);
+
+    /**
+     * 通过姓名查询用户(包括角色)
+     * @param name
+     * @return
+     */
+    User queryUserByStudentName(String name);
 
     /**
      * 增加学生
@@ -26,12 +34,12 @@ public interface IUserDao {
     int insertUser(User user);
 
     /**
-     * 修改用户
-     * @param newUser
+     * 修改密码
+     * @param password
      * @param oldUser
      * @return 成功返回1，失败返回-1
      */
-    int updateUser(User newUser,User oldUser);
+    int updateUser(String password,User oldUser);
 
     /**
      * 删除学生
@@ -39,4 +47,32 @@ public interface IUserDao {
      * @return 成功返回1，失败返回-1
      */
     int deleteUser(int studentNumber);
+
+    /**
+     * 查询全部职责
+     * @return
+     */
+    List<Role> queryAllRole();
+
+    /**
+     * 增加职责
+     * @param role
+     * @return
+     */
+    int insertRole(Role role);
+
+    /**
+     * 修改职责
+     * @param newRole
+     * @param oleRole
+     * @return
+     */
+    int updateRole(Role newRole ,Role oleRole);
+
+    /**
+     * 删除职责
+     * @param role
+     * @return
+     */
+    int deleteRole(Role role);
 }
