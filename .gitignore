@@ -7,6 +7,9 @@
 *.iml
 *.ipr
 
+# IntelliJ
+out/
+
 # Log file
 *.log
 
