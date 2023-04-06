@@ -1,15 +1,15 @@
 package tyut.selab.desktop.moudle.login.service.impl;
 
-import tyut.selab.desktop.moudle.login.dao.impl.LoginDao;
+import tyut.selab.desktop.moudle.login.dao.ILoginDao;
 import tyut.selab.desktop.moudle.login.service.ILoginService;
 import tyut.selab.desktop.moudle.student.domain.User;
-import tyut.selab.desktop.moudle.student.userdao.impl.UserDao;
+import tyut.selab.desktop.moudle.student.userdao.IUserDao;
 
 public class LoginService implements ILoginService {
 
-    private LoginDao loginDao;
+    private ILoginDao loginDao;
 
-    private UserDao userDao;
+    private IUserDao userDao;
 
     @Override
     public Boolean login(String accountNumber, String password) {

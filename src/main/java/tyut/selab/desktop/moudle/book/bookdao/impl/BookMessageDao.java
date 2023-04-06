@@ -2,10 +2,21 @@ package tyut.selab.desktop.moudle.book.bookdao.impl;
 
 import tyut.selab.desktop.moudle.book.bookdao.IBookMessageDao;
 import tyut.selab.desktop.moudle.book.domain.Book;
+import tyut.selab.desktop.moudle.book.domain.BookBorrow;
 
 import java.util.List;
 
-public class BookMessageDao implements IBookMessageDao {
+public class BookMessageDao implements IBookMessageDao{
+    @Override
+    public List<BookBorrow> queryBorrowBookLog() {
+        return null;
+    }
+
+    @Override
+    public List<BookBorrow> queryBorrowBookLog(BookBorrow bookBorrow) {
+        return null;
+    }
+
     @Override
     public List<Book> queryAllBook() {
         return null;
@@ -17,7 +28,7 @@ public class BookMessageDao implements IBookMessageDao {
     }
 
     @Override
-    public List<Book> queryBookByUserid(int userId) {
+    public List<Book> queryBookByUserid(Integer userStudentNumber) {
         return null;
     }
 
@@ -32,7 +43,12 @@ public class BookMessageDao implements IBookMessageDao {
     }
 
     @Override
-    public int deleteBook(int userId, String bookName) {
+    public int updateBookStatus(int status, Book book) {
+        return 0;
+    }
+
+    @Override
+    public int deleteBook(Integer userStudentNumber, String bookName) {
         return 0;
     }
 }

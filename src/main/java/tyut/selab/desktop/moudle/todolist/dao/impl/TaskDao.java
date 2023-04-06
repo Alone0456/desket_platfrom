@@ -22,7 +22,7 @@ public class TaskDao implements ITaskDao {
     }
 
     @Override
-    public int updateTask(Task task, Integer taskId) {
+    public int updateTask(Task newTask, Task oldTask) {
         return 0;
     }
 

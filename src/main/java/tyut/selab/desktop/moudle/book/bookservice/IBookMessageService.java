@@ -1,11 +1,24 @@
 package tyut.selab.desktop.moudle.book.bookservice;
 
-import tyut.selab.desktop.moudle.book.domain.Book;
+import tyut.selab.desktop.moudle.book.domain.vo.BookBorrowVo;
 import tyut.selab.desktop.moudle.book.domain.vo.BookVo;
 
 import java.util.List;
 
 public interface IBookMessageService {
+    /**
+     * 查询借书记录
+     * @return
+     */
+    List<BookBorrowVo> queryBorrowBookLog();
+
+    /**
+     * 根据书名/书的拥有者学号来查询借书记录
+     * @param bookBorrow
+     * @return
+     */
+    List<BookBorrowVo> queryBorrowBookLog(BookBorrowVo bookBorrow);
+
     /**
      * 查询全部图书
      * @return 图书列表
@@ -13,7 +26,7 @@ public interface IBookMessageService {
     List<BookVo> queryAllBook();
 
     /**
-     * 通过图名查询图书
+     * 通过图书名字查询图书
      * @param bookName 书名
      * @return 图书列表
      */
@@ -21,30 +34,30 @@ public interface IBookMessageService {
 
     /**
      * 通过用户id查询该用户的图书
-     * @param userId 用户学号
+     * @param userStudentNumber 用户学号
      * @return 图书列表
      */
-    List<BookVo> queryBookByUserid(int userId);
+    List<BookVo> queryBookByUserid(Integer userStudentNumber);
 
     /**
      * 增加图书
      * @param book 书
      * @return 成功返回1，失败返回-1
      */
-    int insertBook(Book book);
+    int insertBook(BookVo book);
 
     /**
      * 修改图书信息
-     * @param book
+     * @param book 更新
      * @return
      */
-    BookVo updateBook(Book book);
+    int updateBook(BookVo book);
 
     /**
      * 删除图书
-     * @param userId 用户学号
+     * @param userStudentNumber 用户学号
      * @param bookName 书名
      * @return 成功返回1，失败返回-1
      */
-    int deleteBook(int userId,String bookName);
+    int deleteBook(Integer userStudentNumber,String bookName);
 }

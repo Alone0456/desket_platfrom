@@ -1,16 +1,21 @@
 package tyut.selab.desktop.moudle.book.bookcontroller.impl;
 
 import tyut.selab.desktop.moudle.book.bookcontroller.IBookBorrowController;
-import tyut.selab.desktop.moudle.book.domain.Book;
+import tyut.selab.desktop.moudle.book.bookservice.IBookBorrowService;
+import tyut.selab.desktop.moudle.book.domain.vo.BookBorrowVo;
+import tyut.selab.desktop.moudle.book.domain.vo.BookVo;
 
 public class BookBorrowController implements IBookBorrowController {
+
+    private IBookBorrowService bookBorrowService;
+
     @Override
-    public int borrowBook(Book book) {
-        return 0;
+    public BookBorrowVo borrowBook(BookVo book) {
+        return null;
     }
 
     @Override
-    public int returnBook(Book book) {
-        return 0;
+    public BookVo returnBook(BookBorrowVo book) {
+        return null;
     }
 }

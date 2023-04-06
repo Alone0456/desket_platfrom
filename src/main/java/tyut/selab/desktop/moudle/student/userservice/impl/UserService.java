@@ -1,14 +1,13 @@
 package tyut.selab.desktop.moudle.student.userservice.impl;
 
-import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
-import tyut.selab.desktop.moudle.student.userdao.impl.UserDao;
+import tyut.selab.desktop.moudle.student.userdao.IUserDao;
 import tyut.selab.desktop.moudle.student.userservice.IUserService;
 
 import java.util.List;
 
 public class UserService implements IUserService {
-    private UserDao userDao;
+    private IUserDao userDao;
 
     @Override
     public List<UserVo> queryUser() {

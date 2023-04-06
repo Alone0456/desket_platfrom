@@ -2,12 +2,12 @@ package tyut.selab.desktop.moudle.student.usercontroller.impl;
 
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 import tyut.selab.desktop.moudle.student.usercontroller.IUserController;
-import tyut.selab.desktop.moudle.student.userservice.impl.UserService;
+import tyut.selab.desktop.moudle.student.userservice.IUserService;
 
 import java.util.List;
 
 public class UserController implements IUserController {
-    private UserService userService;
+    private IUserService userService;
 
     @Override
     public List<UserVo> queryUser() {

@@ -1,17 +1,18 @@
 package tyut.selab.desktop.moudle.todolist.controller;
 
 import tyut.selab.desktop.moudle.todolist.domain.Task;
+import tyut.selab.desktop.moudle.todolist.domain.vo.TaskVo;
 
 import java.util.List;
 
 public interface ITaskController {
-    List<Task> queryAllTask(Integer studentNumber);
+    List<TaskVo> queryAllTask(Integer studentNumber);
 
-    List<Task> queryAllTaskByUserName(String name);
+    List<TaskVo> queryAllTaskByUserName(String name);
 
-    int insertTask(Task task);
+    int insertTask(TaskVo task);
 
-    int updateTask(Task task,Integer taskId);
+    int updateTask(TaskVo task);
 
-    int deleteTask(Task task);
+    int deleteTask(TaskVo task);
 }

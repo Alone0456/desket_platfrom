@@ -5,13 +5,39 @@ import tyut.selab.desktop.moudle.todolist.domain.Task;
 import java.util.List;
 
 public interface ITaskDao {
+    /**
+     * 通过学号查询的清单
+     * @param studentNumber
+     * @return
+     */
     List<Task> queryAllTask(Integer studentNumber);
 
+    /**
+     * 通过姓名查询清单
+     * @param name
+     * @return
+     */
     List<Task> queryAllTaskByUserName(String name);
 
+    /**
+     * 添加清单
+     * @param task
+     * @return
+     */
     int insertTask(Task task);
 
-    int updateTask(Task task,Integer taskId);
+    /**
+     * 修改清单
+     * @param newTask
+     * @param oldTask
+     * @return
+     */
+    int updateTask(Task newTask,Task oldTask);
 
+    /**
+     * 删除清单
+     * @param task
+     * @return
+     */
     int deleteTask(Task task);
 }

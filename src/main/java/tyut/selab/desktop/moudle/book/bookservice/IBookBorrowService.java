@@ -2,6 +2,10 @@ package tyut.selab.desktop.moudle.book.bookservice;
 
 
 import tyut.selab.desktop.moudle.book.domain.Book;
+import tyut.selab.desktop.moudle.book.domain.vo.BookBorrowVo;
+import tyut.selab.desktop.moudle.book.domain.vo.BookVo;
+
+import java.util.Base64;
 
 public interface IBookBorrowService {
     /**
@@ -9,12 +13,12 @@ public interface IBookBorrowService {
      * @param book
      * @return 借书的信息
      */
-    int borrowBook(Book book);
+    BookBorrowVo borrowBook(BookVo book);
 
     /**
      * 还书
      * @param book
      * @return
      */
-    int returnBook(Book book);
+    BookVo returnBook(BookBorrowVo book);
 }

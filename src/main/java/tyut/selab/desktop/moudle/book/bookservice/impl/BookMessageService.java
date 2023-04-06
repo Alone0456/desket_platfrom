@@ -1,12 +1,28 @@
 package tyut.selab.desktop.moudle.book.bookservice.impl;
 
+import tyut.selab.desktop.moudle.book.bookdao.IBookMessageDao;
 import tyut.selab.desktop.moudle.book.bookservice.IBookMessageService;
-import tyut.selab.desktop.moudle.book.domain.Book;
+import tyut.selab.desktop.moudle.book.domain.vo.BookBorrowVo;
 import tyut.selab.desktop.moudle.book.domain.vo.BookVo;
+import tyut.selab.desktop.moudle.student.userdao.IUserDao;
 
 import java.util.List;
 
 public class BookMessageService implements IBookMessageService {
+    private IBookMessageDao bookMessageDao;
+
+    private IUserDao userDao;
+
+    @Override
+    public List<BookBorrowVo> queryBorrowBookLog() {
+        return null;
+    }
+
+    @Override
+    public List<BookBorrowVo> queryBorrowBookLog(BookBorrowVo bookBorrow) {
+        return null;
+    }
+
     @Override
     public List<BookVo> queryAllBook() {
         return null;
@@ -18,22 +34,22 @@ public class BookMessageService implements IBookMessageService {
     }
 
     @Override
-    public List<BookVo> queryBookByUserid(int userId) {
+    public List<BookVo> queryBookByUserid(Integer userStudentNumber) {
         return null;
     }
 
     @Override
-    public int insertBook(Book book) {
+    public int insertBook(BookVo book) {
         return 0;
     }
 
     @Override
-    public BookVo updateBook(Book book) {
-        return null;
+    public int updateBook(BookVo book) {
+        return 0;
     }
 
     @Override
-    public int deleteBook(int userId, String bookName) {
+    public int deleteBook(Integer userStudentNumber, String bookName) {
         return 0;
     }
 }

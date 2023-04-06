@@ -1,16 +1,16 @@
 package tyut.selab.desktop.moudle.todolist.service.impl;
 
-import tyut.selab.desktop.moudle.student.userdao.impl.UserDao;
-import tyut.selab.desktop.moudle.todolist.dao.impl.TaskDao;
+import tyut.selab.desktop.moudle.student.userdao.IUserDao;
+import tyut.selab.desktop.moudle.todolist.dao.ITaskDao;
 import tyut.selab.desktop.moudle.todolist.domain.vo.TaskVo;
 import tyut.selab.desktop.moudle.todolist.service.ITaskService;
 
 import java.util.List;
 
 public class TaskService implements ITaskService {
-    private UserDao userDao;
+    private IUserDao userDao;
 
-    private TaskDao taskDao;
+    private ITaskDao taskDao;
 
     @Override
     public List<TaskVo> queryAllTask(Integer studentNumber) {

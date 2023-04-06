@@ -1,6 +1,7 @@
 package tyut.selab.desktop.moudle.book.bookcontroller;
 
-import tyut.selab.desktop.moudle.book.domain.Book;
+import tyut.selab.desktop.moudle.book.domain.vo.BookBorrowVo;
+import tyut.selab.desktop.moudle.book.domain.vo.BookVo;
 
 public interface IBookBorrowController {
     /**
@@ -8,12 +9,12 @@ public interface IBookBorrowController {
      * @param book
      * @return 成功返回1,失败返回-1
      */
-    int borrowBook(Book book);
+    BookBorrowVo borrowBook(BookVo book);
 
     /**
      * 还书
      * @param book
      * @return 成功返回1,失败返回-1
      */
-    int returnBook(Book book);
+    BookVo returnBook(BookBorrowVo book);
 }
