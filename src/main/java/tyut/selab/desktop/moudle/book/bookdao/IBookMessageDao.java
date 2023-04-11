@@ -28,6 +28,8 @@ public interface IBookMessageDao {
      */
     List<BookBorrow> queryBorrowBookLog(String bookName);
 
+
+
     /**
      * 根据学号来查询借书记录
      * @param studentNumber
