@@ -13,13 +13,6 @@ public interface ITaskDao {
     List<Task> queryAllTask(Integer studentNumber);
 
     /**
-     * 通过姓名查询清单
-     * @param name
-     * @return
-     */
-    List<Task> queryAllTaskByUserName(String name);
-
-    /**
      * 添加清单
      * @param task
      * @return

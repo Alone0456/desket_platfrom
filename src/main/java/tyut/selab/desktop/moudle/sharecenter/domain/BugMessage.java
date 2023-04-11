@@ -6,10 +6,8 @@ import java.util.Date;
 
 public class BugMessage {
     private Integer bugId;
-    private String bugTitle;
-    private String bugSolve;
-    private Date releaseTime;
-    private Integer userStudentNumber;
-    private String userName;
-    private User user;
+    private String bugTitle;  //bug标题
+    private String bugSolve; //bug的解决方法
+    private Date releaseTime; //发布时间
+    private User user; //用户
 }

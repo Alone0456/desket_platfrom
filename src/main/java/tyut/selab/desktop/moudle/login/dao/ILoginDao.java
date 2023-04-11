@@ -1,26 +1,11 @@
 package tyut.selab.desktop.moudle.login.dao;
 
 import tyut.selab.desktop.moudle.login.domain.LoginLog;
-import tyut.selab.desktop.moudle.student.domain.User;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 public interface ILoginDao {
-    /**
-     * 通过账号，密码查询用户
-     * @param accountNumber
-     * @param password
-     * @return
-     */
-    Boolean queryUser(String accountNumber, String password);
-
-    /**
-     * 添加用户
-     * @param user
-     * @return 结果
-     */
-    int insertUser(User user);
-
     /**
      * 查询所有记录
      * @return 结果
@@ -33,6 +18,14 @@ public interface ILoginDao {
      * @return 结果
      */
     List<LoginLog> queryLoginLogByStudentNumber(String studentNumber);
+
+    /**
+     * 查看某段时间内的登录日志
+     * @param startTime
+     * @param endingTime
+     * @return
+     */
+    List<LoginLog> showLoginLog(Data startTime, Data endingTime);
 
     /**
      * 增加记录

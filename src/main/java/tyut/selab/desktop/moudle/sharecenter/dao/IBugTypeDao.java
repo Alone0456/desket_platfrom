@@ -5,6 +5,10 @@ import tyut.selab.desktop.moudle.sharecenter.domain.BugType;
 import java.util.List;
 
 public interface IBugTypeDao {
+     /**
+      * 查询所有类型
+      * @return
+      */
      List<BugType> queryAllType();
 
      int insertBugType(BugType bugType);

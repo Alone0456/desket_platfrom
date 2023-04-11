@@ -8,6 +8,11 @@ import java.util.List;
 
 public class UserDao implements IUserDao {
     @Override
+    public User queryUserByAccount(String accountNumber, String password) {
+        return null;
+    }
+
+    @Override
     public List<User> queryUser() {
         return null;
     }
@@ -33,6 +38,11 @@ public class UserDao implements IUserDao {
     }
 
     @Override
+    public int updateUser(User oldUser, User newUser) {
+        return 0;
+    }
+
+    @Override
     public int deleteUser(int studentNumber) {
         return 0;
     }
@@ -44,11 +54,6 @@ public class UserDao implements IUserDao {
 
     @Override
     public int insertRole(Role role) {
-        return 0;
-    }
-
-    @Override
-    public int updateRole(Role newRole, Role oleRole) {
         return 0;
     }
 

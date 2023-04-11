@@ -28,9 +28,25 @@ public interface IShareCenterDao {
      */
     List<BugMessage> ShowBugInfo(User user);
 
+    /**
+     * 增加
+     * @param bugMessage
+     * @return
+     */
     int insertBugInfo(BugMessage bugMessage);
 
+    /**
+     * 修改
+     * @param newBugMessage
+     * @param oldBugMessage
+     * @return
+     */
     int updateBugInfo(BugMessage newBugMessage,BugMessage oldBugMessage);
 
+    /**
+     * 删除
+     * @param bugMessage
+     * @return
+     */
     int deleteBugInfo(BugMessage bugMessage);
 }
