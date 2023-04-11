@@ -2,23 +2,31 @@ package tyut.selab.desktop.moudle.book.bookcontroller.impl;
 
 import tyut.selab.desktop.moudle.book.bookcontroller.IBookMessageController;
 import tyut.selab.desktop.moudle.book.bookservice.IBookMessageService;
-import tyut.selab.desktop.moudle.book.domain.Book;
-import tyut.selab.desktop.moudle.book.domain.vo.BookBorrowVo;
 import tyut.selab.desktop.moudle.book.domain.vo.BookVo;
 
 import java.util.List;
 
-public class BookMessageController implements IBookMessageController {
+public class BookMessageController implements  IBookMessageController{
 
     private IBookMessageService bookMessageService;
 
     @Override
-    public List<BookBorrowVo> queryBorrowBookLog() {
+    public List<BookVo> queryBorrowBookLog() {
         return null;
     }
 
     @Override
-    public List<BookBorrowVo> queryBorrowBookLog(BookBorrowVo bookBorrow) {
+    public BookVo queryBorrowBookLog(String bookName, Integer userStudentNumber) {
+        return null;
+    }
+
+    @Override
+    public List<BookVo> queryBorrowBookLog(String bookName) {
+        return null;
+    }
+
+    @Override
+    public List<BookVo> queryBorrowBookLog(Integer studentNumber) {
         return null;
     }
 

@@ -1,7 +1,5 @@
 package tyut.selab.desktop.moudle.book.domain;
 
-import tyut.selab.desktop.moudle.student.domain.User;
-
 import java.util.Date;
 
 public class BookBorrow {

@@ -8,17 +8,32 @@ import java.util.List;
 
 public interface IBookMessageDao {
     /**
+     * 查询指定书籍
+     * @param userStudentNumber
+     * @param bookName
+     * @return
+     */
+    Book queryAsBook(Integer userStudentNumber,String bookName);
+
+    /**
      * 查询借书记录
      * @return
      */
     List<BookBorrow> queryBorrowBookLog();
 
     /**
-     * 根据书名/书的拥有者学号来查询借书记录
-     * @param bookBorrow
+     * 根据书名来查询借书记录
+     * @param bookName
      * @return
      */
-    List<BookBorrow> queryBorrowBookLog(BookBorrow bookBorrow);
+    List<BookBorrow> queryBorrowBookLog(String bookName);
+
+    /**
+     * 根据学号来查询借书记录
+     * @param studentNumber
+     * @return
+     */
+    List<BookBorrow> queryBorrowBookLog(Integer studentNumber);
 
     /**
      * 查询全部图书
@@ -49,10 +64,11 @@ public interface IBookMessageDao {
 
     /**
      * 修改图书信息
-     * @param book 更新
+     * @param newBook
+     * @param oldBook
      * @return
      */
-    int updateBook(Book book);
+    int updateBook(Book newBook,Book oldBook);
 
     /**
      * 通过书名，修改图书状态

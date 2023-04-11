@@ -1,11 +1,18 @@
 package tyut.selab.desktop.moudle.sharecenter.controller;
 
+import tyut.selab.desktop.moudle.sharecenter.domain.BugType;
 import tyut.selab.desktop.moudle.sharecenter.domain.vo.BugVo;
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 
 import java.util.List;
 
 public interface IShareCenterController {
+    /**
+     * 查询所有类型
+     * @return
+     */
+    List<BugType> queryAllType();
+
     /**
      * 展示所有信息
      * @return
@@ -47,4 +54,10 @@ public interface IShareCenterController {
      * @return
      */
     int deleteBugInfo(BugVo bugVo);
+
+    int insertBugType(BugType bugType);
+
+    int updateBugType(BugType newBugType,BugType oldBugType);
+
+    int delete(BugType bugType);
 }

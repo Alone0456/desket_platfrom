@@ -8,12 +8,22 @@ import java.util.List;
 
 public class BookMessageDao implements IBookMessageDao{
     @Override
+    public Book queryAsBook(Integer userStudentNumber, String bookName) {
+        return null;
+    }
+
+    @Override
     public List<BookBorrow> queryBorrowBookLog() {
         return null;
     }
 
     @Override
-    public List<BookBorrow> queryBorrowBookLog(BookBorrow bookBorrow) {
+    public List<BookBorrow> queryBorrowBookLog(String bookName) {
+        return null;
+    }
+
+    @Override
+    public List<BookBorrow> queryBorrowBookLog(Integer studentNumber) {
         return null;
     }
 
@@ -38,7 +48,7 @@ public class BookMessageDao implements IBookMessageDao{
     }
 
     @Override
-    public int updateBook(Book book) {
+    public int updateBook(Book newBook, Book oldBook) {
         return 0;
     }
 

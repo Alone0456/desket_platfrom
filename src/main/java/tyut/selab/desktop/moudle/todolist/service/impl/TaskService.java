@@ -12,13 +12,14 @@ public class TaskService implements ITaskService {
 
     private ITaskDao taskDao;
 
+
     @Override
-    public List<TaskVo> queryAllTask(Integer studentNumber) {
-        return null;
+    public void taskWarnTime(TaskVo taskVo) {
+
     }
 
     @Override
-    public List<TaskVo> queryAllTaskByUserName(String name) {
+    public List<TaskVo> queryAllTask(Integer studentNumber) {
         return null;
     }
 

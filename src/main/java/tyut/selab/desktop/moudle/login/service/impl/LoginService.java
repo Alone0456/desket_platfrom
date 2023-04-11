@@ -1,9 +1,13 @@
 package tyut.selab.desktop.moudle.login.service.impl;
 
 import tyut.selab.desktop.moudle.login.dao.ILoginDao;
+import tyut.selab.desktop.moudle.login.domain.LoginLog;
 import tyut.selab.desktop.moudle.login.service.ILoginService;
-import tyut.selab.desktop.moudle.student.domain.User;
+import tyut.selab.desktop.moudle.student.domain.vo.UserRegisterVo;
 import tyut.selab.desktop.moudle.student.userdao.IUserDao;
+
+import javax.xml.crypto.Data;
+import java.util.List;
 
 public class LoginService implements ILoginService {
 
@@ -12,12 +16,12 @@ public class LoginService implements ILoginService {
     private IUserDao userDao;
 
     @Override
-    public Boolean login(String accountNumber, String password) {
+    public String login(String accountNumber, String password) {
         return null;
     }
 
     @Override
-    public Boolean register(User user) {
+    public String register(UserRegisterVo user) {
         return null;
     }
 
@@ -34,5 +38,15 @@ public class LoginService implements ILoginService {
     @Override
     public void rememberPassword() {
 
+    }
+
+    @Override
+    public List<LoginLog> showLoginLog() {
+        return null;
+    }
+
+    @Override
+    public List<LoginLog> showLoginLog(Data startTime, Data endingTime) {
+        return null;
     }
 }
