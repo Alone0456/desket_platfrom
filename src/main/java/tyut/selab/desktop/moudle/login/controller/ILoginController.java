@@ -12,7 +12,7 @@ public interface ILoginController {
      * 登录
      * @return
      */
-    String login(String accountNumber, String password);
+    String login(String accountNumber, String password) throws Exception;
 
     /**
      * 注册
@@ -23,7 +23,7 @@ public interface ILoginController {
     /**
      * 自动登录
      */
-    void autoLogin();
+    void autoLogin() throws Exception;
 
     /**
      * 记住账号
@@ -39,7 +39,7 @@ public interface ILoginController {
      * 查询登录日志
      * @return
      */
-    List<LoginLog> showLoginLog();
+    List<LoginLog> showLoginLog() throws Exception;
 
     /**
      * 查看某段时间内的登录日志
@@ -47,5 +47,5 @@ public interface ILoginController {
      * @param endingTime
      * @return
      */
-    List<LoginLog> showLoginLog(Data startTime, Data endingTime);
+    List<LoginLog> showLoginLog(Data startTime, Data endingTime) throws Exception;
 }
