@@ -1,0 +1,239 @@
+package tyut.selab.desktop.moudle.tools.client.dao.impl;
+
+import tyut.selab.desktop.moudle.student.domain.User;
+import tyut.selab.desktop.moudle.tools.client.dao.IUpFileDao;
+import tyut.selab.desktop.moudle.tools.client.domain.FileUp;
+import tyut.selab.desktop.utils.MysqlConnect;
+
+import java.math.BigDecimal;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class UpFileDao implements IUpFileDao {
+
+    @Override
+    public List<FileUp> queryAllFileUpInfo()  {
+        // 获取连接
+        Connection con = null;
+        try {
+            con = MysqlConnect.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        // 定义sql
+        String sql = "select * " +
+                "from user_file_up a,user b,user_role c " +
+                "where b.user_id = a.up_id and c.role_id=b.user_id ";
+
+        //获取对象
+        PreparedStatement psmt = null;
+        try {
+            psmt = con.prepareStatement(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        //执行
+        ResultSet rs = null;
+        try {
+            rs = psmt.executeQuery(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        //得到数据
+        FileUp uf =null;
+        List<FileUp> list = new ArrayList<>();
+        while(true){
+            try {
+                if (!rs.next()) break;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }  // 数据类型与什么对应呢
+
+            long userStudentNumber = 0;//不用展示
+            String upFilePath = null;
+            Timestamp upTime = null; // 数据类型可能不匹配
+            String upIp = null;
+            String accountNumber = null;
+            String password = null;
+            String name = null;
+            long studentNumber = 0;
+            String gender = null;
+            String phone = null;
+            String post = null;
+            Timestamp registerTime = null;
+            int loginStatus = 0;
+            String duty = null;
+            try {
+                long upId = rs.getLong("up_id");
+                userStudentNumber = rs.getLong("user_student_number");
+                upFilePath = rs.getString("up_file_path");
+                upTime = rs.getTimestamp("up_time");
+                upIp = rs.getString("up_ip");
+
+                int userId = rs.getInt("user_id");
+                accountNumber = rs.getString("account_number");
+                password = rs.getString("password");
+                name = rs.getString("name");
+                studentNumber = rs.getLong("student_number");
+                gender = rs.getString("gender");
+                phone = rs.getString("phone");
+                post = rs.getString("post");
+                registerTime = rs.getTimestamp("register_time");
+                loginStatus = rs.getInt("login_status");
+                int roleId = rs.getInt("role_id");
+                duty = rs.getString("duty");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+
+            //封装成对象
+            uf = new FileUp();
+            //uf.setUpId(Integer.valueOf((int) upId));  // 主键不用设置
+            uf.getUser().setStudentNumber(Integer.valueOf((int) userStudentNumber));
+            uf.setUpFilePath(upFilePath);
+            uf.setUpTime(upTime);
+            uf.setUpIp(upIp);
+            uf.getUser().setAccountNumber(accountNumber);
+            uf.getUser().setPassword(password);
+            uf.getUser().setName(name);
+            uf.getUser().setStudentNumber((int) studentNumber);
+            uf.getUser().getGender(gender);
+            uf.getUser().setPhone(phone);
+            uf.getUser().setPost(post);
+            uf.getUser().setRegisterTime(registerTime);
+            uf.getUser().setLoginStatus(loginStatus);
+            // uf.getUser().setRole(roleId);  // 主键不用设置
+            uf.getUser().getRole().setDuty(duty);
+
+            //写在集合里
+
+            list.add(uf);
+
+        }
+        //释放资源
+        try {
+            rs.close();
+            psmt.close();
+            con.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return list;
+
+
+    }
+
+    @Override
+    public List<FileUp> queryFileUpByUser(User user)  {    //根据学号查询
+        Connection con = null;
+        PreparedStatement psmt = null;
+        ResultSet rs = null;
+        try {
+            con = MysqlConnect.getConnection();
+            String sql = "select *from user_file_up a,user b,user_role c where b.user_id = a.up_id and c.role_id=b.user_id ";
+            psmt = con.prepareStatement(sql);
+            rs = psmt.executeQuery(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        int useStudentNumber = user.getStudentNumber().intValue();  // 与原参相比少了一个 r
+        FileUp uf =null;
+        List<FileUp> list = new ArrayList<>();
+
+        while(true){
+            try {
+                if (!rs.next()) break;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            long userStudentNumber = 0; // 判断语句
+            try {
+                userStudentNumber = rs.getLong("user_student_number");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            if(useStudentNumber == userStudentNumber){
+                String upFilePath = null;
+                Timestamp upTime = null; // 数据类型可能不匹配
+                String upIp = null;
+                String accountNumber = null;
+                String password = null;
+                String name = null;
+                long studentNumber = 0;
+                String gender = null;
+                String phone = null;
+                String post = null;
+                Timestamp registerTime = null;
+                int loginStatus = 0;
+                String duty = null;
+                try {
+                    upFilePath = rs.getString("up_file_path");
+                    upTime = rs.getTimestamp("up_time");
+                    upIp = rs.getString("up_ip");
+
+                    int userId = rs.getInt("user_id");
+                    accountNumber = rs.getString("account_number");
+                    password = rs.getString("password");
+                    name = rs.getString("name");
+                    studentNumber = rs.getLong("student_number");
+                    gender = rs.getString("gender");
+                    phone = rs.getString("phone");
+                    post = rs.getString("post");
+                    registerTime = rs.getTimestamp("register_time");
+                    loginStatus = rs.getInt("login_status");
+                    int roleId = rs.getInt("role_id");
+                    duty = rs.getString("duty");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+                //封装成对象
+                uf = new FileUp();
+                //uf.setUpId(Integer.valueOf((int) upId));  // 主键不用设置
+                uf.getUser().setStudentNumber(Integer.valueOf((int) userStudentNumber));
+                uf.setUpFilePath(upFilePath);
+                uf.setUpTime(upTime);
+                uf.setUpIp(upIp);
+                uf.getUser().setAccountNumber(accountNumber);
+                uf.getUser().setPassword(password);
+                uf.getUser().setName(name);
+                uf.getUser().setStudentNumber((int) studentNumber);
+                uf.getUser().getGender(gender);
+                uf.getUser().setPhone(phone);
+                uf.getUser().setPost(post);
+                uf.getUser().setRegisterTime(registerTime);
+                uf.getUser().setLoginStatus(loginStatus);
+                // uf.getUser().setRole(roleId);  // 主键不用设置
+                uf.getUser().getRole().setDuty(duty);
+
+                //写在集合里
+
+                list.add(uf);
+            }
+        }
+        //释放资源
+        try {
+            rs.close();
+            psmt.close();
+            con.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+
+    }
+    @Override
+    public int insertFileUp(FileUp fileUp) {
+
+        return 0;
+    }
+}
