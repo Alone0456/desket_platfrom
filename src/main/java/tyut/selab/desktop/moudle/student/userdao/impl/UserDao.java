@@ -16,22 +16,40 @@ public class UserDao implements IUserDao {
     private QueryRunner qr = new QueryRunner();
     @Override
     public User queryUserByAccount(String accountNumber, String password) {
+        User user = new User();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet =null;
-        String sql  ="select account_number,password,name,student_number,gender,phone,post,register_time,login_status,user_role.duty from user,user_role where user.role_id = user_role.role_id and account_number = ? and password = ?";
+        String sql  ="select account_number,password,name,student_number,gender,phone,post,register_time,login_status,user_role.duty " +
+                "from user,user_role " +
+                "where user.role_id = user_role.role_id " +
+                "and account_number = ? and password = ?";
         try {
             connection  = MysqlConnect.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,accountNumber);
             preparedStatement.setString(2,password);
             resultSet = preparedStatement.executeQuery();
-            return utility(resultSet);
+            while(resultSet.next()){
+                user.setAccountNumber(resultSet.getString("account_number"));
+                user.setPassword(resultSet.getString("password"));
+                user.setName(resultSet.getString("name"));
+                user.setGender(resultSet.getInt("gender"));
+                user.setStudentNumber(resultSet.getInt("student_number"));
+                user.setGender(resultSet.getInt("gender"));
+                user.setPhone(resultSet.getString("phone"));
+                user.setPost(resultSet.getString("post"));
+                user.setRegisterTime(resultSet.getDate("register_time"));
+                user.setLoginStatus(resultSet.getInt("login_status"));
+                user.setRole(new Role(resultSet.getString("duty")));
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }finally {
             MysqlConnect.close(connection);
         }
+        return user;
     }
 
     @Override
@@ -46,6 +64,21 @@ public class UserDao implements IUserDao {
 
     @Override
     public User queryUserByStudentName(String name) {
+//        Connection connection = null;
+//        PreparedStatement preparedStatement = null;
+//        ResultSet resultSet =null;
+//        String sql  ="select account_number,password,name,student_number,gender,phone,post,register_time,login_status,user_role.duty from user,user_role where user.role_id = user_role.role_id and student_number = ?";
+//        try {
+//            connection  = MysqlConnect.getConnection();
+//            preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setInt(1,studentNumber);
+//            resultSet = preparedStatement.executeQuery();
+//            return utility(resultSet);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }finally {
+//            MysqlConnect.close(connection);
+//        }
         return null;
     }
 

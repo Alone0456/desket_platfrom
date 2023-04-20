@@ -16,6 +16,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,6 +24,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import javax.xml.crypto.dsig.Transform;
+
+import static java.lang.System.currentTimeMillis;
 
 public class LoginService implements ILoginService {
 
@@ -30,7 +34,7 @@ public class LoginService implements ILoginService {
 
     private IUserDao userDao = new UserDao();
 
-    private User user=null;
+    private User user = null;
 
 
     @Override
@@ -43,15 +47,24 @@ public class LoginService implements ILoginService {
         String encryptPassword = loginService.getEncryptPassword(password);
         user = userDao.queryUserByAccount(accountNumber, encryptPassword);
 
-        if (user!=null) {
+        if (user == null) {
             return "账号或密码错误";
-        } else  {
+        } else {
             LoginLog loginLog = new LoginLog();
             loginLog.setName(user.getName());
             loginLog.setStudentNumber(user.getStudentNumber());
             //获取当前时间
-            Date currentTime = loginService.getCurrentTime();
-            loginLog.setLoginTime((Data) currentTime);
+//            Date timestamp = loginService.getCurrentTime();
+//
+//            // 将 Timestamp 转换为 Date
+//            Date date = new Date(timestamp.getTime());
+//
+//            // 将 Date 转换为 Data
+//            Data currentTime = javax.xml.crypto.Data(date);
+//            loginLog.setLoginTime(currentTime);
+
+
+
             //获取登录ip
             InetAddress localhost;
 
@@ -101,19 +114,21 @@ public class LoginService implements ILoginService {
         if (!Pattern.matches(qqEmain, userRegisterVo.getPost())) {
             return "QQ邮箱格式错误";
         }
-//        if (userDao.queryUserByAccount(userRegisterVo.getAccountNumber(), userRegisterVo.getPassword()).getAccountNumber() == userRegisterVo.getAccountNumber()) {
-//            return "该账号已经存在";
-//        }
-//        if (userDao.queryUserByStudentNumber(userRegisterVo.getStudentNumber()).getStudentNumber()== user.getStudentNumber()) {
-//            return "该学号已经存在";
-//        }
-        user.setAccountNumber(userRegisterVo.getAccountNumber());
 
         //使用MD5加密算法将密码加密存到数据库中
         String password = userRegisterVo.getPassword();
         LoginService loginService = new LoginService();
         String encryptPassword = loginService.getEncryptPassword(password);
         user.setPassword(encryptPassword);
+
+        if (userDao.queryUserByAccount(userRegisterVo.getAccountNumber(), encryptPassword).getAccountNumber() != null) {
+            return "该账号已经存在";
+        }
+        if (userDao.queryUserByStudentNumber(userRegisterVo.getStudentNumber()) != null) {
+            return "该学号已经存在";
+        }
+        user.setAccountNumber(userRegisterVo.getAccountNumber());
+
 
         user.setName(userRegisterVo.getName());
         user.setStudentNumber(userRegisterVo.getStudentNumber());
@@ -219,7 +234,7 @@ public class LoginService implements ILoginService {
         File f = new File("account.txt");
         FileReader fr = null;
         String account = null;
-        if(f.exists()){
+        if (f.exists()) {
             try {
                 fr = new FileReader(f);
                 int len;
@@ -239,8 +254,7 @@ public class LoginService implements ILoginService {
                 }
             }
             return account;
-        }
-        else return "";
+        } else return "";
     }
 
     //获取存入文件中的密码
@@ -248,30 +262,29 @@ public class LoginService implements ILoginService {
         File file = new File("password.txt");
         FileReader fr = null;
         String password = null;
-        if(file.exists()){
-        try {
-            fr = new FileReader(file);
-            Scanner sc = new Scanner(fr);
-            if (sc.hasNext()) {
-                byte[] bt = sc.nextLine().getBytes();
-                for (int i = 0; i < bt.length; i++) {
-                    bt[i] = (byte) (bt[i] ^ (i + 18));
-                }
-                password = new String(bt, 0, bt.length);
-
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
+        if (file.exists()) {
             try {
-                fr.close();
-            } catch (IOException e) {
+                fr = new FileReader(file);
+                Scanner sc = new Scanner(fr);
+                if (sc.hasNext()) {
+                    byte[] bt = sc.nextLine().getBytes();
+                    for (int i = 0; i < bt.length; i++) {
+                        bt[i] = (byte) (bt[i] ^ (i + 18));
+                    }
+                    password = new String(bt, 0, bt.length);
+
+                }
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    fr.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        return password;
-        }
-        else return "";
+            return password;
+        } else return "";
     }
 
     //获取当前时间

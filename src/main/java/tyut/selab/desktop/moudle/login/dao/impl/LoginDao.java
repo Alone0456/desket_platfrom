@@ -134,7 +134,11 @@ public class LoginDao implements ILoginDao {
 
         pstmt.setString(1, log.getName());
         pstmt.setInt(2, log.getStudentNumber());
-        pstmt.setString(3, log.getLoginTime().toString());
+        if(log.getLoginTime()!=null){
+            pstmt.setString(3, log.getLoginTime().toString());
+        }else{
+            System.out.println("登录时间不能为空");
+        }
         pstmt.setString(4, log.getLoginIp());
 
         //执行sql
