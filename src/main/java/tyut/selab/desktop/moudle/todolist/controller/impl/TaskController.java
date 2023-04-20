@@ -11,26 +11,27 @@ public class TaskController implements ITaskController {
 
     @Override
     public void taskWarnTime(TaskVo taskVo) {
-
+        taskService.taskWarnTime(taskVo);
     }
 
     @Override
     public List<TaskVo> queryAllTask(Integer studentNumber) {
-        return null;
+        return taskService.queryAllTask(studentNumber);
     }
 
     @Override
-    public int insertTask(TaskVo task) {
-        return 0;
+    public int insertTask(TaskVo taskVo) {
+        return taskService.insertTask(taskVo);
     }
 
     @Override
-    public int updateTask(TaskVo task) {
-        return 0;
+    public int updateTask(TaskVo taskVo) {
+        return taskService.updateTask(taskVo);
     }
 
     @Override
-    public int deleteTask(TaskVo task) {
-        return 0;
+    public int deleteTask(TaskVo taskVo) {
+        return taskService.deleteTask(taskVo);
     }
 }
+

@@ -2,6 +2,7 @@ package tyut.selab.desktop.moudle.todolist.dao;
 
 import tyut.selab.desktop.moudle.todolist.domain.Task;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ITaskDao {
@@ -10,14 +11,16 @@ public interface ITaskDao {
      * @param studentNumber
      * @return
      */
-    List<Task> queryAllTask(Integer studentNumber);
+    List<Task> queryAllTask(Integer studentNumber) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException;
+
+//    List<Task> queryAllTaskByUserName(String name);
 
     /**
      * 添加清单
      * @param task
      * @return
      */
-    int insertTask(Task task);
+    int insertTask(Task task) throws SQLException;
 
     /**
      * 修改清单
@@ -25,12 +28,12 @@ public interface ITaskDao {
      * @param oldTask
      * @return
      */
-    int updateTask(Task newTask,Task oldTask);
+    int updateTask(Task newTask,Task oldTask) throws SQLException;
 
     /**
      * 删除清单
      * @param task
      * @return
      */
-    int deleteTask(Task task);
+    int deleteTask(Task task) throws SQLException;
 }
