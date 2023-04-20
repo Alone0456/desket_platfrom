@@ -3,6 +3,12 @@ package tyut.selab.desktop.moudle.student.domain;
 public class Role {
 
 
+    public Role(String duty) {
+    }
+
+    public Role() {
+
+    }
 
     public String getDuty() {
         return duty;
