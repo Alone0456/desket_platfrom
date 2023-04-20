@@ -10,54 +10,63 @@ import java.util.List;
 
 public class UserController implements IUserController {
     private IUserService userService;
-
     @Override
     public List<UserVo> queryUser() {
-        return null;
+        List<UserVo> userVos= userService.queryUser();
+        return userVos;
     }
 
     @Override
     public UserVo queryUserByStudentNumber(Integer studentNumber) {
-        return null;
+        UserVo userVo=userService.queryUserByStudentNumber(studentNumber);
+        return userVo;
     }
 
     @Override
     public UserVo queryUserByStudentName(String name) {
-        return null;
+        UserVo userVo=userService.queryUserByStudentName(name);
+        return userVo;
     }
 
     @Override
     public int insertUser(UserRegisterVo user) {
-        return 0;
+        int judge=userService.insertUser(user);
+        return judge;
     }
 
     @Override
     public int updateUserPassword(String password, UserVo user) {
-        return 0;
+        int judge=userService.updateUserPassword(password,user);
+        return judge;
     }
 
     @Override
     public int updateUser(UserVo oldUser, UserVo newUser) {
-        return 0;
+        int judge=userService.updateUser(oldUser,newUser);
+        return judge;
     }
 
     @Override
     public int deleteUser(Integer studentNumber) {
-        return 0;
+        int judge=userService.deleteUser(studentNumber);
+        return judge;
     }
 
     @Override
     public List<Role> queryAllRole() {
-        return null;
+        List<Role> list=userService.queryAllRole();
+        return list;
     }
 
     @Override
     public int insertRole(Role role) {
-        return 0;
+        int judge = userService.insertRole(role);
+        return judge;
     }
 
     @Override
     public int deleteRole(Role role) {
-        return 0;
+        int judge =userService.deleteRole(role);
+        return judge;
     }
 }

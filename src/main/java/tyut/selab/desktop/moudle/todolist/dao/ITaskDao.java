@@ -12,6 +12,8 @@ public interface ITaskDao {
      */
     List<Task> queryAllTask(Integer studentNumber);
 
+    List<Task> queryAllTaskByUserName(String name);
+
     /**
      * 添加清单
      * @param task
