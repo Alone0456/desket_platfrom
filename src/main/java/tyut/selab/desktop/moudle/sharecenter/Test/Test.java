@@ -1,4 +1,4 @@
-package tyut.selab.desktop.moudle.sharecenter.test;
+package tyut.selab.desktop.moudle.sharecenter.Test;
 
 import tyut.selab.desktop.moudle.sharecenter.controller.impl.ShareCenterController;
 import tyut.selab.desktop.moudle.sharecenter.dao.impl.BugTypeDao;

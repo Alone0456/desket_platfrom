@@ -1,9 +1,7 @@
 package tyut.selab.desktop.ui.sharecenter;
 
-import tyut.selab.desktop.moudle.sharecenter.controller.impl.ShareCenterController;
+
 import tyut.selab.desktop.moudle.sharecenter.domain.vo.BugVo;
-import tyut.selab.desktop.moudle.sharecenter.service.impl.ShareCenterService;
-import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 
 
 import javax.swing.*;

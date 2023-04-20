@@ -30,7 +30,6 @@ public class ShareCenterController implements IShareCenterController {
     public ShareCenterController(UserVo userVo) {
 
         if("用户".equals(userVo.getDuty())){
-            System.out.println("6");
             ui.getFrame().setJMenuBar(ui.getjMenuBar());
             ui.getjMenuBar().add(ui.getjMenu());
             ui.getjMenu().add(ui.getjMenuItem1());
@@ -98,6 +97,7 @@ public class ShareCenterController implements IShareCenterController {
     public List<BugVo> showBugInfo() {
 
         List<BugVo> bugVos = shareCenterService.showBugInfo();
+        System.out.println(bugVos.size());
         ui.getDefaultListModel().clear();
         ui.getDefaultListModel().addAll(bugVos);
         ui.setDefaultJlist(bugVos);

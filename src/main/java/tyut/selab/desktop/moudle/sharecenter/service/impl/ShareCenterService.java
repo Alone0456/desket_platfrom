@@ -36,9 +36,6 @@ public class ShareCenterService implements IShareCenterService{
         try {
             List<BugMessage> bugMessages = shareCenterDao.queryAllBugInfo();
             List<BugVo> bugVoList = new Vector<>();
-            if(bugMessages.size()>0){
-                bugVoList.add(bugMessages.get(0).toBugVo());
-            }
             if (bugMessages.size()>=1){
                 BugMessage bugMessage = bugMessages.get(0);
                 BugVo BugVo = bugMessage.toBugVo();
@@ -46,7 +43,7 @@ public class ShareCenterService implements IShareCenterService{
                 for (int i = 1; i < bugMessages.size(); i++) {
                     bugMessage = bugMessages.get(i);
 
-                    if(bugMessage.equals(bugMessages.get(i-1))){
+                    if(bugMessage.getBugTitle().equals(bugMessages.get(i-1).getBugTitle())){
                         BugVo.addBugType(bugMessage.getBugType());
                     }else {
                         BugVo = bugMessage.toBugVo();
