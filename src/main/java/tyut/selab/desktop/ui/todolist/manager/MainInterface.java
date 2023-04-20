@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class MainInterface {
 
-    JFrame jf = new JFrame("创新实验室图书馆");
+    JFrame jf = new JFrame("||创新实验室图书馆||");
 
     final int WIDTH = 500;
     final int HEIGHT = 300;
