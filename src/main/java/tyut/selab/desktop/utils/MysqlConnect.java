@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -40,9 +42,10 @@ public class MysqlConnect{
         return dataSource.getConnection();
     }
 
-    public static void closeConnection(Connection conn) {
+    public static void closeConnection(Connection conn, PreparedStatement ps) {
         if (conn != null) {
             try {
+                ps.close();
                 conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();

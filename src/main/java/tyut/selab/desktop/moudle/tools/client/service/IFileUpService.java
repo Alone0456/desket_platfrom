@@ -7,11 +7,12 @@ import tyut.selab.desktop.moudle.tools.client.domain.vo.FileUpVo;
 import java.util.List;
 
 public interface IFileUpService {
-    int fileDown(FileUpVo fileUpVo);
+    public int fileDown(FileUpVo fileUpVo,String localFilePath);
 
-    int fileUpLoading(FileUpVo fileUpVo);
+    public int fileUpLoading(FileUp fileUp, String localFilePath);
 
-    List<FileUp> queryAllFileUpInfo() ;
+    List<FileUp> queryAllFileUpInfo();
 
     List<FileUp> queryFileUpByUser(User user) ;
+    int insertFileUp(FileUp fileUp);
 }

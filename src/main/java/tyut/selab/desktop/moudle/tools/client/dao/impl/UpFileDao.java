@@ -8,6 +8,7 @@ import tyut.selab.desktop.utils.MysqlConnect;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UpFileDao implements IUpFileDao {
@@ -25,9 +26,9 @@ public class UpFileDao implements IUpFileDao {
         // 定义sql
         String sql = "select * " +
                 "from user_file_up a,user b,user_role c " +
-                "where b.user_id = a.up_id and c.role_id=b.user_id ";
+                "where b.student_number = a.user_student_number and c.role_id=b.role_id";
 
-        //获取对象
+        //获取执行对象
         PreparedStatement psmt = null;
         try {
             psmt = con.prepareStatement(sql);
@@ -57,6 +58,7 @@ public class UpFileDao implements IUpFileDao {
             String upFilePath = null;
             Timestamp upTime = null; // 数据类型可能不匹配
             String upIp = null;
+            String week = null;
             String accountNumber = null;
             String password = null;
             String name = null;
@@ -73,6 +75,7 @@ public class UpFileDao implements IUpFileDao {
                 upFilePath = rs.getString("up_file_path");
                 upTime = rs.getTimestamp("up_time");
                 upIp = rs.getString("up_ip");
+                week = rs.getString("up_week");
 
                 int userId = rs.getInt("user_id");
                 accountNumber = rs.getString("account_number");
@@ -98,6 +101,7 @@ public class UpFileDao implements IUpFileDao {
             uf.setUpFilePath(upFilePath);
             uf.setUpTime(upTime);
             uf.setUpIp(upIp);
+            uf.setWeek(week);
             uf.getUser().setAccountNumber(accountNumber);
             uf.getUser().setPassword(password);
             uf.getUser().setName(name);
@@ -136,7 +140,9 @@ public class UpFileDao implements IUpFileDao {
         ResultSet rs = null;
         try {
             con = MysqlConnect.getConnection();
-            String sql = "select *from user_file_up a,user b,user_role c where b.user_id = a.up_id and c.role_id=b.user_id ";
+            String sql = "select *from user_file_up a,user b,user_role c" +
+                    " where b.student_number = a.user_student_number " +
+                    "and c.role_id=b.role_id ";
             psmt = con.prepareStatement(sql);
             rs = psmt.executeQuery(sql);
         } catch (SQLException e) {
@@ -149,7 +155,8 @@ public class UpFileDao implements IUpFileDao {
 
         while(true){
             try {
-                if (!rs.next()) break;
+                if (!rs.next())
+                    break;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -164,6 +171,7 @@ public class UpFileDao implements IUpFileDao {
                 String upFilePath = null;
                 Timestamp upTime = null; // 数据类型可能不匹配
                 String upIp = null;
+                String week = null;
                 String accountNumber = null;
                 String password = null;
                 String name = null;
@@ -178,6 +186,7 @@ public class UpFileDao implements IUpFileDao {
                     upFilePath = rs.getString("up_file_path");
                     upTime = rs.getTimestamp("up_time");
                     upIp = rs.getString("up_ip");
+                    week = rs.getString("week");
 
                     int userId = rs.getInt("user_id");
                     accountNumber = rs.getString("account_number");
@@ -203,6 +212,7 @@ public class UpFileDao implements IUpFileDao {
                 uf.setUpFilePath(upFilePath);
                 uf.setUpTime(upTime);
                 uf.setUpIp(upIp);
+                uf.setWeek(week);
                 uf.getUser().setAccountNumber(accountNumber);
                 uf.getUser().setPassword(password);
                 uf.getUser().setName(name);
@@ -234,6 +244,58 @@ public class UpFileDao implements IUpFileDao {
     @Override
     public int insertFileUp(FileUp fileUp) {
 
-        return 0;
+        //获取数据
+        Integer studentNumber =fileUp.getUser().getStudentNumber();
+        String filePath = fileUp.getUpFilePath();
+        Date time = fileUp.getUpTime();
+        String ip = fileUp.getUpIp();
+        String week = fileUp.getWeek();
+
+        //获取连接
+        Connection con =null;
+        try {
+            con = MysqlConnect.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //定义sql语句
+        String sql = "insert into user_file_up " +
+                "(user_student_number, up_file_path, up_time, up_ip,up_week)" +
+                " VALUE (?,?,?,?,?)";
+
+        //获取执行对象
+        PreparedStatement psmt = null;
+        try {
+             psmt = con.prepareStatement(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //获取参数
+        try{
+            psmt.setInt(1,studentNumber);
+            psmt.setString(2,filePath);
+            psmt.setDate(3, (java.sql.Date) time);//可能会报错
+            psmt.setString(4,ip);
+            psmt.setString(5,week);
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        //执行sql
+        int i = 0;
+        try {
+             i = psmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        //释放资源
+        try {
+            psmt.close();
+            con.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return i;
     }
 }
