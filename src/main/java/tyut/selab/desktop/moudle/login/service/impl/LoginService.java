@@ -54,15 +54,10 @@ public class LoginService implements ILoginService {
             loginLog.setName(user.getName());
             loginLog.setStudentNumber(user.getStudentNumber());
             //获取当前时间
-//            Date timestamp = loginService.getCurrentTime();
-//
-//            // 将 Timestamp 转换为 Date
-//            Date date = new Date(timestamp.getTime());
-//
-//            // 将 Date 转换为 Data
-//            Data currentTime = javax.xml.crypto.Data(date);
-//            loginLog.setLoginTime(currentTime);
 
+
+            Date date=loginService.getCurrentTime();
+            loginLog.setLoginTime(date);
 
 
             //获取登录ip
@@ -121,7 +116,7 @@ public class LoginService implements ILoginService {
         String encryptPassword = loginService.getEncryptPassword(password);
         user.setPassword(encryptPassword);
 
-        if (userDao.queryUserByAccount(userRegisterVo.getAccountNumber(), encryptPassword).getAccountNumber() != null) {
+        if (userDao.queryUserByAccount(userRegisterVo.getAccountNumber())!=null) {
             return "该账号已经存在";
         }
         if (userDao.queryUserByStudentNumber(userRegisterVo.getStudentNumber()) != null) {
@@ -148,6 +143,7 @@ public class LoginService implements ILoginService {
         user.setRegisterTime(currentTime);
         int registAffectRows = userDao.insertUser(user);//获取注册用户在数据库中影响的行数
         if (registAffectRows > 0) {
+
             return "注册成功";
         }
         ;
@@ -158,7 +154,7 @@ public class LoginService implements ILoginService {
     @Override
     public void autoLogin() throws Exception {
 
-        Thread.sleep(3000);
+//        Thread.sleep(1000);
         LoginService loginService = new LoginService();
         String account = loginService.getAccount();
         String password = loginService.getPassword();

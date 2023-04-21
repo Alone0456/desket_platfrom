@@ -127,18 +127,15 @@ public class LoginDao implements ILoginDao {
         //获取collection
         Connection connection = MysqlConnect.getConnection();
         String sql = "insert into user_login_log" +
-                " (log_id,user_student_number,login_time,login_ip)values(????)";
+                " (log_id,user_student_number,login_time,login_ip)values(?,?,?,?)";
 
         //获取pstmt对象
         PreparedStatement pstmt = connection.prepareStatement(sql);
 
-        pstmt.setString(1, log.getName());
+        pstmt.setString(1, null);
         pstmt.setInt(2, log.getStudentNumber());
-        if(log.getLoginTime()!=null){
             pstmt.setString(3, log.getLoginTime().toString());
-        }else{
-            System.out.println("登录时间不能为空");
-        }
+
         pstmt.setString(4, log.getLoginIp());
 
         //执行sql

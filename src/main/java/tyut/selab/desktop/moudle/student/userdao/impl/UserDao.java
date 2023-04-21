@@ -109,6 +109,7 @@ public class UserDao implements IUserDao {
                 return -1;
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }finally {
             MysqlConnect.close(connection);

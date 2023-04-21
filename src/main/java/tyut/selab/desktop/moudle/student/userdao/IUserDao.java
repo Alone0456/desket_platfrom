@@ -6,6 +6,8 @@ import tyut.selab.desktop.moudle.student.domain.User;
 import java.util.List;
 
 public interface IUserDao {
+    User queryUserByAccount(String accountNumber);
+
     /**
      * 通过账号,密码查询用户
      * @param accountNumber

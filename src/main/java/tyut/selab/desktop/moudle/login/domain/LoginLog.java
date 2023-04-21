@@ -1,11 +1,11 @@
 package tyut.selab.desktop.moudle.login.domain;
 
-import javax.xml.crypto.Data;
+import java.util.Date;
 
 public class LoginLog {
     private String name;  //用户名字
     private Integer studentNumber; //用户学号
-    private Data LoginTime;  //登录时间
+    private Date LoginTime;  //登录时间
     private String LoginIp; //登录IP
 
     @Override
@@ -18,7 +18,7 @@ public class LoginLog {
                 '}';
     }
 
-    public LoginLog(String name, Integer studentNumber, Data loginTime, String loginIp) {
+    public LoginLog(String name, Integer studentNumber, Date loginTime, String loginIp) {
         this.name = name;
         this.studentNumber = studentNumber;
         LoginTime = loginTime;
@@ -44,11 +44,11 @@ public class LoginLog {
         this.studentNumber = studentNumber;
     }
 
-    public Data getLoginTime() {
+    public Date getLoginTime() {
         return LoginTime;
     }
 
-    public void setLoginTime(Data loginTime) {
+    public void setLoginTime(Date loginTime) {
         LoginTime = loginTime;
     }
 

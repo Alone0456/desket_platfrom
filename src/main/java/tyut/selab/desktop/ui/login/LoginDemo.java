@@ -89,7 +89,7 @@ public class LoginDemo extends JFrame {
             }else if(b>2&&temp[2].equals("false")){
                 RememberNumber.setSelected(false);
             }
-            System.out.println(b);
+
             if(b>3){
                 uField.setText(temp[3]);
             }
