@@ -4,6 +4,7 @@ import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.userdao.IUserDao;
 
 import tyut.selab.desktop.moudle.student.userdao.impl.UserDao;
+import tyut.selab.desktop.moudle.tools.client.dao.impl.GetMangerName;
 import tyut.selab.desktop.moudle.tools.client.dao.impl.UpFileDao;
 import tyut.selab.desktop.moudle.tools.client.dao.IUpFileDao;
 import tyut.selab.desktop.moudle.tools.client.dao.IUpFileDao;
@@ -145,5 +146,8 @@ public class FileService implements IFileUpService {
     public int  insertFileUp(FileUp fileUp) {
         upFileDao = new UpFileDao();
         return upFileDao.insertFileUp(fileUp);
+    }
+    public static List<String> queryAllMangers(){
+       return GetMangerName.queryAllManger();
     }
 }

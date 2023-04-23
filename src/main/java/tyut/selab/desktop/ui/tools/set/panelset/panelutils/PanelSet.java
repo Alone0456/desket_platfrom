@@ -19,7 +19,7 @@ import java.awt.*;
 public class PanelSet extends JPanel {
     private static final long serialVersionUID = -6352788025440244338L;
     // 固定背景图片，允许这个JPanel可以在图片上添加其他组件
-    private Image backgroundImage = (Image) new ImageIcon("/tyut/selab/desktop/ui/tools/imgs/background.jpg").getImage();
+    private Image backgroundImage = (Image) new ImageIcon(getClass().getResource("/tyut/selab/desktop/ui/tools/imgs/background.jpg")).getImage();
 
     @Override
     protected void paintComponent(Graphics g) {

@@ -59,16 +59,16 @@ public class UpFileDao implements IUpFileDao {
             Timestamp upTime = null; // 数据类型可能不匹配
             String upIp = null;
             String week = null;
-            String accountNumber = null;
-            String password = null;
-            String name = null;
-            long studentNumber = 0;
-            String gender = null;
-            String phone = null;
-            String post = null;
-            Timestamp registerTime = null;
-            int loginStatus = 0;
-            String duty = null;
+//            String accountNumber = null;
+//            String password = null;
+//            String name = null;
+//            long studentNumber = 0;
+//            String gender = null;
+//            String phone = null;
+//            String post = null;
+//            Timestamp registerTime = null;
+//            int loginStatus = 0;
+//            String duty = null;
             try {
                 long upId = rs.getLong("up_id");
                 userStudentNumber = rs.getLong("user_student_number");
@@ -77,18 +77,18 @@ public class UpFileDao implements IUpFileDao {
                 upIp = rs.getString("up_ip");
                 week = rs.getString("up_week");
 
-                int userId = rs.getInt("user_id");
-                accountNumber = rs.getString("account_number");
-                password = rs.getString("password");
-                name = rs.getString("name");
-                studentNumber = rs.getLong("student_number");
-                gender = rs.getString("gender");
-                phone = rs.getString("phone");
-                post = rs.getString("post");
-                registerTime = rs.getTimestamp("register_time");
-                loginStatus = rs.getInt("login_status");
-                int roleId = rs.getInt("role_id");
-                duty = rs.getString("duty");
+//                int userId = rs.getInt("user_id");
+//                accountNumber = rs.getString("account_number");
+//                password = rs.getString("password");
+//                name = rs.getString("name");
+//                studentNumber = rs.getLong("student_number");
+//                gender = rs.getString("gender");
+//                phone = rs.getString("phone");
+//                post = rs.getString("post");
+//                registerTime = rs.getTimestamp("register_time");
+//                loginStatus = rs.getInt("login_status");
+//                int roleId = rs.getInt("role_id");
+//                duty = rs.getString("duty");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -102,17 +102,17 @@ public class UpFileDao implements IUpFileDao {
             uf.setUpTime(upTime);
             uf.setUpIp(upIp);
             uf.setWeek(week);
-            uf.getUser().setAccountNumber(accountNumber);
-            uf.getUser().setPassword(password);
-            uf.getUser().setName(name);
-            uf.getUser().setStudentNumber((int) studentNumber);
-            uf.getUser().getGender(gender);
-            uf.getUser().setPhone(phone);
-            uf.getUser().setPost(post);
-            uf.getUser().setRegisterTime(registerTime);
-            uf.getUser().setLoginStatus(loginStatus);
+//            uf.getUser().setAccountNumber(accountNumber);
+//            uf.getUser().setPassword(password);
+//            uf.getUser().setName(name);
+//            uf.getUser().setStudentNumber((int) studentNumber);
+//            uf.getUser().getGender(gender);
+//            uf.getUser().setPhone(phone);
+//            uf.getUser().setPost(post);
+//            uf.getUser().setRegisterTime(registerTime);
+//            uf.getUser().setLoginStatus(loginStatus);
             // uf.getUser().setRole(roleId);  // 主键不用设置
-            uf.getUser().getRole().setDuty(duty);
+//            uf.getUser().getRole().setDuty(duty);
 
             //写在集合里
 
@@ -163,7 +163,7 @@ public class UpFileDao implements IUpFileDao {
 
             long userStudentNumber = 0; // 判断语句
             try {
-                userStudentNumber = rs.getLong("user_student_number");
+                userStudentNumber = rs.getLong("user_student_number");  //是用户类型的User
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -172,16 +172,16 @@ public class UpFileDao implements IUpFileDao {
                 Timestamp upTime = null; // 数据类型可能不匹配
                 String upIp = null;
                 String week = null;
-                String accountNumber = null;
-                String password = null;
-                String name = null;
-                long studentNumber = 0;
-                String gender = null;
-                String phone = null;
-                String post = null;
-                Timestamp registerTime = null;
-                int loginStatus = 0;
-                String duty = null;
+//                String accountNumber = null;
+//                String password = null;
+//                String name = null;
+//                long studentNumber = 0;
+//                String gender = null;
+//                String phone = null;
+//                String post = null;
+//                Timestamp registerTime = null;
+//                int loginStatus = 0;
+//                String duty = null;
                 try {
                     upFilePath = rs.getString("up_file_path");
                     upTime = rs.getTimestamp("up_time");
@@ -189,20 +189,21 @@ public class UpFileDao implements IUpFileDao {
                     week = rs.getString("week");
 
                     int userId = rs.getInt("user_id");
-                    accountNumber = rs.getString("account_number");
-                    password = rs.getString("password");
-                    name = rs.getString("name");
-                    studentNumber = rs.getLong("student_number");
-                    gender = rs.getString("gender");
-                    phone = rs.getString("phone");
-                    post = rs.getString("post");
-                    registerTime = rs.getTimestamp("register_time");
-                    loginStatus = rs.getInt("login_status");
-                    int roleId = rs.getInt("role_id");
-                    duty = rs.getString("duty");
+//                    accountNumber = rs.getString("account_number");
+//                    password = rs.getString("password");
+//                    name = rs.getString("name");
+//                    studentNumber = rs.getLong("student_number");
+//                    gender = rs.getString("gender");
+//                    phone = rs.getString("phone");
+//                    post = rs.getString("post");
+//                    registerTime = rs.getTimestamp("register_time");
+//                    loginStatus = rs.getInt("login_status");
+//                    int roleId = rs.getInt("role_id");
+//                    duty = rs.getString("duty");
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+
 
 
                 //封装成对象
@@ -213,17 +214,17 @@ public class UpFileDao implements IUpFileDao {
                 uf.setUpTime(upTime);
                 uf.setUpIp(upIp);
                 uf.setWeek(week);
-                uf.getUser().setAccountNumber(accountNumber);
-                uf.getUser().setPassword(password);
-                uf.getUser().setName(name);
-                uf.getUser().setStudentNumber((int) studentNumber);
-                uf.getUser().getGender(gender);
-                uf.getUser().setPhone(phone);
-                uf.getUser().setPost(post);
-                uf.getUser().setRegisterTime(registerTime);
-                uf.getUser().setLoginStatus(loginStatus);
-                // uf.getUser().setRole(roleId);  // 主键不用设置
-                uf.getUser().getRole().setDuty(duty);
+//                uf.getUser().setAccountNumber(accountNumber);
+//                uf.getUser().setPassword(password);
+//                uf.getUser().setName(name);
+//                uf.getUser().setStudentNumber((int) studentNumber);
+//                uf.getUser().getGender(gender);
+//                uf.getUser().setPhone(phone);
+//                uf.getUser().setPost(post);
+//                uf.getUser().setRegisterTime(registerTime);
+//                uf.getUser().setLoginStatus(loginStatus);
+//                // uf.getUser().setRole(roleId);  // 主键不用设置
+//                uf.getUser().getRole().setDuty(duty);
 
                 //写在集合里
 

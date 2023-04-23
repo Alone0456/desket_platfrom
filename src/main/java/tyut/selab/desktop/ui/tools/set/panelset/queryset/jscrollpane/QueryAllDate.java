@@ -20,20 +20,15 @@ import java.util.List;
 public class QueryAllDate extends JScrollPane {
     public QueryAllDate(){
         JTextArea jTextArea = new JTextArea(50, 20);
-        //  获取数据库中所有用户信息
+         // 获取数据库中所有用户信息
         List<FileUp> fileUps = FileChooser.fileController.queryAllFileUpInfo();
-//        for (FileUp fileUp : fileUps) {
-//            jTextArea.setText(fileUp.getUpFilePath());
-//            jTextArea.setText(fileUp.getWeek());
-//            jTextArea.setText(fileUp.getUpIp());
-//            jTextArea.setText(String.valueOf(fileUp.getUpId()));
-//            jTextArea.setText(String.valueOf(fileUp.getUpTime()));
-//            User user = fileUp.getUser();
-//            jTextArea.setText(user.getPost());
-//            jTextArea.setText(user.getName());
-//            jTextArea.setText(String.valueOf(user.getStudentNumber()));
-//            jTextArea.setText(user.getPhone());
-//        }
+        for (FileUp fileUp : fileUps) {
+            jTextArea.setText(fileUp.getUpFilePath());
+            jTextArea.setText(fileUp.getWeek());
+            jTextArea.setText(fileUp.getUpIp());
+            jTextArea.setText(String.valueOf(fileUp.getUpId()));
+            jTextArea.setText(String.valueOf(fileUp.getUpTime()));
+        }
         this.setViewportView(jTextArea);
         this.getViewport().getView().setBackground(Color.pink);
     }

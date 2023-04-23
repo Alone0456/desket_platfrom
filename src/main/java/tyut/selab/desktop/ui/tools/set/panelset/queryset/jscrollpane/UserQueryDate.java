@@ -23,18 +23,13 @@ public class UserQueryDate extends JScrollPane {
         JTextArea jTextArea = new JTextArea(50, 20);
         // 根据用户信息获取数据库中对应的数据
         List<FileUp> fileUps = FileChooser.fileController.queryFileUpByUser(FileChooser.fileUp.getUser());
-//        for (FileUp fileUp : fileUps) {
-//            jTextArea.setText(fileUp.getUpFilePath());
-//            jTextArea.setText(fileUp.getWeek());
-//            jTextArea.setText(fileUp.getUpIp());
-//            jTextArea.setText(String.valueOf(fileUp.getUpId()));
-//            jTextArea.setText(String.valueOf(fileUp.getUpTime()));
-//            User user = fileUp.getUser();
-//            jTextArea.setText(user.getPost());
-//            jTextArea.setText(user.getName());
-//            jTextArea.setText(String.valueOf(user.getStudentNumber()));
-//            jTextArea.setText(user.getPhone());
-//        }
+        for (FileUp fileUp : fileUps) {
+            jTextArea.setText(fileUp.getUpFilePath());
+            jTextArea.setText(fileUp.getWeek());
+            jTextArea.setText(fileUp.getUpIp());
+            jTextArea.setText(String.valueOf(fileUp.getUpId()));
+            jTextArea.setText(String.valueOf(fileUp.getUpTime()));
+    }
         this.setViewportView(jTextArea);
         this.getViewport().getView().setBackground(Color.pink);
     }

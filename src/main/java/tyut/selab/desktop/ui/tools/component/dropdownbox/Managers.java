@@ -1,11 +1,14 @@
 package tyut.selab.desktop.ui.tools.component.dropdownbox;
 
+import tyut.selab.desktop.moudle.tools.client.service.impl.FileService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 /**
  * ClassName:Managers
@@ -24,13 +27,11 @@ public class Managers {
         jComboBox.setFont(new Font("华文行楷",Font.PLAIN,18));
         jComboBox.setBorder(BorderFactory.createLineBorder(Color.blue));
         jComboBox.setForeground(Color.gray);
-        jComboBox.addItem("请选择组长");
-        //TODO: 2023/04/19 从数据库中提取管理员数据
-        jComboBox.addItem("奚城琛1");
-        jComboBox.addItem("奚城琛2");
-        jComboBox.addItem("奚城琛3");
-        jComboBox.addItem("奚城琛4");
-        jComboBox.addItem("奚城琛5");
+        //从数据库中提取管理员数据
+        List<String> names = FileService.queryAllMangers();
+        for (String name : names) {
+            jComboBox.addItem(name);
+        }
         jComboBox.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

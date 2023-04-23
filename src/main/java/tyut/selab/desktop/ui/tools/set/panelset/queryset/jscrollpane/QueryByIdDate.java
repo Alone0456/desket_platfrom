@@ -23,22 +23,17 @@ public class QueryByIdDate extends JScrollPane {
     public QueryByIdDate() {
         JTextArea jTextArea = new JTextArea(50, 20);
         //  根据学号获取数据库中个别用户信息
-//        User privateuser = new User();
-//        Integer StudentNumber = Integer.parseInt(IdText.id);
-//        privateuser.setStudentNumber(StudentNumber);
-//        List<FileUp> fileUps = FileChooser.fileController.queryFileUpByUser(privateuser);
-//        for (FileUp fileUp : fileUps) {
-//            jTextArea.setText(fileUp.getUpFilePath());
-//            jTextArea.setText(fileUp.getWeek());
-//            jTextArea.setText(fileUp.getUpIp());
-//            jTextArea.setText(String.valueOf(fileUp.getUpId()));
-//            jTextArea.setText(String.valueOf(fileUp.getUpTime()));
-//            User user = fileUp.getUser();
-//            jTextArea.setText(user.getPost());
-//            jTextArea.setText(user.getName());
-//            jTextArea.setText(String.valueOf(user.getStudentNumber()));
-//            jTextArea.setText(user.getPhone());
-//        }
+        User privateuser = new User();
+        Integer StudentNumber = Integer.parseInt(IdText.id);
+        privateuser.setStudentNumber(StudentNumber);
+        List<FileUp> fileUps = FileChooser.fileController.queryFileUpByUser(privateuser);
+        for (FileUp fileUp : fileUps) {
+            jTextArea.setText(fileUp.getUpFilePath());
+            jTextArea.setText(fileUp.getWeek());
+            jTextArea.setText(fileUp.getUpIp());
+            jTextArea.setText(String.valueOf(fileUp.getUpId()));
+            jTextArea.setText(String.valueOf(fileUp.getUpTime()));
+        }
         jTextArea.setText("Welcome");
         this.setViewportView(jTextArea);
         this.getViewport().getView().setBackground(Color.pink);
