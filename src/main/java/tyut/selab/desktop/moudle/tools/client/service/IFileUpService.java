@@ -9,7 +9,7 @@ import java.util.List;
 public interface IFileUpService {
     public int fileDown(FileUpVo fileUpVo,String localFilePath);
 
-    public int fileUpLoading(FileUp fileUp, String localFilePath);
+    public int fileUpLoading(FileUpVo fileUpVo,String localFilePath);
 
     List<FileUp> queryAllFileUpInfo();
 
