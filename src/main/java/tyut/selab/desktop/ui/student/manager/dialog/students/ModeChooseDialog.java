@@ -9,7 +9,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
@@ -19,14 +18,15 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ModeChooseDialog extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
+    Object[][] objects;
+    private boolean isRepaint=false;
 
-    public ModeChooseDialog() {
+    public ModeChooseDialog(Object[][] obj) {
         //设置边界
         setBounds(100, 100, 472, 312);
         //设置父容器不可操作
@@ -51,8 +51,8 @@ public class ModeChooseDialog extends JDialog {
         AllButton.setFont(new Font("宋体", Font.BOLD, 26));
         AllButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                AllSelect(obj);
                 dispose();
-                AllSelect();
             }
         });
 
@@ -61,8 +61,8 @@ public class ModeChooseDialog extends JDialog {
         SingleButton.setFont(new Font("宋体", Font.BOLD, 26));
         SingleButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                showSingle(obj);
                 dispose();
-                showSingle();
             }
         });
 
@@ -100,21 +100,24 @@ public class ModeChooseDialog extends JDialog {
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
         }
     }
-
-
-
     //进入单体查询页面
-    private void showSingle() {
-        JFrame SingleSelect=new SingleSelectFrame();
+    private void showSingle(Object[][] obj) {
+        SingleSelectFrame SingleSelect=new SingleSelectFrame(obj);
         SingleSelect.setVisible(true);
         SingleSelect.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        this.isRepaint=SingleSelect.isUpdate();
     }
-
     //进行全体查询
-    private void AllSelect() {
+    private void AllSelect(Object[][] obj) {
         UserController userController = new UserController();
         List<UserVo> list=userController.queryUser();
         //列表转化为二维数组
+        obj=list.stream().map(p->new Object[]{p.getStudentNumber(),p.getName(),p.getAccountNumber(),p.getGender(),p.getPhone(),p.getPost(),p.getDuty()}).toArray(Object[][]::new);
+        this.isRepaint=true;
+    }
 
+    //是否进行数据更新
+    public boolean isUpdate(){
+        return isRepaint;
     }
 }

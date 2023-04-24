@@ -6,18 +6,14 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,11 +21,13 @@ public class students extends JFrame {
 
     private JPanel contentPane;
     private JTable table;
-    DefaultTableModel content=new DefaultTableModel(	new Object[][] {
+    Object[][] obj;
+    private boolean isRepaint=false;
+    DefaultTableModel content=new DefaultTableModel(	obj
 
-    },
+    ,
             new String[] {
-                    "姓名", "ID", "性别", "年龄", "账号","邮箱", "学号"
+                    "学号", "姓名", "账户", "性别","电话","邮箱","职责"
             });
 
     public static void main(String[] args) {
@@ -102,9 +100,10 @@ public class students extends JFrame {
 
     //进入查询页面
     private void showSelect() {
-        JDialog Modechoose=new ModeChooseDialog();
+        ModeChooseDialog Modechoose=new ModeChooseDialog(obj);
         Modechoose.setVisible(true);
         Modechoose.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        this.isRepaint=Modechoose.isUpdate();
     }
 
 }

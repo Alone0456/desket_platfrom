@@ -4,9 +4,7 @@ import tyut.selab.desktop.moudle.student.domain.Role;
 import tyut.selab.desktop.moudle.student.usercontroller.impl.UserController;
 import tyut.selab.desktop.ui.student.manager.dialog.duty.deleteDutyDialog;
 import tyut.selab.desktop.ui.student.manager.dialog.duty.insertDutyDialog;
-import tyut.selab.desktop.ui.student.user.User;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -29,17 +27,22 @@ public class dutyAdmin extends JFrame {
 
     },
             new String[] {
-                    "姓名","登录时间","登录状态","职责"
+                    "职责"
             });
     private JTable table;
 
     public dutyAdmin() {
-        setTitle("\u804C\u8D23\u7BA1\u7406");
+        setTitle("职责管理");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 502, 517);
+        setBounds(100, 100, 464, 517);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
+
+        //设置表格
+        table = new JTable();
+        table.setModel(content);
+        table.getTableHeader().setReorderingAllowed(false);
 
         //设置三个按钮
         //查询按钮
@@ -47,7 +50,13 @@ public class dutyAdmin extends JFrame {
         selectButton.setFont(new Font("宋体", Font.PLAIN, 24));
         selectButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Select();
+                content=new DefaultTableModel(Select()
+                ,
+                        new String[] {
+                                "职责"
+                        });
+                //刷新表格内容
+                table.setModel(content);
             }
         });
 
@@ -75,43 +84,46 @@ public class dutyAdmin extends JFrame {
         gl_contentPane.setHorizontalGroup(
                 gl_contentPane.createParallelGroup(Alignment.LEADING)
                         .addGroup(gl_contentPane.createSequentialGroup()
-                                .addGap(25)
                                 .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
                                         .addGroup(gl_contentPane.createSequentialGroup()
-                                                .addComponent(selectButton, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(29)
-                                                .addComponent(insertButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(31)
-                                                .addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 418, GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(35, Short.MAX_VALUE))
+                                                .addGap(41)
+                                                .addComponent(selectButton, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(gl_contentPane.createSequentialGroup()
+                                                .addGap(35)
+                                                .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+                                                        .addComponent(insertButton, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE))))
+                                .addGap(60)
+                                .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+                                .addGap(86))
         );
         gl_contentPane.setVerticalGroup(
                 gl_contentPane.createParallelGroup(Alignment.LEADING)
                         .addGroup(gl_contentPane.createSequentialGroup()
-                                .addGap(18)
-                                .addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(insertButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(selectButton, GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                                        .addComponent(deleteButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(27)
-                                .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 356, GroupLayout.PREFERRED_SIZE)
-                                .addGap(32))
+                                .addGap(75)
+                                .addComponent(selectButton, GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                                .addGap(88)
+                                .addComponent(insertButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(96)
+                                .addComponent(deleteButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(100))
+                        .addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+                                .addContainerGap(36, Short.MAX_VALUE)
+                                .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE)
+                                .addGap(26))
         );
 
-        table = new JTable();
-        table.setModel(content);
-        table.getTableHeader().setReorderingAllowed(false);
+        //对表格表头的设置
         scrollPane.setViewportView(table);
         contentPane.setLayout(gl_contentPane);
     }
 
     //查询功能实现
-    private String[][] Select() {
+    private Object[][] Select() {
         UserController userController=new UserController();
         List<Role> list=userController.queryAllRole();
-        //返回一个二位数组
-        return null;
+        obj=list.stream().map(p->new Object[]{p.getDuty()}).toArray(Object[][]::new);
+        return obj;
     }
 
     //添加功能实现
@@ -127,6 +139,4 @@ public class dutyAdmin extends JFrame {
         deleteDuty.setVisible(true);
         deleteDuty.setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
-
-
 }

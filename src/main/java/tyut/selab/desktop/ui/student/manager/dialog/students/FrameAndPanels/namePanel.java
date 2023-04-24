@@ -17,7 +17,8 @@ import java.awt.event.ActionEvent;
 
 public class namePanel extends JPanel {
     private JTextField textField;
-    public namePanel() {
+    private boolean isRepaint=false;
+    public namePanel(Object[][] obj) {
         //初始化标签，文本框和按钮
         JLabel nameLabel = new JLabel("请输入姓名");
         nameLabel.setFont(new Font("宋体", Font.PLAIN, 30));
@@ -29,8 +30,9 @@ public class namePanel extends JPanel {
         JButton SureButton = new JButton("确认");
         SureButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                isNull();
-                SelectName();
+                if(isNull()) {
+                    SelectName(obj);
+                }
             }
         });
         SureButton.setFont(new Font("宋体", Font.PLAIN, 20));
@@ -66,18 +68,31 @@ public class namePanel extends JPanel {
     }
 
     //判断是否填空
-    private void isNull() {
+    private boolean isNull() {
         String content=textField.getText();
-        if("".equals(content)||"".equals(content.trim()))
+        if("".equals(content)||"".equals(content.trim())) {
             JOptionPane.showMessageDialog(null, "请输入姓名");
+            return false;
+        }else{
+            return true;
+        }
     }
 
     //进行搜索
-    private String[] SelectName() {
+    private void SelectName(Object[][] obj) {
         String name=textField.getText();
         UserController userController = new UserController();
         UserVo user=userController.queryUserByStudentName(name);
-        //返回一维数组
-        return null;
+        if(user==null){
+            JOptionPane.showMessageDialog(null,"找不到该姓名");
+        }else {
+            obj = new Object[][]{{user.getStudentNumber(), user.getName(), user.getAccountNumber(), user.getGender(), user.getPhone(), user.getPost(), user.getDuty()}};
+            this.isRepaint = true;
+        }
+    }
+
+    //设置是否更新数据
+    public boolean isUpdate(){
+       return this.isRepaint;
     }
 }

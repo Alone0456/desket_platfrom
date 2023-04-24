@@ -6,6 +6,8 @@ public class UserVo {
     private String accountNumber; //用户账户
     private int gender; //用户性别
     private String phone; //用户电话
+    private String post; //用户邮箱
+    private String duty; //用户职责
 
     public Integer getStudentNumber() {
         return studentNumber;
@@ -22,6 +24,27 @@ public class UserVo {
     public void setName(String name) {
         this.name = name;
     }
+
+    public UserVo(String name, String accountNumber, int gender, String phone, String post) {
+        this.name = name;
+        this.accountNumber = accountNumber;
+        this.gender = gender;
+        this.phone = phone;
+        this.post = post;
+    }
+
+    public UserVo(){}
+
+    public UserVo(Integer studentNumber, String name, String accountNumber, int gender, String phone, String post, String duty) {
+        this.studentNumber = studentNumber;
+        this.name = name;
+        this.accountNumber = accountNumber;
+        this.gender = gender;
+        this.phone = phone;
+        this.post = post;
+        this.duty = duty;
+    }
+
 
     public String getAccountNumber() {
         return accountNumber;
@@ -62,7 +85,4 @@ public class UserVo {
     public void setDuty(String duty) {
         this.duty = duty;
     }
-
-    private String post; //用户邮箱
-    private String duty; //用户职责
 }

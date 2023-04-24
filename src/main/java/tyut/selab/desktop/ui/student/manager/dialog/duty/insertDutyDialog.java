@@ -1,6 +1,7 @@
 package tyut.selab.desktop.ui.student.manager.dialog.duty;
 
 import tyut.selab.desktop.moudle.student.domain.Role;
+import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 import tyut.selab.desktop.moudle.student.usercontroller.impl.UserController;
 
 import java.awt.BorderLayout;
@@ -29,10 +30,10 @@ import java.awt.event.ActionEvent;
 public class insertDutyDialog extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
-    private JTextField Name;
-    private JComboBox Duty ;
+    private JTextField Duty;
 
     public insertDutyDialog() {
+        setTitle("添加职责");
         setBounds(100, 100, 450, 300);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout());
@@ -46,18 +47,12 @@ public class insertDutyDialog extends JDialog {
         setLocation(x, y);
 
         //初始化两个文本框和输入框
-        JLabel printText = new JLabel("请输入学生姓名");
+        JLabel printText = new JLabel("请输入要增添的职责名称：");
         printText.setFont(new Font("宋体", Font.PLAIN, 25));
 
-        Name = new JTextField();
-        Name.setColumns(10);
-
-        JLabel chooseText = new JLabel("选择职责");
-        chooseText.setFont(new Font("宋体", Font.PLAIN, 25));
-
-        Duty = new JComboBox();
-        Duty.setFont(new Font("宋体", Font.PLAIN, 18));
-        Duty.setModel(new DefaultComboBoxModel(new String[] {"用户", "管理员"}));
+        Duty = new JTextField();
+        Duty.setFont(new Font("宋体", Font.PLAIN, 25));
+        Duty.setColumns(10);
 
         //设置布局器
         GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
@@ -66,27 +61,18 @@ public class insertDutyDialog extends JDialog {
                         .addGroup(gl_contentPanel.createSequentialGroup()
                                 .addGap(23)
                                 .addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-                                        .addGroup(gl_contentPanel.createSequentialGroup()
-                                                .addPreferredGap(ComponentPlacement.RELATED)
-                                                .addComponent(chooseText, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                                .addComponent(Duty, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(Name, GroupLayout.PREFERRED_SIZE, 298, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(printText, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(105, Short.MAX_VALUE))
+                                        .addComponent(printText, GroupLayout.PREFERRED_SIZE, 318, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Duty, GroupLayout.PREFERRED_SIZE, 298, GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(85, Short.MAX_VALUE))
         );
         gl_contentPanel.setVerticalGroup(
                 gl_contentPanel.createParallelGroup(Alignment.LEADING)
                         .addGroup(gl_contentPanel.createSequentialGroup()
-                                .addGap(27)
+                                .addGap(51)
                                 .addComponent(printText, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(Name, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
-                                .addGap(27)
-                                .addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-                                        .addComponent(Duty)
-                                        .addComponent(chooseText, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(34, Short.MAX_VALUE))
+                                .addGap(18)
+                                .addComponent(Duty, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(64, Short.MAX_VALUE))
         );
         contentPanel.setLayout(gl_contentPanel);
 
@@ -101,8 +87,8 @@ public class insertDutyDialog extends JDialog {
                 okButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         if(judgeNull()) {
-                            insert();}
-                        dispose();
+                            insert();
+                        }
                     }
                 });
                 okButton.setActionCommand("OK");
@@ -126,15 +112,15 @@ public class insertDutyDialog extends JDialog {
     //进行添加操作
     private void insert() {
         //取出填入的信息
+        String duty=Duty.getText();
         UserController userController=new UserController();
-        Role role=new Role();
+        Role role=new Role(duty);
         isSuccess(userController.insertRole(role));
-        Object duty=Duty.getSelectedItem();
     }
 
     //判断输入是否为空
     private boolean judgeNull() {
-        if("".equals(Name.getText())||"".equals(Name.getText().trim())) {
+        if("".equals(Duty.getText())||"".equals(Duty.getText().trim())) {
             JOptionPane.showMessageDialog(null, "输入不能为空");
             return false;
         }

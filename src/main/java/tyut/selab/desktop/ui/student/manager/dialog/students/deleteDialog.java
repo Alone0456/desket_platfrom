@@ -1,11 +1,9 @@
 package tyut.selab.desktop.ui.student.manager.dialog.students;
 
-import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 import tyut.selab.desktop.moudle.student.usercontroller.impl.UserController;
 import tyut.selab.desktop.ui.student.manager.dialog.deleteSureDialog;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.*;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -16,7 +14,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
@@ -32,6 +29,12 @@ public class deleteDialog extends JDialog {
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
+
+        //设置出现在屏幕中央
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((screenSize.getWidth() - getWidth()) / 2);
+        int y = (int) ((screenSize.getHeight() - getHeight()) / 2);
+        setLocation(x, y);
 
         //设置标签和文本框
         JLabel deleteText = new JLabel("请输入要注销学生的学号");
@@ -76,6 +79,7 @@ public class deleteDialog extends JDialog {
                             if(SureDelete()) {
                                 //删除
                                 delete();
+                                dispose();
                             }
                         }
                     }
@@ -128,14 +132,13 @@ public class deleteDialog extends JDialog {
 
     //进行删除操作
     private void delete() {
-        String schoolNumber=schoolnumber.getText();
+        Integer schoolNumber= Integer.valueOf(schoolnumber.getText());
         UserController userController=new UserController();
-        isSuccess(userController.deleteUser(Integer.valueOf(schoolNumber)));
+        isSuccess(userController.deleteUser(schoolNumber));
     }
-
     //检测注销成功或者失败
-    private void isSuccess(int i) {
-        if(i==-1){
+    private void isSuccess(int number) {
+        if(number==-1){
             JOptionPane.showMessageDialog(null,"注销失败");
         }else{
             JOptionPane.showMessageDialog(null,"注销成功");

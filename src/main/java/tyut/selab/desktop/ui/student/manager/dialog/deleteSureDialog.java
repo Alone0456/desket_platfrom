@@ -22,7 +22,7 @@ public class deleteSureDialog extends JDialog {
     private boolean SureDelete;
 
     public deleteSureDialog() {
-        setBounds(100, 100, 413, 233);
+        setBounds(100, 100, 400, 220);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -34,7 +34,7 @@ public class deleteSureDialog extends JDialog {
         setLocation(x, y);
 
         //设置标签
-        JLabel isSure = new JLabel("\u786E\u5B9A\u6267\u884C\u8BE5\u64CD\u4F5C\u5417\uFF1F");
+        JLabel isSure = new JLabel("确定执行该操作吗？");
         isSure.setFont(new Font("宋体", Font.PLAIN, 30));
 
         //设置布局器
@@ -60,7 +60,7 @@ public class deleteSureDialog extends JDialog {
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
-                JButton okButton = new JButton("\u786E\u8BA4");
+                JButton okButton = new JButton("确认");
                 okButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         //确认注销
@@ -90,7 +90,6 @@ public class deleteSureDialog extends JDialog {
     public boolean getSureDelete() {
         return SureDelete;
     }
-
     public void setSureDelete(boolean sureDelete) {
         SureDelete = sureDelete;
     }

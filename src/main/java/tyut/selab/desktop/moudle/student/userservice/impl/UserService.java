@@ -9,16 +9,21 @@ import tyut.selab.desktop.moudle.student.userservice.IUserService;
 import java.util.ArrayList;
 import java.util.List;
 public class UserService implements IUserService {
-    private IUserDao userDao;
-
+    private IUserDao userDao=new UserDao();
     @Override
     public List<UserVo> queryUser() {
+
         List<UserVo> list = new ArrayList<>();
         UserVo userVo = new UserVo();
         for (User user : userDao.queryUser()) {
             list.add(User_UserVo(userVo, user));
         }
         return list;
+    }
+
+    public static void main(String[] args) {
+        UserService U= new UserService();
+        System.out.println(U.queryUser());
     }
 
     @Override
@@ -38,6 +43,7 @@ public class UserService implements IUserService {
     @Override
     public int insertUser(UserRegisterVo user) {
         User use = new User();
+        Role role = new Role(user.getDuty());
         use.setStudentNumber(user.getStudentNumber());
         use.setName(user.getName());
         use.setAccountNumber(user.getAccountNumber());
@@ -45,6 +51,7 @@ public class UserService implements IUserService {
         use.setPost(user.getPost());
         use.setPassword(String.valueOf(user.getPassword()));
         use.setPhone(user.getPhone());
+        use.setRole(role);
         return judge(userDao.insertUser(use));
     }
 

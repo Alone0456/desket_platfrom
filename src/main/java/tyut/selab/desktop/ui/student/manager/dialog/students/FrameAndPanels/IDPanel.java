@@ -18,7 +18,8 @@ import java.awt.event.ActionEvent;
 
 public class IDPanel extends JPanel {
     private JTextField textField;
-    public IDPanel() {
+    private boolean isRepaint=false;
+    public IDPanel(Object[][] obj) {
         //初始化标签，文本框和按钮
         JLabel schoolLabel = new JLabel("请输入学号");
         schoolLabel.setFont(new Font("宋体", Font.PLAIN, 30));
@@ -30,8 +31,10 @@ public class IDPanel extends JPanel {
         JButton SureButton = new JButton("确认");
         SureButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                isNull();
-                SelectSchoolnumber();
+                if(isNull()) {
+                    SelectSchoolnumber(obj);
+                }
+
             }
         });
         SureButton.setFont(new Font("宋体", Font.PLAIN, 20));
@@ -76,13 +79,20 @@ public class IDPanel extends JPanel {
         }
     }
     //进行搜索
-    private String[] SelectSchoolnumber() {
+    private void SelectSchoolnumber(Object[][] obj) {
         String content=textField.getText();
         int ID=Integer.parseInt(content);
         UserController userController = new UserController();
         UserVo user=userController.queryUserByStudentNumber(ID);
-        //返回一维数组
-        return null;
+        if(user==null){
+            JOptionPane.showMessageDialog(null,"找不到该学号");
+        }else {
+            obj = new Object[][]{{user.getStudentNumber(), user.getName(), user.getAccountNumber(), user.getGender(), user.getPhone(), user.getPost(), user.getDuty()}};
+            this.isRepaint = true;
+        }
     }
 
+    public boolean isUpdate() {
+        return this.isRepaint;
+    }
 }

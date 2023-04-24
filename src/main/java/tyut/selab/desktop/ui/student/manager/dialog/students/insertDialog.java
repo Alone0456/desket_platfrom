@@ -4,9 +4,7 @@ import tyut.selab.desktop.moudle.student.domain.vo.UserRegisterVo;
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 import tyut.selab.desktop.moudle.student.usercontroller.impl.UserController;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -30,124 +28,169 @@ public class insertDialog extends JDialog {
     private final JPanel contentPanel = new JPanel();
     private JTextField Name;
     private JTextField schoolNumber;
+    private JTextField Email;
+    private JTextField StudentNumber;
     private JTextField Phone;
-    private JTextField age;
-    private JTextField ID;
-    private JComboBox sex;
+    private JComboBox Gender;
+    private JPanel buttonPane;
+    private JTextField AccountNumber;
+    private JTextField Password;
+    private JTextField Duty;
 
     public insertDialog() {
         setTitle("添加界面");
-        setBounds(100, 100, 558, 618);
-        getContentPane().setLayout(new BorderLayout());
+        setBounds(100, 100, 558, 625);
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        getContentPane().add(contentPanel, BorderLayout.NORTH);
+        setLocation(EXIT_ON_CLOSE, ABORT);
+
+        //设置出现在屏幕中央
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((screenSize.getWidth() - getWidth()) / 2);
+        int y = (int) ((screenSize.getHeight() - getHeight()) / 2);
+        setLocation(x, y);
 
         //设置固定标签
         JLabel nameText = new JLabel("名字:");
         nameText.setFont(new Font("宋体", Font.PLAIN, 30));
 
-        JLabel IDText = new JLabel("ID:");
+        JLabel IDText = new JLabel("学号:");
         IDText.setFont(new Font("宋体", Font.PLAIN, 30));
 
         JLabel sexText = new JLabel("性别:");
         sexText.setFont(new Font("宋体", Font.PLAIN, 30));
 
-        JLabel ageText = new JLabel("年龄:");
-        ageText.setFont(new Font("宋体", Font.PLAIN, 30));
+        JLabel emailText = new JLabel("地址:");
+        emailText.setFont(new Font("宋体", Font.PLAIN, 30));
 
         JLabel PhoneText = new JLabel("手机号:");
         PhoneText.setFont(new Font("宋体", Font.PLAIN, 30));
 
-        JLabel schoolnumberText_1 = new JLabel("学号:");
-        schoolnumberText_1.setFont(new Font("宋体", Font.PLAIN, 30));
-
         //可以修改的数据
         Name = new JTextField();
+        Name.setFont(new Font("宋体", Font.PLAIN, 30));
         Name.setColumns(10);
-        schoolNumber = new JTextField();
-        schoolNumber.setColumns(10);
-        Phone = new JTextField();
-        Phone.setColumns(10);
-        age = new JTextField();
-        age.setColumns(10);
-        ID = new JTextField("");
-        ID.setFont(new Font("宋体", Font.PLAIN, 30));
+        Email = new JTextField();
+        Email.setFont(new Font("宋体", Font.PLAIN, 30));
+        Email.setColumns(10);
+        StudentNumber = new JTextField();
+        StudentNumber.setFont(new Font("宋体", Font.PLAIN, 30));
+        StudentNumber.setColumns(10);
+        Phone = new JTextField("");
+        Phone.setFont(new Font("宋体", Font.PLAIN, 30));
 
-        sex = new JComboBox();
-        sex.setFont(new Font("宋体", Font.PLAIN, 30));
-        sex.setModel(new DefaultComboBoxModel(new String[] {"\u7537", "\u5973"}));
+        Gender = new JComboBox();
+        Gender.setFont(new Font("宋体", Font.PLAIN, 30));
+        Gender.setModel(new DefaultComboBoxModel(new String[] {"女", "男"}));
+
+        JLabel accountNumberText = new JLabel("账户:");
+        accountNumberText.setFont(new Font("宋体", Font.PLAIN, 30));
+
+        AccountNumber = new JTextField();
+        AccountNumber.setFont(new Font("宋体", Font.PLAIN, 30));
+        AccountNumber.setColumns(10);
+
+        JLabel passwordText = new JLabel("密码:");
+        passwordText.setFont(new Font("宋体", Font.PLAIN, 30));
+
+        Password = new JTextField();
+        Password.setFont(new Font("宋体", Font.PLAIN, 30));
+        Password.setColumns(10);
+
+        JLabel dutyText = new JLabel("职责:");
+        dutyText.setFont(new Font("宋体", Font.PLAIN, 30));
+
+        Duty = new JTextField();
+        Duty.setFont(new Font("宋体", Font.PLAIN, 30));
+        Duty.setColumns(10);
 
         //设置布局器
         GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
         gl_contentPanel.setHorizontalGroup(
                 gl_contentPanel.createParallelGroup(Alignment.LEADING)
                         .addGroup(gl_contentPanel.createSequentialGroup()
-                                .addGap(18)
-                                .addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+                                .addGap(36)
+                                .addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
                                         .addGroup(gl_contentPanel.createSequentialGroup()
+                                                .addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+                                                        .addComponent(sexText)
+                                                        .addComponent(IDText)
+                                                        .addComponent(emailText)
+                                                        .addComponent(nameText))
+                                                .addGap(18)
                                                 .addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-                                                        .addComponent(ageText)
-                                                        .addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-                                                                .addComponent(IDText)
-                                                                .addComponent(nameText))
-                                                        .addComponent(sexText))
-                                                .addGap(22))
-                                        .addComponent(schoolnumberText_1, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(Gender, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+                                                                .addComponent(Name, GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                                                                .addComponent(Email, GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                                                                .addComponent(StudentNumber))))
                                         .addGroup(gl_contentPanel.createSequentialGroup()
-                                                .addComponent(PhoneText)
-                                                .addGap(18)))
-                                .addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-                                        .addGroup(Alignment.LEADING, gl_contentPanel.createSequentialGroup()
                                                 .addPreferredGap(ComponentPlacement.RELATED)
                                                 .addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-                                                        .addComponent(age, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(Phone, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-                                                        .addComponent(schoolNumber, GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
-                                                        .addComponent(sex, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE))
-                                                .addContainerGap())
-                                        .addGroup(Alignment.LEADING, gl_contentPanel.createSequentialGroup()
-                                                .addGap(10)
-                                                .addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-                                                        .addComponent(Name, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
-                                                        .addComponent(ID, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE))
-                                                .addContainerGap())))
+                                                        .addGroup(gl_contentPanel.createSequentialGroup()
+                                                                .addComponent(PhoneText)
+                                                                .addPreferredGap(ComponentPlacement.UNRELATED)
+                                                                .addComponent(Phone))
+                                                        .addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
+                                                                .addGroup(gl_contentPanel.createSequentialGroup()
+                                                                        .addComponent(accountNumberText, GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                                                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                                                        .addComponent(AccountNumber, GroupLayout.PREFERRED_SIZE, 329, GroupLayout.PREFERRED_SIZE))
+                                                                .addGroup(gl_contentPanel.createSequentialGroup()
+                                                                        .addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+                                                                                .addComponent(dutyText)
+                                                                                .addComponent(passwordText, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                                        .addGap(18)
+                                                                        .addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+                                                                                .addComponent(Duty, GroupLayout.PREFERRED_SIZE, 331, GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(Password, GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)))))))
+                                .addContainerGap(59, Short.MAX_VALUE))
         );
         gl_contentPanel.setVerticalGroup(
                 gl_contentPanel.createParallelGroup(Alignment.LEADING)
                         .addGroup(gl_contentPanel.createSequentialGroup()
-                                .addGap(39)
-                                .addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-                                        .addComponent(nameText, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(Name, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+                                .addGap(40)
+                                .addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(Name, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(nameText, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
                                 .addGap(13)
                                 .addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(ID, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(StudentNumber, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(IDText, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
                                 .addGap(18)
                                 .addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(sexText, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(sex, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-                                .addGap(18)
-                                .addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-                                        .addComponent(ageText, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(age, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-                                .addGap(7)
+                                        .addComponent(Gender, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(sexText, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(ComponentPlacement.UNRELATED)
+                                .addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+                                        .addGroup(gl_contentPanel.createSequentialGroup()
+                                                .addComponent(emailText, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(ComponentPlacement.UNRELATED))
+                                        .addGroup(gl_contentPanel.createSequentialGroup()
+                                                .addComponent(Email, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18)))
                                 .addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
                                         .addComponent(PhoneText, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(Phone, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(ComponentPlacement.RELATED)
+                                        .addComponent(Phone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(18)
                                 .addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(schoolnumberText_1, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(schoolNumber, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
-                                .addGap(143))
+                                        .addComponent(accountNumberText, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(AccountNumber, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(18)
+                                .addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(passwordText, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Password, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(18)
+                                .addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(Duty, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(dutyText, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap())
         );
         contentPanel.setLayout(gl_contentPanel);
 
 
         {  //设置按钮面板
-            JPanel buttonPane = new JPanel();
+            buttonPane = new JPanel();
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-            getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
                 //确认按钮
                 JButton okButton = new JButton("确认");
@@ -173,26 +216,46 @@ public class insertDialog extends JDialog {
                 buttonPane.add(cancelButton);
             }
         }
+        GroupLayout groupLayout = new GroupLayout(getContentPane());
+        groupLayout.setHorizontalGroup(
+                groupLayout.createParallelGroup(Alignment.LEADING)
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                                        .addGroup(groupLayout.createSequentialGroup()
+                                                .addGap(10)
+                                                .addComponent(contentPanel, 0, 0, Short.MAX_VALUE))
+                                        .addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, 544, GroupLayout.PREFERRED_SIZE))
+                                .addGap(0))
+        );
+        groupLayout.setVerticalGroup(
+                groupLayout.createParallelGroup(Alignment.LEADING)
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 539, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(ComponentPlacement.UNRELATED)
+                                .addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+                                .addGap(1))
+        );
+        getContentPane().setLayout(groupLayout);
     }
 
     //信息存入数据库
     private void insertData() {
-        if(judgeText(Name)||judgeText(age)||judgeText(Phone)||judgeText(schoolNumber)||judgeText(ID)) {
+        if(judgeText(Name)||judgeText(Email)||judgeText(Phone)||judgeText(StudentNumber)||judgeText(Password)||judgeText(StudentNumber)||judgeText(AccountNumber)||judgeText(Duty)) {
             //弹出信息框提示
             JOptionPane.showMessageDialog(null, "请将信息填写完整");
         }else {
             //获取填入的信息
             String name=Name.getText();
-            String ID1=ID.getText();
-            String yearold=age.getText();
-            String telephone=Phone.getText();
-            String number=schoolNumber.getText();
-            Object gender=new String();
-            gender=sex.getSelectedItem();
-
+            Integer studentNumber= Integer.valueOf(StudentNumber.getText());
+            String accountNumber=AccountNumber.getText();
+            String email=Email.getText();
+            String phone=Phone.getText();
+            String duty=Duty.getText();
+            Integer password= Integer.valueOf(Password.getText());
+            int gender=Gender.getSelectedIndex();
             //添加进入数据库
             UserController userController=new UserController();
-            UserRegisterVo newUser=new UserRegisterVo();
+            UserRegisterVo newUser=new UserRegisterVo(studentNumber,password,name,accountNumber,gender,phone,email,duty);
             isSuccess(userController.insertUser(newUser));
         }
     }
@@ -212,6 +275,4 @@ public class insertDialog extends JDialog {
             JOptionPane.showMessageDialog(null,"添加成功");
         }
     }
-
-
 }

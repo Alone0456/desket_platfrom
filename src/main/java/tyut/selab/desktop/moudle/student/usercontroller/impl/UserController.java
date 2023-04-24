@@ -11,12 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserController implements IUserController {
-    private IUserService userService;
+    private static IUserService userService=new UserService();
 
     @Override
     public List<UserVo> queryUser() {
         List<UserVo> userVos= userService.queryUser();
         return userVos;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(userService.queryUser());
     }
 
     @Override

@@ -9,6 +9,9 @@ public class UserRegisterVo {
     private String phone; //用户电话
     private String post; //用户邮箱
 
+    public UserRegisterVo() {
+    }
+
     public Integer getStudentNumber() {
         return studentNumber;
     }
@@ -74,4 +77,15 @@ public class UserRegisterVo {
     }
 
     private String duty; //用户职责
+
+    public UserRegisterVo(Integer studentNumber, Integer password, String name, String accountNumber, int gender, String phone, String post, String duty) {
+        this.studentNumber = studentNumber;
+        this.password = password;
+        this.name = name;
+        this.accountNumber = accountNumber;
+        this.gender = gender;
+        this.phone = phone;
+        this.post = post;
+        this.duty = duty;
+    }
 }

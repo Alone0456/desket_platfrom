@@ -27,7 +27,7 @@ import java.awt.event.ActionEvent;
 public class deleteDutyDialog extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
-    private JTextField Name;
+    private JTextField Duty;
 
     public deleteDutyDialog() {
         setBounds(100, 100, 450, 300);
@@ -43,11 +43,12 @@ public class deleteDutyDialog extends JDialog {
         setLocation(x, y);
 
         //设置标签与文本框
-        JLabel printText = new JLabel("请输入该学生的姓名");
+        JLabel printText = new JLabel("请输入要删除职责的名称：");
         printText.setFont(new Font("宋体", Font.PLAIN, 25));
 
-        Name = new JTextField();
-        Name.setColumns(10);
+        Duty = new JTextField();
+        Duty.setFont(new Font("宋体", Font.PLAIN, 25));
+        Duty.setColumns(10);
 
         //设置布局器
         GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
@@ -56,8 +57,8 @@ public class deleteDutyDialog extends JDialog {
                         .addGroup(gl_contentPanel.createSequentialGroup()
                                 .addGap(31)
                                 .addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-                                        .addComponent(printText, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(Name, GroupLayout.PREFERRED_SIZE, 346, GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(printText, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Duty, GroupLayout.PREFERRED_SIZE, 346, GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(49, Short.MAX_VALUE))
         );
         gl_contentPanel.setVerticalGroup(
@@ -66,7 +67,7 @@ public class deleteDutyDialog extends JDialog {
                                 .addGap(43)
                                 .addComponent(printText, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18)
-                                .addComponent(Name, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Duty, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(76, Short.MAX_VALUE))
         );
         contentPanel.setLayout(gl_contentPanel);
@@ -85,7 +86,8 @@ public class deleteDutyDialog extends JDialog {
                                 delete();
                             }
                         }
-                        dispose();
+
+
                     }
                 });
                 okButton.setActionCommand("OK");
@@ -108,7 +110,7 @@ public class deleteDutyDialog extends JDialog {
 
     //判断输入是否为空
     private boolean judgeNull() {
-        if("".equals(Name.getText())||"".equals(Name.getText().trim())) {
+        if("".equals(Duty.getText())||"".equals(Duty.getText().trim())) {
             JOptionPane.showMessageDialog(null, "输入不能为空");
             return false;
         }
@@ -124,7 +126,8 @@ public class deleteDutyDialog extends JDialog {
     //执行删除操作
     private void delete() {
         UserController userController=new UserController();
-        Role role=new Role();
+        String duty=Duty.getText();
+        Role role=new Role(duty);
         isSuccess(userController.deleteRole(role));
     }
 

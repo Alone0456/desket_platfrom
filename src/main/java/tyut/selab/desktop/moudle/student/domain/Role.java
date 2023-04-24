@@ -4,6 +4,7 @@ public class Role {
 
 
     public Role(String duty) {
+        this.duty = duty;
     }
 
     public Role() {

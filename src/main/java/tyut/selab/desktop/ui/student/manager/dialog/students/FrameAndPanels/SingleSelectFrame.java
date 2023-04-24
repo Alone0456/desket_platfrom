@@ -19,7 +19,11 @@ public class SingleSelectFrame extends JFrame {
     private JPanel contentPane;
     private CardLayout cardLayout=new CardLayout();
     JPanel TwoModePanel;
-    public SingleSelectFrame() {
+    private boolean isRepaint=false;
+    //下面是两块面板
+    private namePanel p1;
+    private IDPanel p2;
+    public SingleSelectFrame(Object[][] obj) {
         setTitle("单个查询");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 669, 645);
@@ -31,8 +35,8 @@ public class SingleSelectFrame extends JFrame {
         //设置卡片布局，准备好两个面板
         TwoModePanel = new JPanel();
         TwoModePanel.setLayout(cardLayout);
-        JPanel p1=new namePanel();
-        JPanel p2=new IDPanel();
+        JPanel p1=new namePanel(obj);
+        JPanel p2=new IDPanel(obj);
         TwoModePanel.add(p1,"p1");
         TwoModePanel.add(p2,"p2");
         cardLayout.show(TwoModePanel, "p1");
@@ -41,6 +45,7 @@ public class SingleSelectFrame extends JFrame {
         SchoolNumberButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(TwoModePanel,"p2");
+                changeP2();
             }
         });
         SchoolNumberButton.setFont(new Font("宋体", Font.PLAIN, 25));
@@ -49,6 +54,7 @@ public class SingleSelectFrame extends JFrame {
         NameButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(TwoModePanel,"p1");
+                changeP1();
             }
         });
         NameButton.setFont(new Font("宋体", Font.PLAIN, 25));
@@ -82,26 +88,30 @@ public class SingleSelectFrame extends JFrame {
         );
 
         contentPane.setLayout(gl_contentPane);
-
-
     }
-
     //初始化可切换面板
-    private void initTwoPanel() {
+    private void initTwoPanel(Object[][] obj) {
         TwoModePanel.setLayout(cardLayout);
-        JPanel p1=new namePanel();
-        JPanel p2=new IDPanel();
+        p1=new namePanel(obj);
+        p2=new IDPanel(obj);
         TwoModePanel.add(p1,"p1");
         TwoModePanel.add(p2,"p2");
         cardLayout.show(TwoModePanel, "p1");
+        //初始权限设置在名字界面
+        this.isRepaint=p1.isUpdate();
     }
 
-    @Override
-    public void dispose() {
-        super.dispose();
-        if (getParent() != null) {
-            getParent().setEnabled(true); // 启用父表格
-        }
+    //切换权限开启界面
+    private void changeP2(){
+        this.isRepaint=p2.isUpdate();
+    }
+    private void changeP1(){
+        this.isRepaint=p1.isUpdate();
+    }
+
+    //是否进行数据更新
+    public boolean isUpdate(){
+        return this.isRepaint;
     }
 }
 

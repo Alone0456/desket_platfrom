@@ -18,7 +18,6 @@ import java.util.List;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
-import org.junit.Test;
 import tyut.selab.desktop.moudle.student.domain.Role;
 import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.userdao.IUserDao;
@@ -27,30 +26,28 @@ import tyut.selab.desktop.utils.MysqlConnect;
 public class UserDao implements IUserDao {
     private QueryRunner qr = new QueryRunner();
 
-    public UserDao() {
-    }
-
     public User queryUserByAccount(String accountNumber, String password) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         String sql = "select account_number,password,name,student_number,gender,phone,post,register_time,login_status,user_role.duty from user,user_role where user.role_id = user_role.role_id and account_number = ? and password = ?";
-
-        User var7;
+        User var7 =null;
         try {
             connection = MysqlConnect.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, accountNumber);
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
-            var7 = utility(resultSet);
+            if (resultSet.next()) {
+                var7 = utility(resultSet);
+            }
+            return var7;
         } catch (SQLException var11) {
             throw new RuntimeException(var11);
         } finally {
             MysqlConnect.close(resultSet, preparedStatement, connection);
         }
 
-        return var7;
     }
 
     public List<User> queryUser() {
@@ -58,18 +55,15 @@ public class UserDao implements IUserDao {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         String sql = "select account_number,password,name,student_number,gender,phone,post,register_time,login_status,user_role.duty from user,user_role where user.role_id = user_role.role_id";
-
         try {
             connection = MysqlConnect.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
-            new User();
+           // new User();
             List<User> list = new ArrayList();
-
             while(resultSet.next()) {
                 list.add(utility(resultSet));
             }
-
             ArrayList var7 = (ArrayList) list;
             return var7;
         } catch (SQLException var11) {
@@ -84,21 +78,44 @@ public class UserDao implements IUserDao {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         String sql = "select account_number,password,name,student_number,gender,phone,post,register_time,login_status,user_role.duty from user,user_role where user.role_id = user_role.role_id and student_number = ?";
-
-        User var6;
+        User var6 = null;
         try {
             connection = MysqlConnect.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, studentNumber);
             resultSet = preparedStatement.executeQuery();
-            var6 = utility(resultSet);
+            if(resultSet.next()) {
+                var6 = utility(resultSet);
+            }
+            return var6;
         } catch (SQLException var10) {
             throw new RuntimeException(var10);
         } finally {
             MysqlConnect.close(resultSet, preparedStatement, connection);
         }
 
-        return var6;
+    }
+
+    public User queryUserByAccountNumber(String accountNumber) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String sql = "select account_number,password,name,student_number,gender,phone,post,register_time,login_status,user_role.duty from user,user_role where user.role_id = user_role.role_id and account_number = ?";
+        User var9 = null;
+        try {
+            connection = MysqlConnect.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,accountNumber );
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()) {
+                var9 = utility(resultSet);
+            }
+            return var9;
+        } catch (SQLException var10) {
+            throw new RuntimeException(var10);
+        } finally {
+            MysqlConnect.close(resultSet, preparedStatement, connection);
+        }
     }
 
     public User queryUserByStudentName(String name) {
@@ -106,38 +123,38 @@ public class UserDao implements IUserDao {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         String sql = "select account_number,password,name,student_number,gender,phone,post,register_time,login_status,user_role.duty from user,user_role where user.role_id = user_role.role_id and name = ?";
-
-        User var6;
+        User var6 = null ;
         try {
             connection = MysqlConnect.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, name);
             resultSet = preparedStatement.executeQuery();
-            var6 = utility(resultSet);
+            if(resultSet.next()) {
+                var6 = utility(resultSet);
+            }
+            return var6;
         } catch (SQLException var10) {
             throw new RuntimeException(var10);
         } finally {
             MysqlConnect.close(resultSet, preparedStatement, connection);
         }
-
-        return var6;
     }
 
     public int insertUser(User user) {
         Connection connection = null;
-
+        Role role = user.getRole();
         byte var12;
         try {
-            Date date = user.getRegisterTime();
+            Date date = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String s_time = dateFormat.format(date);
             Timestamp t_time = Timestamp.valueOf(s_time);
             connection = MysqlConnect.getConnection();
-            String sql1 = "insert into user value(null,?,?,?,?,?,?,?,?,?,null)";
+            String sql1 = "insert into user value(null,?,?,?,?,?,?,?,?,?,1)";
             int insert = this.qr.update(connection, sql1, new Object[]{user.getAccountNumber(), user.getPassword(), user.getName(), user.getStudentNumber(), user.getGender(), user.getPhone(), user.getPost(), t_time, user.getLoginStatus()});
             String sql2 = "select role_id from user_role where duty = ?";
             String sql3 = "update user set role_id = ? where student_number =?";
-            int update = this.qr.update(connection, sql3, new Object[]{this.qr.query(connection, sql2, new ScalarHandler(), new Object[]{(new Role()).getDuty()}), user.getStudentNumber()});
+            int update = this.qr.update(connection, sql3, qr.query(connection, sql2, new ScalarHandler(),role.getDuty()), user.getStudentNumber());
             if (update <= 0 || insert <= 0) {
                 byte var18 = -1;
                 return var18;
@@ -155,17 +172,16 @@ public class UserDao implements IUserDao {
 
     public int updateUser(String password, User oldUser) {
         Connection connection = null;
-
         int var6;
         try {
             connection = MysqlConnect.getConnection();
-            String sql = "update user set password =? where student_number =?";
-            int update = this.qr.update(connection, sql, new Object[]{password, oldUser.getStudentNumber()});
+            String sql = "update user set password = ? where student_number = ?";
+            int update = qr.update(connection,sql,password,oldUser.getStudentNumber());
             var6 = update > 0 ? 1 : -1;
-        } catch (SQLException var10) {
-            throw new RuntimeException(var10);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         } finally {
-            MysqlConnect.close((ResultSet)null, (Statement)null, connection);
+            MysqlConnect.close(null,null, connection);
         }
 
         return var6;
@@ -173,19 +189,14 @@ public class UserDao implements IUserDao {
 
     public int updateUser(User oldUser, User newUser) {
         Connection connection = null;
-
         byte var13;
         try {
-            Date date = newUser.getRegisterTime();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String s_time = dateFormat.format(date);
-            Timestamp t_time = Timestamp.valueOf(s_time);
             connection = MysqlConnect.getConnection();
-            String sql1 = "update user set account_number =?,password =?,`name` =?,gender =?,phone =?,post =?,register_time =?,login_status =? where student_number = ?";
-            int update1 = this.qr.update(connection, sql1, new Object[]{newUser.getAccountNumber(), newUser.getPassword(), newUser.getName(), newUser.getGender(), newUser.getPhone(), newUser.getPost(), t_time, newUser.getLoginStatus(), oldUser.getStudentNumber()});
+            String sql1 = "update user set account_number =?,password =?,`name` =?,gender =?,phone =?,post =?,login_status =? where student_number = ?";
+            int update1 = this.qr.update(connection, sql1, new Object[]{newUser.getAccountNumber(), newUser.getPassword(), newUser.getName(), newUser.getGender(), newUser.getPhone(), newUser.getPost(), newUser.getLoginStatus(), oldUser.getStudentNumber()});
             String sql2 = "select role_id from user_role where duty =?";
             String sql3 = "update user set role_id = ?,student_number =? where student_number";
-            int update2 = this.qr.update(connection, sql3, new Object[]{this.qr.query(connection, sql2, new ScalarHandler(), new Object[]{newUser.getRole().getDuty()}), newUser.getStudentNumber(), oldUser.getStudentNumber()});
+            int update2 = qr.update(connection,sql3,qr.query(connection,sql2,new ScalarHandler(),newUser.getRole().getDuty()),newUser.getStudentNumber());
             if (update1 <= 0 || update2 <= 0) {
                 byte var19 = -1;
                 return var19;
@@ -286,27 +297,5 @@ public class UserDao implements IUserDao {
         user.setLoginStatus(resultSet.getInt("login_status"));
         user.setRole(new Role(resultSet.getString("duty")));
         return user;
-    }
-
-    @Test
-    public void queryUserByAccount1() {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        String sql = "select account_number,password,name,student_number,gender,phone,post,register_time,login_status,user_role.duty from user,user_role where user.role_id = user_role.role_id and account_number = ? and password = ?";
-
-        try {
-            connection = MysqlConnect.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, "111");
-            preparedStatement.setString(2, "222");
-            resultSet = preparedStatement.executeQuery();
-            System.out.println(resultSet);
-        } catch (SQLException var9) {
-            throw new RuntimeException(var9);
-        } finally {
-            MysqlConnect.close(resultSet, preparedStatement, connection);
-        }
-
     }
 }

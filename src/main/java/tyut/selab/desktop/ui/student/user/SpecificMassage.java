@@ -1,5 +1,6 @@
 package tyut.selab.desktop.ui.student.user;
 
+import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 
 import java.awt.EventQueue;
@@ -18,7 +19,14 @@ import javax.swing.JTable;
 
 public class SpecificMassage extends JFrame {
     private JPanel contentPane;
-    public SpecificMassage() {
+    private JLabel name;
+    private JLabel studentNumber;
+    private JLabel sex;
+    private JLabel duty;
+    private JLabel telephoneNumber;
+    private JLabel email;
+    private JLabel accountnumber;
+    public SpecificMassage(User user) {
         setTitle("详细信息");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 724, 813);
@@ -82,10 +90,10 @@ public class SpecificMassage extends JFrame {
         nameText.setBounds(25, 24, 159, 49);
         NamePane.add(nameText);
 
-        JLabel IDText = new JLabel("学号：");
-        IDText.setFont(new Font("宋体", Font.PLAIN, 30));
-        IDText.setBounds(25, 23, 117, 43);
-        IDPane.add(IDText);
+        JLabel studentNumberText = new JLabel("学号：");
+        studentNumberText.setFont(new Font("宋体", Font.PLAIN, 30));
+        studentNumberText.setBounds(25, 23, 117, 43);
+        IDPane.add(studentNumberText);
 
         JLabel SexText = new JLabel("性别：");
         SexText.setFont(new Font("宋体", Font.PLAIN, 30));
@@ -97,10 +105,10 @@ public class SpecificMassage extends JFrame {
         TelephoneNumberText.setBounds(25, 22, 123, 38);
         telephoneNumberPane.add(TelephoneNumberText);
 
-        JLabel ageText = new JLabel("年龄：");
-        ageText.setFont(new Font("宋体", Font.PLAIN, 30));
-        ageText.setBounds(25, 20, 141, 53);
-        agePane.add(ageText);
+        JLabel dutyText = new JLabel("\u804C\u8D23\uFF1A");
+        dutyText.setFont(new Font("宋体", Font.PLAIN, 30));
+        dutyText.setBounds(25, 20, 90, 53);
+        agePane.add(dutyText);
 
         JLabel emailText = new JLabel("邮箱：");
         emailText.setFont(new Font("宋体", Font.PLAIN, 30));
@@ -116,41 +124,42 @@ public class SpecificMassage extends JFrame {
          * 读取到的个人信息标签
          */
         //名字
-        JLabel name = new JLabel("New label");
+        name = new JLabel("New label");
         name.setFont(new Font("宋体", Font.PLAIN, 30));
         name.setBounds(453, 24, 175, 49);
         NamePane.add(name);
-        //ID
-        JLabel ID = new JLabel("New label");
-        ID.setFont(new Font("宋体", Font.PLAIN, 30));
-        ID.setBounds(453, 24, 170, 43);
-        IDPane.add(ID);
+        //学号
+        studentNumber = new JLabel("New label");
+        studentNumber.setFont(new Font("宋体", Font.PLAIN, 30));
+        studentNumber.setBounds(453, 24, 170, 43);
+        IDPane.add(studentNumber);
         //性别
-        JLabel sex =  new JLabel("New label");
+        sex =  new JLabel("New label");
         sex.setFont(new Font("宋体", Font.PLAIN, 30));
         sex.setBounds(453, 10, 171, 56);
         sexPane.add(sex);
-        //年龄
-        JLabel age = new JLabel("New label");
-        age.setFont(new Font("宋体", Font.PLAIN, 30));
-        age.setBounds(453, 20, 197, 53);
-        agePane.add(age);
+        //职责
+        duty = new JLabel("New label");
+        duty.setFont(new Font("宋体", Font.PLAIN, 30));
+        duty.setBounds(453, 20, 197, 53);
+        agePane.add(duty);
         //手机号
-        JLabel telephoneNumber = new JLabel("New label");
+        telephoneNumber = new JLabel("New label");
         telephoneNumber.setFont(new Font("宋体", Font.PLAIN, 30));
         telephoneNumber.setBounds(453, 22, 175, 39);
         telephoneNumberPane.add(telephoneNumber);
         //邮箱
-        JLabel email = new JLabel("New label");
+        email = new JLabel("New label");
         email.setFont(new Font("宋体", Font.PLAIN, 30));
         email.setBounds(453, 19, 156, 58);
         emailPane.add(email);
         //账号
-        JLabel accountnumber = new JLabel("New label");
+        accountnumber = new JLabel("New label");
         accountnumber.setFont(new Font("宋体", Font.PLAIN, 30));
         accountnumber.setBounds(453, 23, 189, 52);
         accountnumberPane.add(accountnumber);
 
+        getMassage(user);
         //设置布局器
         GroupLayout gl_MainPane = new GroupLayout(MainPane);
         gl_MainPane.setHorizontalGroup(
@@ -187,9 +196,15 @@ public class SpecificMassage extends JFrame {
     }
 
     //获取个人信息
-    private void getMassage(){
-        UserVo userVo=new UserVo();
+    private void getMassage(User user){
         //初始化信息
+        name.setText(user.getName());
+        duty.setText(user.getRole().getDuty());
+        studentNumber.setText(String.valueOf(user.getStudentNumber()));
+        sex.setText(String.valueOf(user.getGender()));
+        telephoneNumber.setText(user.getAccountNumber());
+        email.setText(user.getPost());
+        accountnumber.setText(user.getAccountNumber());
     }
 
 }

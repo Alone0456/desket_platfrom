@@ -95,4 +95,20 @@ public class User {
     private Date registerTime; //登录时间
     private int loginStatus; //登录状态
     private Role role; //用户职责
+
+    public User() {
+    }
+
+    public User(String accountNumber, String password, String name, Integer studentNumber, int gender, String phone, String post, Date registerTime, int loginStatus, Role role) {
+        this.accountNumber = accountNumber;
+        this.password = password;
+        this.name = name;
+        this.studentNumber = studentNumber;
+        this.gender = gender;
+        this.phone = phone;
+        this.post = post;
+        this.registerTime = registerTime;
+        this.loginStatus = loginStatus;
+        this.role = role;
+    }
 }

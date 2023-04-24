@@ -4,7 +4,6 @@ import tyut.selab.desktop.ui.student.user.dialog.codeUpdateDialog;
 import tyut.selab.desktop.ui.student.user.dialog.massageUpdateDialog;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -19,9 +18,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
 public class Settings extends JFrame {
-
     private JPanel contentPane;
-
     public Settings() {
         setTitle("设置");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

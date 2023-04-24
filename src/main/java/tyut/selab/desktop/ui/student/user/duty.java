@@ -26,16 +26,21 @@ public class duty extends JFrame {
 
     },
             new String[] {
-                    "姓名","登录时间","登录状态","职责"
+                    "职责"
             });
     private JTable table;
     public duty() {
         setTitle("职责管理");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 502, 517);
+        setBounds(100, 100, 428, 517);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
+
+        //表格设置
+        table = new JTable();
+        table.setModel(content);
+        table.getTableHeader().setReorderingAllowed(false);
 
         //设置按钮
         //查询按钮
@@ -43,7 +48,13 @@ public class duty extends JFrame {
         selectButton.setFont(new Font("宋体", Font.PLAIN, 24));
         selectButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Select();
+                content=new DefaultTableModel(Select()
+                        ,
+                        new String[] {
+                                "职责"
+                        });
+                //刷新表格内容
+                table.setModel(content);
             }
         });
 
@@ -53,36 +64,36 @@ public class duty extends JFrame {
         gl_contentPane.setHorizontalGroup(
                 gl_contentPane.createParallelGroup(Alignment.LEADING)
                         .addGroup(gl_contentPane.createSequentialGroup()
-                                .addGap(25)
-                                .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-                                        .addComponent(selectButton, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 418, GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(35, Short.MAX_VALUE))
+                                .addGap(23)
+                                .addComponent(selectButton, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
+                                .addGap(49)
+                                .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(61, Short.MAX_VALUE))
         );
         gl_contentPane.setVerticalGroup(
                 gl_contentPane.createParallelGroup(Alignment.LEADING)
                         .addGroup(gl_contentPane.createSequentialGroup()
-                                .addGap(18)
-                                .addComponent(selectButton, GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                                .addGap(27)
-                                .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 356, GroupLayout.PREFERRED_SIZE)
-                                .addGap(32))
+                                .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+                                        .addGroup(gl_contentPane.createSequentialGroup()
+                                                .addGap(170)
+                                                .addComponent(selectButton, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(gl_contentPane.createSequentialGroup()
+                                                .addGap(43)
+                                                .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 381, GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(46, Short.MAX_VALUE))
         );
 
-        //表格设置
-        table = new JTable();
-        table.setModel(content);
-        table.getTableHeader().setReorderingAllowed(false);
+        //表头设置
         scrollPane.setViewportView(table);
         contentPane.setLayout(gl_contentPane);
     }
 
     //查询功能实现
-    private String[][] Select() {
+    private Object[][] Select() {
         UserController userController=new UserController();
         List<Role> list=userController.queryAllRole();
+        obj=list.stream().map(p->new Object[]{p.getDuty()}).toArray(Object[][]::new);
         //返回一个二位数组
         return null;
     }
-
 }

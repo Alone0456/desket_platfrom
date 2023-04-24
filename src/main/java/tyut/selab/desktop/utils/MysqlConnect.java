@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSourceFactory;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +22,8 @@ public class MysqlConnect{
         Properties properties = new Properties();
         try {
             //获取配置文件
-            properties.load(new FileInputStream("src\\resources\\druid.properties"));
+            InputStream resourceAsStream = MysqlConnect.class.getClassLoader().getResourceAsStream("druid.properties");
+            properties.load(resourceAsStream);
             //创建数据源
             dataSource = createDataSource(properties);
         } catch (Exception e) {

@@ -1,9 +1,6 @@
 package tyut.selab.desktop.ui.student.manager;
 
-import tyut.selab.desktop.ui.student.manager.dialog.students.ModeChooseDialog;
-import tyut.selab.desktop.ui.student.manager.dialog.students.deleteDialog;
-import tyut.selab.desktop.ui.student.manager.dialog.students.insertDialog;
-import tyut.selab.desktop.ui.student.manager.dialog.students.updateDialog;
+import tyut.selab.desktop.ui.student.manager.dialog.students.*;
 
 import java.awt.Dialog.ModalityType;
 import java.awt.EventQueue;
@@ -34,13 +31,15 @@ public class studentsAdmin extends JFrame {
 
     private JPanel contentPane;
     private JTable table;
+    Object obj[][];
     //对表头内容设置
-    DefaultTableModel content=new DefaultTableModel(	new Object[][] {
-
-    },
+    DefaultTableModel content=new DefaultTableModel(obj
+    ,
             new String[] {
-                    "姓名", "ID", "性别", "年龄", "账号","邮箱", "学号"
+                    "学号", "姓名", "账户", "性别","电话","邮箱","职责"
             });
+    //是否重置表格内容
+    private boolean isRepaint=false;
 
     public studentsAdmin() {
         setTitle("成员信息");
@@ -50,6 +49,11 @@ public class studentsAdmin extends JFrame {
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
+
+        //设置表格
+        table = new JTable();
+        table.setModel(content);
+        table.getTableHeader().setReorderingAllowed(false);
 
         //设置四个按钮
         //修改按钮
@@ -125,24 +129,29 @@ public class studentsAdmin extends JFrame {
                                 .addGap(65))
         );
 
-        //设置表格
-        table = new JTable();
-        table.setModel(content);
-        table.getTableHeader().setReorderingAllowed(false);
+        //设置表头
         scrollPane.setViewportView(table);
         contentPane.setLayout(gl_contentPane);
     }
 
     //进入查询页面
     private void showSelect() {
-        JDialog modechooseDialog=new ModeChooseDialog();
+        ModeChooseDialog modechooseDialog=new ModeChooseDialog(obj);
         modechooseDialog.setVisible(true);
         modechooseDialog.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        if(modechooseDialog.isUpdate()){
+            content=new DefaultTableModel(obj
+                    ,
+                    new String[] {
+                            "学号", "姓名", "账户", "性别","电话","邮箱","职责"
+                    });
+            table.setModel(content);
+        }
     }
 
     //进入修改页面
     private void showUpdate() {
-        updateDialog updatedialog=new updateDialog();
+        updateWhoDialog updatedialog=new updateWhoDialog();
         updatedialog.setVisible(true);
         updatedialog.setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
