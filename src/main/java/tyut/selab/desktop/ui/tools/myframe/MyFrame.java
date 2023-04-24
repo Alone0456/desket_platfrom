@@ -12,6 +12,7 @@ import java.awt.*;
  * @Create:2023/04/16 - 16:42
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class MyFrame extends JFrame {
     public MyFrame() {
 

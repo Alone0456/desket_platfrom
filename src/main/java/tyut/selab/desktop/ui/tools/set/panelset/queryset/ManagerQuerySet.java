@@ -18,6 +18,7 @@ import java.awt.*;
  * @Create:2023/04/17 - 9:28
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class ManagerQuerySet extends JPanel {
     public static JPanel p6 = new JPanel(new CardLayout()){
         private static final long serialVersionUID = -6352788025440244338L;

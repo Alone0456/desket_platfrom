@@ -12,6 +12,7 @@ import java.awt.*;
  * @Create:2023/04/16 - 17:06
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class FileName extends JDialog {
     public FileName() {
         this.setTitle("提示信息");

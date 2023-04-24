@@ -9,6 +9,7 @@ package tyut.selab.desktop.ui.tools.myexception;
  * @Create:2023/04/16 - 20:39
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class MyException extends Exception {
     public MyException(){
 

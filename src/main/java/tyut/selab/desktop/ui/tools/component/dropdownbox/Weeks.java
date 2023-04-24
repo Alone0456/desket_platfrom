@@ -18,6 +18,7 @@ import java.awt.event.MouseEvent;
  * @Create:2023/04/16 - 17:24
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class Weeks {
     public static String week;
 

@@ -1,6 +1,6 @@
 package tyut.selab.desktop.ui.tools.set.panelset.uploadset;
 
-import tyut.selab.desktop.ui.tools.set.panelset.panelutils.PanelSet;
+import tyut.selab.desktop.ui.tools.set.panelset.panelutils.UploadPanelSet;
 
 import javax.swing.*;
 
@@ -13,8 +13,9 @@ import javax.swing.*;
  * @Create:2023/04/18 - 0:59
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class UserUploadSet {
     public static JPanel setUpload(){
-        return new PanelSet("用户上传页面","请按照规定格式上传，例如，2223-XXX.zip","选择上传文件","上传周报");
+        return new UploadPanelSet("用户上传页面","请按照规定格式上传，例如，学号-姓名.zip","选择上传文件","上传周报");
     }
 }

@@ -12,6 +12,7 @@ import java.awt.*;
  * @Create:2023/04/11 - 20:39
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class PanelEast extends JPanel {
     public PanelEast(JButton button) {
         this.setLayout(new BorderLayout());

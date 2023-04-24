@@ -1,3 +1,4 @@
+
 package tyut.selab.desktop.moudle.tools.client.service.impl;
 
 import tyut.selab.desktop.moudle.student.domain.User;
@@ -15,12 +16,10 @@ import tyut.selab.desktop.ui.tools.utils.GetServerPath;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.List;
 
 public class FileService implements IFileUpService {
-    private IUserDao userDao;            //  学生类的Dao层接口
+    private IUserDao userDao;             //  学生类的Dao层接口
 
     private IUpFileDao upFileDao;         //  周报管理系统的Dao
 
@@ -28,14 +27,14 @@ public class FileService implements IFileUpService {
 
     @Override
     public int fileDown(FileUpVo fileUpVo, String localFLiePath) {
-
-        String userName;            //  2234-袁晓晶.zip  袁晓晶
+        boolean success = false;
+        String fileName;            //  袁晓晶  (或文件名(2234-袁晓晶.zip))
         String week;                //  第一周  (或次数(第一次))
         String sendMessage;
         week = GetServerPath.getWeek();          // 静态得到 周数字符串
-        userName = GetServerPath.getUserName();  // 静态得到 文件名字符串
-        sendMessage = week+"-"+userName;  //"第一周"+"-"+"袁晓晶"
-        sendMessage = "第一周"+"-"+"袁晓晶"; //测试
+        fileName = GetServerPath.getFileName();  // 静态得到 文件名字符串
+        sendMessage = week+"-"+fileName;  //"第一周"+"-"+"袁晓晶"
+        //sendMessage = "第一周"+"-"+"袁晓晶"; //测试
         //Socket连接
         Socket Socket;
         //从本地输出到Socket
@@ -65,13 +64,15 @@ public class FileService implements IFileUpService {
                 if (len == -1){
                     break;
                 }
-                System.out.println("len："+len);
+                System.out.println("len："+ len);
                 fileOutputStream.write(data,0,len);
             }
+            success = new File(localFLiePath).exists();
             fileOutputStream.close();
             dataInputStream.close();
             dataOutStream.close();
             Socket.close();
+            if (success) return 1;
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -82,7 +83,7 @@ public class FileService implements IFileUpService {
     @Override
     public int fileUpLoading(FileUpVo fileUpVo, String localFilePath) {
         int length;
-        int success;
+        int success = 0;
         //套接字
         Socket socket;
         //输出流
@@ -96,20 +97,14 @@ public class FileService implements IFileUpService {
         String upFilePath;;
         //输出流的第二部分------->文件内容
         String localPath;
-        byte[] sendBytes1;              // 文件路径
+
         byte[] sendBytes2;              // 文件本身
         byte[] upFilePathBytes;
         try {
             socket = new Socket("192.168.1.134",port);
             outputStream = socket.getOutputStream();
-
- //           sendBytes1 = new byte[80];
-
+            // 上传路径
             upFilePath = fileUpVo.getUpFilePath();
-//            // 对上传路径 ->bytes数组-> bytes数组复制到80字节的前一部分
-//            upFilePathBytes = upFilePath.getBytes(StandardCharsets.UTF_8);
-//            int lengthOfFileUpFilePath = upFilePath.getBytes().length;
-//            System.arraycopy(sendBytes1,0,upFilePathBytes,0,lengthOfFileUpFilePath);
             // 本地文件
             localPath = localFilePath;
             File file = new File(localPath);
@@ -121,15 +116,15 @@ public class FileService implements IFileUpService {
             while ((length = fileInputStream.read(sendBytes2)) > 0){
                 dataOutputStream.write(sendBytes2,0,length);
             }
-            //inputStream = socket.getInputStream();
-            //dataInputStream = new DataInputStream(inputStream);
-            //todo
             //成功判断  --服务器判断文件是否存在
-            //  success= dataInputStream.readInt();
+            inputStream = socket.getInputStream();
+            dataInputStream = new DataInputStream(inputStream);
+            success = dataInputStream.readInt();
+            return success;
         }catch (Exception e){
             e.printStackTrace();
         }
-        return 0;
+        return success;
     }
 
     @Override
@@ -147,7 +142,7 @@ public class FileService implements IFileUpService {
         upFileDao = new UpFileDao();
         return upFileDao.insertFileUp(fileUp);
     }
-    public static List<String> queryAllMangers(){
-       return GetMangerName.queryAllManger();
+    public static List<String>queryAllManger(){
+        return GetMangerName.queryAllManger();
     }
 }

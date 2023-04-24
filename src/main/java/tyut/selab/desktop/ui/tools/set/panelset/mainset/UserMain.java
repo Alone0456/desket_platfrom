@@ -16,6 +16,7 @@ import java.awt.*;
  * @Create:2023/04/18 - 0:26
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class UserMain extends JPanel {
     public static JPanel p8 = new JPanel(new CardLayout()) {
         private static final long serialVersionUID = -6352788025440244338L;

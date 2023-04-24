@@ -13,6 +13,7 @@ import javax.swing.*;
  * @Create:2023/04/16 - 16:54
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class UserUpload {
     public static JPanel getUploadPanel() {
 

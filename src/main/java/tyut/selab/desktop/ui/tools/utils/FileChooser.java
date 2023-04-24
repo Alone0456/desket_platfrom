@@ -3,6 +3,7 @@ package tyut.selab.desktop.ui.tools.utils;
 import tyut.selab.desktop.moudle.tools.client.controller.impl.FileController;
 import tyut.selab.desktop.moudle.tools.client.domain.FileUp;
 import tyut.selab.desktop.moudle.tools.client.domain.vo.FileUpVo;
+import tyut.selab.desktop.moudle.tools.client.service.impl.FileService;
 import tyut.selab.desktop.ui.tools.component.dialogs.Achieve;
 import tyut.selab.desktop.ui.tools.component.dropdownbox.Weeks;
 import tyut.selab.desktop.ui.tools.myexception.MyException;
@@ -18,6 +19,7 @@ import java.net.InetAddress;
  * Package:tools.filechooser
  * Description:
  * 文件选择器以及重要的逻辑判断
+ *
  * @Author:14亿少女的梦-苏信玮
  * @Create:2023/04/16 - 17:16
  * @Version:v1.0
@@ -29,7 +31,7 @@ public class FileChooser {
     public static String allPath;
     public static FileController fileController = new FileController();
     public static FileUpVo fileUpVo = new FileUpVo();
-    public static FileUp fileUp=new FileUp();
+    public static FileUp fileUp = new FileUp();
     public static String ip;
 
     public static void openFileChooser(String name) {
@@ -38,7 +40,7 @@ public class FileChooser {
         if (name.equals("上传周报") || name.equals("上传任务")) {
             jf.setFileSelectionMode(JFileChooser.FILES_ONLY);
             //设置默认的文件过滤选择器为压缩包
-            FileFilter filter = new FileNameExtensionFilter("压缩包(.zip .rar)", "zip", "rar");
+            FileFilter filter = new FileNameExtensionFilter("压缩包(.zip )", "zip");
             jf.setFileFilter(filter);
         }
         if (name.equals("存放周报") || name.equals("存放任务")) {
@@ -106,13 +108,13 @@ public class FileChooser {
                     //传输给数据库
                     fileUp.setUpIp(ip);
                     fileUp.setWeek(Weeks.week);
-                    fileUp.setUpTime(WeekNumber.currentTempDate);
+                    fileUp.setUpTime(WeekNumber.date);
                     fileUp.setUpFilePath(allPath);
+                    fileController.insertFileUp(fileUp);
                 }
             }
             if (name.equals("存放任务")) {
-                // 传输上传路径和本地路径给后台
-                fileUpVo.setUpFilePath(GetServerPath.getPathByManager());
+                // 传输本地路径给后台
                 int i = fileController.fileDown(fileUpVo, path);
                 //下载成功与否的提示弹窗
                 if (i > 0) {

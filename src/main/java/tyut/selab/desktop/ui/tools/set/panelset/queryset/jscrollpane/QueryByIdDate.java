@@ -6,6 +6,7 @@ import tyut.selab.desktop.ui.tools.component.jtextfield.IdText;
 import tyut.selab.desktop.ui.tools.utils.FileChooser;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
@@ -19,23 +20,27 @@ import java.util.List;
  * @Create:2023/04/20 - 10:59
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class QueryByIdDate extends JScrollPane {
     public QueryByIdDate() {
-        JTextArea jTextArea = new JTextArea(50, 20);
         //  根据学号获取数据库中个别用户信息
+        JTextArea jTextArea = new JTextArea(50, 20);
+
         User privateuser = new User();
         Integer StudentNumber = Integer.parseInt(IdText.id);
         privateuser.setStudentNumber(StudentNumber);
-        List<FileUp> fileUps = FileChooser.fileController.queryFileUpByUser(privateuser);
-        for (FileUp fileUp : fileUps) {
-            jTextArea.setText(fileUp.getUpFilePath());
-            jTextArea.setText(fileUp.getWeek());
-            jTextArea.setText(fileUp.getUpIp());
-            jTextArea.setText(String.valueOf(fileUp.getUpId()));
-            jTextArea.setText(String.valueOf(fileUp.getUpTime()));
+
+        DefaultTableModel model = new DefaultTableModel();
+        //创建表头
+        model.setColumnIdentifiers(new Object[]{"上传id", "周数", "上传时间", "上传ip","上传路径"});
+        //JTable是将数据以表格的形式显示给用户看的一种组件，它包括行和列，其中每列代表一种属性
+        List<FileUp> fileUps = FileChooser.fileController.queryFileUpByUser(privateuser);        for (FileUp fileUp : fileUps) {
+            //添加数据
+            model.addRow(new Object[]{String.valueOf(fileUp.getUpId()), fileUp.getWeek(),
+                    String.valueOf(fileUp.getUpTime()), fileUp.getUpIp(),fileUp.getUpFilePath()});
         }
-        jTextArea.setText("Welcome");
-        this.setViewportView(jTextArea);
+        JTable fk = new JTable(model);
+        this.setViewportView(fk);
         this.getViewport().getView().setBackground(Color.pink);
     }
 }

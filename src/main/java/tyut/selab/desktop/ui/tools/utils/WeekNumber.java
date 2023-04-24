@@ -10,17 +10,19 @@ import java.util.Date;
  * Package:tools.utils
  * Description:
  * 计算当前日期为开学后第几周
+ *
  * @Author:14亿少女的梦-苏信玮
  * @Create:2023/04/19 - 16:16
  * @Version:v1.0
  */
-public class WeekNumber {
-    public static Date currentTempDate = new Date();
+@SuppressWarnings("all")
+public class WeekNumber extends Date {
+    public static Date date=new WeekNumber();
     public static int getWeek() {
         //开始日期
         String startDate = "2023-02-13";
         //当前日期
-
+        Date currentTempDate = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String currentDate = sdf.format(currentTempDate);
         //设置星期的第一天为周一
@@ -87,5 +89,11 @@ public class WeekNumber {
         }
 
         return dayOfWeek;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(this);
     }
 }

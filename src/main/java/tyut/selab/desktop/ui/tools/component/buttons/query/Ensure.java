@@ -20,6 +20,7 @@ import java.awt.event.MouseEvent;
  * @Create:2023/04/18 - 16:31
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class Ensure extends JButton {
     public Ensure(){
         this.setText("确定");

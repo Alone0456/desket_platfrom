@@ -11,6 +11,7 @@ import javax.swing.*;
  * @Create:2023/04/16 - 18:28
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class SwitchPanel {
     /**
      * 切换面板中的内容

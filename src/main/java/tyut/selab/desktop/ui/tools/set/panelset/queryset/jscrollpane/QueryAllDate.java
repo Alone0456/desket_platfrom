@@ -5,6 +5,7 @@ import tyut.selab.desktop.moudle.tools.client.domain.FileUp;
 import tyut.selab.desktop.ui.tools.utils.FileChooser;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
@@ -17,19 +18,24 @@ import java.util.List;
  * @Create:2023/04/18 - 12:33
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class QueryAllDate extends JScrollPane {
     public QueryAllDate(){
-        JTextArea jTextArea = new JTextArea(50, 20);
-         // 获取数据库中所有用户信息
+        // 获取数据库中所有用户信息
+        DefaultTableModel model = new DefaultTableModel();
+        //创建表头
+        model.setColumnIdentifiers(new Object[]{"上传id", "周数", "上传时间", "上传ip","上传路径","学号"});
+
+        //JTable是将数据以表格的形式显示给用户看的一种组件，它包括行和列，其中每列代表一种属性
         List<FileUp> fileUps = FileChooser.fileController.queryAllFileUpInfo();
         for (FileUp fileUp : fileUps) {
-            jTextArea.setText(fileUp.getUpFilePath());
-            jTextArea.setText(fileUp.getWeek());
-            jTextArea.setText(fileUp.getUpIp());
-            jTextArea.setText(String.valueOf(fileUp.getUpId()));
-            jTextArea.setText(String.valueOf(fileUp.getUpTime()));
+            //添加数据
+            model.addRow(new Object[]{String.valueOf(fileUp.getUpId()), fileUp.getWeek(),
+                    String.valueOf(fileUp.getUpTime()), fileUp.getUpIp(),fileUp.getUpFilePath(),
+            fileUp.getUser().getStudentNumber()});
         }
-        this.setViewportView(jTextArea);
+        JTable fk = new JTable(model);
+        this.setViewportView(fk);
         this.getViewport().getView().setBackground(Color.pink);
     }
 }

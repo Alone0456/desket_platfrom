@@ -19,16 +19,17 @@ import java.util.List;
  * @Create:2023/04/16 - 17:24
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class Managers {
     public static String managerName;
 
     public static JComboBox getManagers() {
         JComboBox<String> jComboBox = new JComboBox<>();
-        jComboBox.setFont(new Font("华文行楷",Font.PLAIN,18));
+        jComboBox.setFont(new Font("华文行楷", Font.PLAIN, 18));
         jComboBox.setBorder(BorderFactory.createLineBorder(Color.blue));
         jComboBox.setForeground(Color.gray);
         //从数据库中提取管理员数据
-        List<String> names = FileService.queryAllMangers();
+        List<String> names = FileService.queryAllManger();
         for (String name : names) {
             jComboBox.addItem(name);
         }

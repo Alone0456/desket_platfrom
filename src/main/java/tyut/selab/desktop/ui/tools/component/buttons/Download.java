@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
  * @Create:2023/04/16 - 16:50
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class Download extends JButton {
     public Download(JPanel panel, JPanel switchPanel) {
         ButtonSet.setButton(getClass().getResource("/tyut/selab/desktop/ui/tools/imgs/download.png"), new Color(255, 160, 122), this);

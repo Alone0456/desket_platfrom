@@ -13,6 +13,7 @@ import javax.swing.*;
  * @Create:2023/04/16 - 16:55
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class UserDownload {
     public static JPanel getDownloadPanel() {
         return User.setDown();

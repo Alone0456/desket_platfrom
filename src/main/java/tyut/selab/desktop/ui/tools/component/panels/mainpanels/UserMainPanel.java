@@ -20,6 +20,7 @@ import javax.swing.*;
  * @Create:2023/04/16 - 16:52
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class UserMainPanel {
     public static JPanel getUserPanel() {
         try {

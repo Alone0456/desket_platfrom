@@ -1,22 +1,23 @@
-package tyut.selab.desktop.ui.tools.set.panelset.queryset;
+package tyut.selab.desktop.ui.tools.set.panelset.panelutils;
 
-import tyut.selab.desktop.ui.tools.component.buttons.query.Ensure;
-import tyut.selab.desktop.ui.tools.component.jtextfield.IdText;
+import tyut.selab.desktop.ui.tools.component.buttons.ChooseFile;
+import tyut.selab.desktop.ui.tools.component.dropdownbox.Weeks;
+import tyut.selab.desktop.ui.tools.component.jtextfield.FileNameText;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * ClassName:QueryByIdSet
- * Package:tools.set.panelset.queryset
+ * ClassName:DownPanelSet
+ * Package:tyut.selab.desktop.ui.tools.set.panelset.panelutils
  * Description:
- * 查询个人界面设置
+ *
  * @Author:14亿少女的梦-苏信玮
- * @Create:2023/04/18 - 12:34
+ * @Create:2023/04/24 - 12:59
  * @Version:v1.0
  */
 @SuppressWarnings("all")
-public class QueryByIdSet extends JPanel {
+public class DownPanelSet extends JPanel {
     private static final long serialVersionUID = -6352788025440244338L;
     // 固定背景图片，允许这个JPanel可以在图片上添加其他组件
     private Image backgroundImage = (Image) new ImageIcon(getClass().getResource("/tyut/selab/desktop/ui/tools/imgs/background.jpg")).getImage();
@@ -25,19 +26,28 @@ public class QueryByIdSet extends JPanel {
     protected void paintComponent(Graphics g) {
         g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
     }
-    public QueryByIdSet() {
-        this.setBackground(Color.pink);
+
+    public DownPanelSet(String name1, String name2) {
+        JLabel label1 = new JLabel(name1);
+        label1.setForeground(Color.yellow);
+        label1.setFont(new Font("微软黑体", Font.ITALIC, 30));
+
+        label1.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JComboBox weeks = Weeks.getWeek();
+
+        JTextField jTextField = FileNameText.getFileNameText();
+
+
+        JButton chooseFile = new ChooseFile("选择存放位置", name2);
+
         this.setLayout(new BorderLayout());
-
-        JTextField jTextField =IdText.getIdText();
-
-        JButton ensure = new Ensure();
-
-        this.setLayout(new BorderLayout());
-        JPanel p1 = new JPanel();
+        JPanel p1 = new JPanel(new GridLayout(1, 3));
         JPanel p2 = new JPanel(new GridLayout(3, 1));
         JPanel p3 = new JPanel(new GridLayout(1, 2));
-
+        JPanel p4 = new JPanel(new BorderLayout());
+        JPanel p5 = new JPanel();
+        JPanel p6 = new JPanel(new BorderLayout());
         JPanel p7 = new JPanel();
         JPanel p8 = new JPanel(new BorderLayout());
         JPanel p9 = new JPanel();
@@ -51,7 +61,9 @@ public class QueryByIdSet extends JPanel {
         JPanel p17 = new JPanel();
         JPanel p18 = new JPanel(new BorderLayout());
         JPanel p19 = new JPanel();
-
+        JPanel p20 = new JPanel();
+        JPanel p21 = new JPanel(new BorderLayout());
+        JPanel p22 = new JPanel();
 
         p1.setPreferredSize(new Dimension(500, 70));
         p3.setPreferredSize(new Dimension(500, 110));
@@ -59,6 +71,9 @@ public class QueryByIdSet extends JPanel {
         p1.setOpaque(false);
         p2.setOpaque(false);
         p3.setOpaque(false);
+        p4.setOpaque(false);
+        p5.setOpaque(false);
+        p6.setOpaque(false);
         p7.setOpaque(false);
         p8.setOpaque(false);
         p9.setOpaque(false);
@@ -72,18 +87,24 @@ public class QueryByIdSet extends JPanel {
         p17.setOpaque(false);
         p18.setOpaque(false);
         p19.setOpaque(false);
-
+        p20.setOpaque(false);
+        p21.setOpaque(false);
+        p22.setOpaque(false);
 
         this.add(p1, BorderLayout.NORTH);
         this.add(p2, BorderLayout.CENTER);
         this.add(p3, BorderLayout.SOUTH);
+        p1.add(p4);
+        p1.add(p5);
+        p1.add(p6);
         p2.add(p10);
         p2.add(p11);
         p2.add(p12);
         p3.add(p7);
         p3.add(p8);
+        p4.add(label1);
         p8.add(p9, BorderLayout.NORTH);
-        p9.add(ensure);
+        p9.add(chooseFile);
         p11.add(p13);
         p11.add(p14);
         p12.add(p15);
@@ -91,9 +112,11 @@ public class QueryByIdSet extends JPanel {
         p13.add(p17);
         p13.add(p18);
         p13.add(p19);
-
-        p18.add(jTextField);
-
-
+        p15.add(p20);
+        p15.add(p21);
+        p15.add(p22);
+        p18.add(weeks);
+        p21.add(jTextField);
     }
 }
+

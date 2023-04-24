@@ -4,8 +4,6 @@ import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.tools.client.dao.IUpFileDao;
 import tyut.selab.desktop.moudle.tools.client.domain.FileUp;
 import tyut.selab.desktop.utils.MysqlConnect;
-
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,10 +22,7 @@ public class UpFileDao implements IUpFileDao {
         }
 
         // 定义sql
-        String sql = "select * " +
-                "from user_file_up a,user b,user_role c " +
-                "where b.student_number = a.user_student_number and c.role_id=b.role_id";
-
+        String sql = "select * from user_file_up";
         //获取执行对象
         PreparedStatement psmt = null;
         try {
@@ -46,6 +41,7 @@ public class UpFileDao implements IUpFileDao {
 
         //得到数据
         FileUp uf =null;
+        User temp = new User();
         List<FileUp> list = new ArrayList<>();
         while(true){
             try {
@@ -54,7 +50,8 @@ public class UpFileDao implements IUpFileDao {
                 throw new RuntimeException(e);
             }  // 数据类型与什么对应呢
 
-            long userStudentNumber = 0;//不用展示
+//            int userStudentNumber = 0;//不用展示
+            int studentNumber = 0;
             String upFilePath = null;
             Timestamp upTime = null; // 数据类型可能不匹配
             String upIp = null;
@@ -71,7 +68,7 @@ public class UpFileDao implements IUpFileDao {
 //            String duty = null;
             try {
                 long upId = rs.getLong("up_id");
-                userStudentNumber = rs.getLong("user_student_number");
+                studentNumber = rs.getInt("user_student_number");
                 upFilePath = rs.getString("up_file_path");
                 upTime = rs.getTimestamp("up_time");
                 upIp = rs.getString("up_ip");
@@ -92,12 +89,12 @@ public class UpFileDao implements IUpFileDao {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-
-
             //封装成对象
             uf = new FileUp();
             //uf.setUpId(Integer.valueOf((int) upId));  // 主键不用设置
-            uf.getUser().setStudentNumber(Integer.valueOf((int) userStudentNumber));
+//            uf.getUser().setStudentNumber(Integer.valueOf((int) userStudentNumber));
+            temp.setStudentNumber(studentNumber);
+            uf.setUser(temp);
             uf.setUpFilePath(upFilePath);
             uf.setUpTime(upTime);
             uf.setUpIp(upIp);
@@ -140,17 +137,17 @@ public class UpFileDao implements IUpFileDao {
         ResultSet rs = null;
         try {
             con = MysqlConnect.getConnection();
-            String sql = "select *from user_file_up a,user b,user_role c" +
-                    " where b.student_number = a.user_student_number " +
-                    "and c.role_id=b.role_id ";
+            String sql = "select * from user_file_up";
             psmt = con.prepareStatement(sql);
             rs = psmt.executeQuery(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        int useStudentNumber = user.getStudentNumber().intValue();  // 与原参相比少了一个 r
+        //int useStudentNumber = user.getStudentNumber().intValue();  // 与原参相比少了一个 r
+        int useStudentNumber = 1;
         FileUp uf =null;
+        User temp = new User();
         List<FileUp> list = new ArrayList<>();
 
         while(true){
@@ -161,9 +158,9 @@ public class UpFileDao implements IUpFileDao {
                 throw new RuntimeException(e);
             }
 
-            long userStudentNumber = 0; // 判断语句
+            int userStudentNumber = 0; // 判断语句
             try {
-                userStudentNumber = rs.getLong("user_student_number");  //是用户类型的User
+                userStudentNumber = rs.getInt("user_student_number");  //是用户类型的User
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -186,9 +183,9 @@ public class UpFileDao implements IUpFileDao {
                     upFilePath = rs.getString("up_file_path");
                     upTime = rs.getTimestamp("up_time");
                     upIp = rs.getString("up_ip");
-                    week = rs.getString("week");
+                    week = rs.getString("up_week");
 
-                    int userId = rs.getInt("user_id");
+                   // int userId = rs.getInt("user_id");
 //                    accountNumber = rs.getString("account_number");
 //                    password = rs.getString("password");
 //                    name = rs.getString("name");
@@ -209,7 +206,8 @@ public class UpFileDao implements IUpFileDao {
                 //封装成对象
                 uf = new FileUp();
                 //uf.setUpId(Integer.valueOf((int) upId));  // 主键不用设置
-                uf.getUser().setStudentNumber(Integer.valueOf((int) userStudentNumber));
+        //        uf.getUser().setStudentNumber(Integer.valueOf((int) userStudentNumber));
+                temp.setStudentNumber(useStudentNumber);
                 uf.setUpFilePath(upFilePath);
                 uf.setUpTime(upTime);
                 uf.setUpIp(upIp);

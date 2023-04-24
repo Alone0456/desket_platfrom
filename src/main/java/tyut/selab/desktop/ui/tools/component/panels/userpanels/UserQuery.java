@@ -13,6 +13,7 @@ import javax.swing.*;
  * @Create:2023/04/16 - 17:00
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class UserQuery {
     public static JScrollPane getQueryPanel() {
         return new UserQueryDate();

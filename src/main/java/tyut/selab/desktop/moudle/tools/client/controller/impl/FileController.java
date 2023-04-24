@@ -31,4 +31,10 @@ public class FileController implements IFileController {
     public List<FileUp> queryFileUpByUser(User user) {
         return iFileUpService.queryFileUpByUser(user);
     }
+
+    @Override
+    public int insertFileUp(FileUp fileUp) {
+        //返回结果大于0为true
+        return iFileUpService.insertFileUp(fileUp);
+    }
 }

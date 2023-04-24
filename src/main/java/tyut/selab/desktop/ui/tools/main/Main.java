@@ -15,6 +15,7 @@ import javax.swing.*;
  * @Create:2023/04/16 - 15:24
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class Main {
     public static void main(String[] args) {
         JPanel userPanel = UserMainPanel.getUserPanel();

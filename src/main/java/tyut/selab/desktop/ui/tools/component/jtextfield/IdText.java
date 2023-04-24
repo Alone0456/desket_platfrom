@@ -11,11 +11,12 @@ import java.awt.event.MouseEvent;
  * ClassName:IdText
  * Package:tools.jtextfield
  * Description:
- *
+ * 管理员查询组员信息时输入学号
  * @Author:14亿少女的梦-苏信玮
  * @Create:2023/04/18 - 16:42
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class IdText {
     public static String id;
 

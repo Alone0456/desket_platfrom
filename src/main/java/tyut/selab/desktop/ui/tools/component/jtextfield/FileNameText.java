@@ -8,26 +8,28 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * ClassName:NameText
+ * ClassName:FileNameText
  * Package:tools.jtextfield
  * Description:
- *
+ * 下载界面获取学号
  * @Author:14亿少女的梦-苏信玮
  * @Create:2023/04/18 - 16:42
  * @Version:v1.0
  */
-public class NameText {
-    public static String name;
+@SuppressWarnings("all")
+public class FileNameText {
+    public static String FileName;
 
-    public static JTextField getNameText() {
-        JTextField jTextField = new MyTextField("请输入用户姓名");
+    public static JTextField getFileNameText() {
+        JTextField jTextField = new MyTextField("请输入文件名");
         jTextField.setFont(new Font("华文行楷",Font.PLAIN,18));
         jTextField.setBorder(BorderFactory.createLineBorder(Color.blue));
         jTextField.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent e) {
-                name = jTextField.getText();
+                FileName = jTextField.getText();
             }
+
         });
         return jTextField;
     }

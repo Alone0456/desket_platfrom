@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * ClassName:PanelSet
+ * ClassName:UploadPanelSet
  * Package:tools.set.panelset.panelutils
  * Description:
  * 主面板设置
@@ -16,7 +16,8 @@ import java.awt.*;
  * @Create:2023/04/17 - 17:32
  * @Version:v1.0
  */
-public class PanelSet extends JPanel {
+@SuppressWarnings("all")
+public class UploadPanelSet extends JPanel {
     private static final long serialVersionUID = -6352788025440244338L;
     // 固定背景图片，允许这个JPanel可以在图片上添加其他组件
     private Image backgroundImage = (Image) new ImageIcon(getClass().getResource("/tyut/selab/desktop/ui/tools/imgs/background.jpg")).getImage();
@@ -26,7 +27,7 @@ public class PanelSet extends JPanel {
         g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
     }
 
-    public PanelSet(String name, String name2, String name3, String name4) {
+    public UploadPanelSet(String name, String name2, String name3, String name4) {
         JLabel label1 = new JLabel(name);
         label1.setForeground(Color.yellow);
         label1.setFont(new Font("微软黑体", Font.ITALIC, 30));

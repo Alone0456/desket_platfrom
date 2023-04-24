@@ -8,6 +8,7 @@ import java.awt.event.FocusListener;
 /**
  * 输入框美化设置
  */
+@SuppressWarnings("all")
 public class MyTextField extends JTextField implements FocusListener {
     private String defaultText;
 

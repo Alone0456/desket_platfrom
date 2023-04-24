@@ -12,6 +12,7 @@ import java.awt.*;
  * @Create:2023/04/16 - 17:05
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class Achieve extends JDialog {
     public Achieve(String isAchieve) {
         this.setTitle("提示信息");

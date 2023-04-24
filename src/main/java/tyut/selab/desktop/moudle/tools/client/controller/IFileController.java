@@ -13,5 +13,7 @@ public interface IFileController {
 
     List<FileUp> queryAllFileUpInfo();
 
-    List<FileUp> queryFileUpByUser(User user) ;
+    List<FileUp> queryFileUpByUser(User user);
+
+    int insertFileUp(FileUp fileUp);
 }

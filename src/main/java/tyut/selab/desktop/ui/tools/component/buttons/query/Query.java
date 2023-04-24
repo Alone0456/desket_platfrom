@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
  * @Create:2023/04/16 - 16:49
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class Query extends JButton {
 
     public Query(JPanel panel, JScrollPane switchPanel) {

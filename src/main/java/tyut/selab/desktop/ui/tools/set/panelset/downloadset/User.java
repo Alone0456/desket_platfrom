@@ -1,6 +1,7 @@
 package tyut.selab.desktop.ui.tools.set.panelset.downloadset;
 
-import tyut.selab.desktop.ui.tools.set.panelset.panelutils.PanelSet;
+import tyut.selab.desktop.ui.tools.set.panelset.panelutils.DownPanelSet;
+import tyut.selab.desktop.ui.tools.set.panelset.panelutils.UploadPanelSet;
 
 import javax.swing.*;
 
@@ -13,8 +14,9 @@ import javax.swing.*;
  * @Create:2023/04/16 - 17:12
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class User {
     public static JPanel setDown(){
-        return new PanelSet("用户下载页面","","选择存放位置","存放任务");
+        return new DownPanelSet("用户下载页面","存放任务");
     }
 }

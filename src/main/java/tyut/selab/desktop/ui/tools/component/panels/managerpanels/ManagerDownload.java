@@ -14,8 +14,9 @@ import javax.swing.*;
  * @Create:2023/04/16 - 16:56
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class ManagerDownload {
     public static JPanel getDownloadPanel() {
-        return new Manager();
+        return Manager.setDown();
     }
 }

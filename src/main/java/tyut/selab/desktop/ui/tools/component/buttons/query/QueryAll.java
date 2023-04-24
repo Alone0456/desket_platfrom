@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
  * @Create:2023/04/18 - 12:20
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class QueryAll extends JButton {
     public QueryAll(JPanel panel, JScrollPane switchPanel){
         ButtonSet.setButton(getClass().getResource("/tyut/selab/desktop/ui/tools/imgs/queryAll.png"),new Color(0,206,209),this);

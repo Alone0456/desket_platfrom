@@ -15,6 +15,7 @@ import java.net.URL;
  * @Create:2023/04/21 - 21:49
  * @Version:v1.0
  */
+@SuppressWarnings("all")
 public class ButtonSet {
     public static void setButton(URL fileName, Color color, JButton button){
         // 添加背景图片
