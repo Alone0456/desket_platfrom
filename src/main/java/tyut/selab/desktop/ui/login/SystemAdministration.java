@@ -19,7 +19,5 @@ public class SystemAdministration extends JPanel {
         accountLabel.setBounds(100, 100,600,300);
         add(accountLabel);
 
-
-
     }
 }

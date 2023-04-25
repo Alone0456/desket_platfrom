@@ -93,4 +93,36 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public User() {
+    }
+
+    public User(String accountNumber, String password, String name, Integer studentNumber, int gender, String phone, String post, Date registerTime, int loginStatus, Role role) {
+        this.accountNumber = accountNumber;
+        this.password = password;
+        this.name = name;
+        this.studentNumber = studentNumber;
+        this.gender = gender;
+        this.phone = phone;
+        this.post = post;
+        this.registerTime = registerTime;
+        this.loginStatus = loginStatus;
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "accountNumber='" + accountNumber + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", studentNumber=" + studentNumber +
+                ", gender=" + gender +
+                ", phone='" + phone + '\'' +
+                ", post='" + post + '\'' +
+                ", registerTime=" + registerTime +
+                ", loginStatus=" + loginStatus +
+                ", role=" + role+
+                '}';
+    }
 }

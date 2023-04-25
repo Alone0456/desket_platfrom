@@ -1,18 +1,21 @@
 package tyut.selab.desktop.ui.login;
 import tyut.selab.desktop.moudle.login.controller.impl.LoginController;
+import tyut.selab.desktop.moudle.login.service.impl.LoginService;
+
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicPanelUI;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.*;
+import java.util.Scanner;
 
 public class LoginDemo extends JFrame {
     LoginController loginController = new LoginController();
 
     public LoginDemo() throws Exception {
         super("登录界面");
-        loginController.autoLogin();
+//        loginController.autoLogin();
         //      获取显示屏的大小
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int sw = screenSize.width;
@@ -21,8 +24,8 @@ public class LoginDemo extends JFrame {
         int width = 500;
         int height = 340;
         this.setBounds((sw - width) / 2, (sh - height) / 2, width, height);
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\logo.jpg"));// 图标
-        ImageIcon background = new ImageIcon("src\\back.jpg"); // 背景图片
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\img\\logo.png" ));// 图标
+        ImageIcon background = new ImageIcon("src\\img\\back.jpg"); // 背景图片
         JLabel label = new JLabel(background); // 把背景图片显示在一个标签里面
         label.setBounds(0, 0, this.getWidth(), this.getHeight()); // 把标签的大小位置设置为图片刚好填充整个面板
         JPanel imagePanel = (JPanel) this.getContentPane(); // 把内容窗格转化为JPanel，否则不能用方法setOpaque()来使内容窗格透明
@@ -94,12 +97,21 @@ public class LoginDemo extends JFrame {
                 uField.setText(temp[3]);
             }
             if(b>4&&RememberNumber.isSelected()){
-                pFd.setText(temp[4]);// 串
+
+
+
+
+                byte[] bt =temp[4] .getBytes();
+                for (int i = 0; i < bt.length; i++) {
+                        bt[i] = (byte) (bt[i] ^ (i * 18));
+                    }
+                String newPassword = new String(bt, 0, bt.length);
+                pFd.setText(newPassword );// 串
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        init(uField, pFd);
+//        init(uField, pFd);
         JButton button1 = new JButton("登录");    //登录按钮
         button1.setToolTipText("登录");// 悬停显示
         JButton button2 = new JButton("注册账号");    //重置按钮
@@ -158,10 +170,12 @@ public class LoginDemo extends JFrame {
             try {
                 String str = init(uField, pFd);
                 if(str.equals("登录成功")){
+                    Thread.sleep(0);
                     save(AutomaticLogin.isSelected() ,RememberNumber.isSelected(),uField, pFd);
                     this.dispose();
-                    Thread.sleep(0);
-                    new MainInterface();
+                    str = uField.getText();
+                    new MainInterface(str);
+
                 } else {
                     pFd.setText("");
                     save(Boolean.parseBoolean("float"),Boolean.parseBoolean("float"),uField, pFd);
@@ -191,9 +205,11 @@ public class LoginDemo extends JFrame {
             try {
                 String str = init(uField, pFd);
                 if(str.equals("登录成功")){
-                    this.dispose();
                     Thread.sleep(0);
-                    new MainInterface();
+                    save(AutomaticLogin.isSelected() ,RememberNumber.isSelected(),uField, pFd);
+                    str =  uField.getText();
+                    this.dispose();
+                    new MainInterface(str);
                 } else JOptionPane.showMessageDialog(null, str, "警告", JOptionPane.WARNING_MESSAGE);
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, "异常", "警告", JOptionPane.WARNING_MESSAGE);
@@ -216,7 +232,13 @@ public class LoginDemo extends JFrame {
         f.createNewFile();
         FileWriter fw = null;
         fw = new FileWriter("src\\main\\java\\tyut\\selab\\desktop\\ui\\login\\Staff.manifest");
-        fw.write(automaticLogin+"\r\n"+rememberNumber+"\r\n"+uField.getText()+"\r\n"+new String(p1));
+        byte[] bytes = new String(p1).getBytes();
+        for (int i = 0; i < bytes.length; i++) {
+            bytes[i] = (byte) (bytes[i] ^ (i * 18));
+        }
+        String newPassword = new String(bytes, 0, bytes.length);
+
+        fw.write(automaticLogin+"\r\n"+rememberNumber+"\r\n"+uField.getText()+"\r\n"+newPassword);
         fw.close();
     }
     public static String read() throws IOException {

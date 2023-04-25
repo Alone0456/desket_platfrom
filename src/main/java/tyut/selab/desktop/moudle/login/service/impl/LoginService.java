@@ -7,6 +7,7 @@ import tyut.selab.desktop.moudle.login.service.ILoginService;
 import tyut.selab.desktop.moudle.student.domain.Role;
 import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.domain.vo.UserRegisterVo;
+import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 import tyut.selab.desktop.moudle.student.userdao.IUserDao;
 import tyut.selab.desktop.moudle.student.userdao.impl.UserDao;
 
@@ -27,6 +28,7 @@ import java.util.regex.Pattern;
 import javax.xml.crypto.dsig.Transform;
 
 import static java.lang.System.currentTimeMillis;
+import static java.lang.System.setOut;
 
 public class LoginService implements ILoginService {
 
@@ -34,7 +36,7 @@ public class LoginService implements ILoginService {
 
     private IUserDao userDao = new UserDao();
 
-    private User user = null;
+    private static User user = null;
 
 
     @Override
@@ -47,7 +49,8 @@ public class LoginService implements ILoginService {
         String encryptPassword = loginService.getEncryptPassword(password);
         user = userDao.queryUserByAccount(accountNumber, encryptPassword);
 
-        if (user == null) {
+
+        if (user==null||user.getStudentNumber() == null) {
             return "账号或密码错误";
         } else {
             LoginLog loginLog = new LoginLog();
@@ -56,7 +59,7 @@ public class LoginService implements ILoginService {
             //获取当前时间
 
 
-            Date date=loginService.getCurrentTime();
+            Date date = loginService.getCurrentTime();
             loginLog.setLoginTime(date);
 
 
@@ -72,6 +75,7 @@ public class LoginService implements ILoginService {
             //将用户的登录状态从0改到1
             User loggedUser = userDao.queryUserByAccount(accountNumber, encryptPassword);
             loggedUser.setLoginStatus(1);
+
             userDao.updateUser(user, loggedUser);
             return "登录成功";
         }
@@ -99,7 +103,7 @@ public class LoginService implements ILoginService {
             return "邮箱不能为空";
         }
 
-        //判断电话号码的格式是否正确
+//        判断电话号码的格式是否正确
         String phone = "^1[3-9]\\d{9}$";
         if (!Pattern.matches(phone, userRegisterVo.getPhone())) {
             return "电话号码格式错误";
@@ -116,10 +120,14 @@ public class LoginService implements ILoginService {
         String encryptPassword = loginService.getEncryptPassword(password);
         user.setPassword(encryptPassword);
 
-        if (userDao.queryUserByAccount(userRegisterVo.getAccountNumber())!=null) {
+
+        User userByAccount = userDao.queryUserByAccount(userRegisterVo.getAccountNumber());
+        if (userByAccount != null && userByAccount.getAccountNumber() != null) {
             return "该账号已经存在";
         }
-        if (userDao.queryUserByStudentNumber(userRegisterVo.getStudentNumber()) != null) {
+
+        User userByStudentNumber = userDao.queryUserByStudentNumber(userRegisterVo.getStudentNumber());
+        if (userByStudentNumber != null && userByStudentNumber.getStudentNumber() != null) {
             return "该学号已经存在";
         }
         user.setAccountNumber(userRegisterVo.getAccountNumber());
@@ -127,7 +135,7 @@ public class LoginService implements ILoginService {
 
         user.setName(userRegisterVo.getName());
         user.setStudentNumber(userRegisterVo.getStudentNumber());
-        user.setGender(1);
+        user.setGender(userRegisterVo.getGender());
         user.setPhone(userRegisterVo.getPhone());
         user.setPost(userRegisterVo.getPost());
         //设置用户职责
@@ -311,6 +319,30 @@ public class LoginService implements ILoginService {
         String encryptPassword = sb.toString();
         return encryptPassword;
     }
+    public void changeLoginState(){
+        String accountNumber=user.getAccountNumber();
+        User loginUser=userDao.queryUserByAccount(accountNumber);
+        User exitUser=userDao.queryUserByAccount(accountNumber);
+        exitUser.setLoginStatus(0);
+        userDao.updateUser(loginUser,exitUser);
+    }
+    public UserVo getUserVo(){
+        UserVo userVo=new UserVo();
+        userVo.setStudentNumber(user.getStudentNumber());
+        userVo.setName(user.getName());
+        userVo.setAccountNumber(user.getAccountNumber());
+        userVo.setGender(user.getGender());
+        userVo.setPhone(user.getPhone());
+        userVo.setPost(user.getPost());
+        userVo.setDuty(user.getRole().toString());
+
+        return userVo;
+    }
+    public static User getUser(){
+        return user;
+    }
+
+
 
 
 }

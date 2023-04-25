@@ -6,6 +6,7 @@ import tyut.selab.desktop.moudle.login.service.ILoginService;
 import tyut.selab.desktop.moudle.login.service.impl.LoginService;
 import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.domain.vo.UserRegisterVo;
+import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 
 import javax.xml.crypto.Data;
 import java.util.List;
@@ -50,4 +51,16 @@ public class LoginController implements ILoginController{
     public List<LoginLog> showLoginLog(Data startTime, Data endingTime) throws Exception {
         return loginService.showLoginLog(startTime,endingTime);
     }
+
+    @Override
+    public UserVo getUserVo() {
+        return loginService.getUserVo();
+    }
+
+    public void changeLoginState(){
+        loginService.changeLoginState();
+    }
+
+
+
 }

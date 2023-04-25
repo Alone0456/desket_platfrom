@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LoginDao implements ILoginDao {
@@ -29,13 +30,14 @@ public class LoginDao implements ILoginDao {
         while (rs.next()) {
             String name = rs.getString("log_id");
             Integer userStudentNumber = rs.getInt("user_student_number");
-            String loginTime = rs.getString("login_time");
+            Date loginTime = rs.getDate("login_time");
             String loginIp = rs.getString("login_ip");
             //封装Loginlog对象
             loginlog = new LoginLog();
             loginlog.setName(name);
-            loginlog.getStudentNumber();
-            loginlog.getLoginTime();
+            loginlog.setStudentNumber(userStudentNumber);
+            loginlog.setLoginTime(loginTime);
+            loginlog.setLoginIp(loginIp);
             loginLogs.add(loginlog);
 
 
@@ -64,13 +66,14 @@ public class LoginDao implements ILoginDao {
         while (rs.next()) {
             String name = rs.getString("log_id");
             Integer userStudentNumber = rs.getInt("user_student_number");
-            String loginTime = rs.getString("login_time");
+            Date loginTime = rs.getDate("login_time");
             String loginIp = rs.getString("login_ip");
             //封装Loginlog对象
             loginlog = new LoginLog();
             loginlog.setName(name);
-            loginlog.getStudentNumber();
-            loginlog.getLoginTime();
+            loginlog.setStudentNumber(userStudentNumber);
+            loginlog.setLoginTime(loginTime);
+            loginlog.setLoginIp(loginIp);
             loginLogs.add(loginlog);
 
 
@@ -103,13 +106,14 @@ public class LoginDao implements ILoginDao {
         while (rs.next()) {
             String name = rs.getString("log_id");
             Integer userStudentNumber = rs.getInt("user_student_number");
-            String loginTime = rs.getString("login_time");
+            Date loginTime = rs.getDate("login_time");
             String loginIp = rs.getString("login_ip");
             //封装Loginlog对象
             loginlog = new LoginLog();
             loginlog.setName(name);
-            loginlog.getStudentNumber();
-            loginlog.getLoginTime();
+            loginlog.setStudentNumber(userStudentNumber);
+            loginlog.setLoginTime(loginTime);
+            loginlog.setLoginIp(loginIp);
             loginLogs.add(loginlog);
         }
 
@@ -119,7 +123,7 @@ public class LoginDao implements ILoginDao {
 
         return loginLogs;
 
-        }
+    }
 
     @Override
     public int insertLoginLog(LoginLog log) throws Exception {
@@ -134,8 +138,7 @@ public class LoginDao implements ILoginDao {
 
         pstmt.setString(1, null);
         pstmt.setInt(2, log.getStudentNumber());
-            pstmt.setString(3, log.getLoginTime().toString());
-
+        pstmt.setString(3, log.getLoginTime().toString());
         pstmt.setString(4, log.getLoginIp());
 
         //执行sql

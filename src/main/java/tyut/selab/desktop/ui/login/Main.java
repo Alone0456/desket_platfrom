@@ -1,5 +1,8 @@
 package tyut.selab.desktop.ui.login;
 
+import tyut.selab.desktop.moudle.login.service.impl.LoginService;
+import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
+
 import javax.swing.*;
 
 public class Main {

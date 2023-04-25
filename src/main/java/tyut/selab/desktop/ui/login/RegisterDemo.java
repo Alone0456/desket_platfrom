@@ -18,8 +18,8 @@ public class RegisterDemo extends JFrame {
         int height = 600;
         this.setBounds((sw - width) / 2, (sh - height) / 2, width, height);
         this.setTitle("注册界面");
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("desket_platfrom\\src\\logo.jpg"));// 图标
-        ImageIcon background = new ImageIcon("desket_platfrom\\src\\back1.jpg"); // 背景图片
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\img\\logo.png"));// 图标
+        ImageIcon background = new ImageIcon("src\\img\\back1.jpg"); // 背景图片
         JLabel label = new JLabel(background); // 把背景图片显示在一个标签里面
         label.setBounds(0, 0, this.getWidth(), this.getHeight()); // 把标签的大小位置设置为图片刚好填充整个面板
         JPanel imagePanel = (JPanel) this.getContentPane(); // 把内容窗格转化为JPanel，否则不能用方法setOpaque()来使内容窗格透明
@@ -250,7 +250,12 @@ public class RegisterDemo extends JFrame {
         userRegisterVo.setAccountNumber(accountField.getText());//账号
         userRegisterVo.setName(nameField.getText());//姓名
         userRegisterVo.setPhone(phoneField.getText());//电话
-        userRegisterVo.setGender(0);//性别
+        String str = String.valueOf(gender);
+        if(str.equals("男")){
+            userRegisterVo.setGender(0);//性别
+        }else{
+            userRegisterVo.setGender(1);//性别
+        }
         userRegisterVo.setPost(postField.getText());//邮箱
         return loginController.register(userRegisterVo);//注册
    }

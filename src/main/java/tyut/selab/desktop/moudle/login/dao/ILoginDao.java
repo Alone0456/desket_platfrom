@@ -1,6 +1,7 @@
 package tyut.selab.desktop.moudle.login.dao;
 
 import tyut.selab.desktop.moudle.login.domain.LoginLog;
+import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 
 import javax.xml.crypto.Data;
 import java.sql.SQLException;
@@ -34,4 +35,5 @@ public interface ILoginDao {
      * @return 结果
      */
     int insertLoginLog(LoginLog log) throws Exception;
+
 }

@@ -2,6 +2,7 @@ package tyut.selab.desktop.moudle.login.service;
 
 import tyut.selab.desktop.moudle.login.domain.LoginLog;
 import tyut.selab.desktop.moudle.student.domain.vo.UserRegisterVo;
+import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 
 import javax.xml.crypto.Data;
 import java.util.List;
@@ -47,4 +48,6 @@ public interface ILoginService {
      * @return
      */
     List<LoginLog> showLoginLog(Data startTime,Data endingTime) throws Exception;
+    public void changeLoginState();
+    public UserVo getUserVo();
 }

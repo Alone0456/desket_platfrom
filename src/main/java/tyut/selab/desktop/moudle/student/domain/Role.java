@@ -7,6 +7,7 @@ public class Role {
     }
 
     public Role(String duty) {
+        this.duty = duty;
     }
 
     public String getDuty() {
@@ -17,4 +18,10 @@ public class Role {
         this.duty = duty;
     }
 
+    @Override
+    public String toString() {
+        return "Role{" +
+                "duty='" + duty + '\'' +
+                '}';
+    }
 }
