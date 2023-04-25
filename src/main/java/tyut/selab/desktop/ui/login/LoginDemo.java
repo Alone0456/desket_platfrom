@@ -88,7 +88,7 @@ public class LoginDemo extends JFrame {
             }
         });
         try {
-            String str=read();
+            String str=loginController.read();
             String[] temp;
             String delimeter = "!";  // 指定分割字符
             temp = str.split(delimeter); // 分割字符
@@ -182,14 +182,14 @@ public class LoginDemo extends JFrame {
                 String str = init(uField, pFd);
                 if(str.equals("登录成功")){
                     Thread.sleep(0);
-                    save(AutomaticLogin.isSelected() ,RememberNumber.isSelected(),uField, pFd);
+                    loginController.save(AutomaticLogin.isSelected() ,RememberNumber.isSelected(),uField, pFd);
                     this.dispose();
                     str = uField.getText();
                     new MainInterface(str);
 
                 } else {
                     pFd.setText("");
-                    save(Boolean.parseBoolean("float"),Boolean.parseBoolean("float"),uField, pFd);
+                    loginController.save(Boolean.parseBoolean("float"),Boolean.parseBoolean("float"),uField, pFd);
                     JOptionPane.showMessageDialog(null, str, "警告", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (Exception exception) {
@@ -217,7 +217,7 @@ public class LoginDemo extends JFrame {
                 String str = init(uField, pFd);
                 if(str.equals("登录成功")){
                     Thread.sleep(0);
-                    save(AutomaticLogin.isSelected() ,RememberNumber.isSelected(),uField, pFd);
+                    loginController.save(AutomaticLogin.isSelected() ,RememberNumber.isSelected(),uField, pFd);
                     str =  uField.getText();
                     this.dispose();
                     new MainInterface(str);
@@ -234,44 +234,5 @@ public class LoginDemo extends JFrame {
         return str;
     }
 
-    public  static void save (boolean automaticLogin,boolean rememberNumber,JTextField uField,JPasswordField pFd) throws IOException {
-        char[] p1 = pFd.getPassword();
-        File f = new File("src\\main\\java\\tyut\\selab\\desktop\\ui\\login\\Staff.manifest");
-        if (f.exists()) {
-            f.delete();
-        }
-        f.createNewFile();
-        FileWriter fw = null;
-        fw = new FileWriter("src\\main\\java\\tyut\\selab\\desktop\\ui\\login\\Staff.manifest");
-        byte[] bytes = new String(p1).getBytes();
-        for (int i = 0; i < bytes.length; i++) {
-            bytes[i] = (byte) (bytes[i] ^ (i * 18));
-        }
-        String newPassword = new String(bytes, 0, bytes.length);
-
-        fw.write(automaticLogin+"\r\n"+rememberNumber+"\r\n"+uField.getText()+"\r\n"+newPassword);
-        fw.close();
-    }
-    public static String read() throws IOException {
-        File f=new File("src\\main\\java\\tyut\\selab\\desktop\\ui\\login\\Staff.manifest");
-        FileReader fr=null;
-
-        int i,j;
-        fr=new FileReader(f);
-        BufferedReader br=new BufferedReader(fr);
-        String str = null,text;
-        try {
-            while ((text=br.readLine())!=null)
-            {
-                str =str +"!"+text;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            fr.close(); // 涉及到IO流操作的时候一定要记得关闭文件，关闭最外层流即可关掉所有的流
-        }
-        return str;
-    }
 }
 

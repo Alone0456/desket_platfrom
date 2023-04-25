@@ -8,7 +8,10 @@ import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.domain.vo.UserRegisterVo;
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 
+import javax.swing.*;
 import javax.xml.crypto.Data;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 public class LoginController implements ILoginController{
@@ -25,23 +28,6 @@ public class LoginController implements ILoginController{
         return loginService.register(user);
     }
 
-
-
-    @Override
-    public void autoLogin() throws Exception {
-        loginService.autoLogin();
-    }
-
-    @Override
-    public void rememberAccount() {
-        loginService.rememberAccount();
-    }
-
-    @Override
-    public void rememberPassword() {
-        loginService.rememberPassword();
-    }
-
     @Override
     public List<LoginLog> showLoginLog() throws Exception {
         return loginService.showLoginLog();
@@ -55,6 +41,17 @@ public class LoginController implements ILoginController{
     @Override
     public UserVo getUserVo() {
         return loginService.getUserVo();
+    }
+
+    @Override
+    public void save(boolean automaticLogin, boolean rememberNumber, JTextField uField, JPasswordField pFd) throws IOException {
+        loginService.save( automaticLogin,  rememberNumber,  uField,  pFd);
+    }
+
+
+    @Override
+    public String read() throws FileNotFoundException {
+        return loginService.read();
     }
 
     public void changeLoginState(){

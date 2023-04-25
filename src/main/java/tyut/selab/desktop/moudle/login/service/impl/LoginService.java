@@ -11,6 +11,7 @@ import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 import tyut.selab.desktop.moudle.student.userdao.IUserDao;
 import tyut.selab.desktop.moudle.student.userdao.impl.UserDao;
 
+import javax.swing.*;
 import javax.xml.crypto.Data;
 import java.io.*;
 import java.net.InetAddress;
@@ -159,71 +160,6 @@ public class LoginService implements ILoginService {
         return null;
     }
 
-    @Override
-    public void autoLogin() throws Exception {
-
-//        Thread.sleep(1000);
-        LoginService loginService = new LoginService();
-        String account = loginService.getAccount();
-        String password = loginService.getPassword();
-        loginService.login(account, password);
-    }
-
-    @Override
-    public void rememberAccount() {
-        String accountNumber = user.getAccountNumber();
-        File file = new File("account.txt");
-        if (file.exists()) {
-            file.delete();
-        }
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter(file);
-            fw.write(accountNumber);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                fw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-    }
-
-    @Override
-    public void rememberPassword() {
-        String password = user.getPassword();
-
-        File file = new File("password.txt");
-        if (file.exists()) {
-            file.delete();
-        }
-        FileWriter fw = null;
-        byte[] bytes = password.getBytes();
-        for (int i = 0; i < bytes.length; i++) {
-            bytes[i] = (byte) (bytes[i] ^ (i * 18));
-        }
-        String newPassword = new String(bytes, 0, bytes.length);
-
-        try {
-            fw = new FileWriter(file);
-            fw.write(newPassword);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                fw.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-    }
-
-    @Override
     public List<LoginLog> showLoginLog() throws Exception {
         return loginDao.queryAllLoginLog();
     }
@@ -233,63 +169,9 @@ public class LoginService implements ILoginService {
         return loginDao.showLoginLog(startTime, endingTime);
     }
 
-    //获取存入文件中的账号
-    public String getAccount() {
-        File f = new File("account.txt");
-        FileReader fr = null;
-        String account = null;
-        if (f.exists()) {
-            try {
-                fr = new FileReader(f);
-                int len;
-                account = "";
-                char[] buf = new char[24];
-                while ((len = fr.read(buf)) != -1) {
-                    String str = new String(buf, 0, len);
-                    account += str;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    fr.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return account;
-        } else return "";
-    }
 
-    //获取存入文件中的密码
-    public String getPassword() {
-        File file = new File("password.txt");
-        FileReader fr = null;
-        String password = null;
-        if (file.exists()) {
-            try {
-                fr = new FileReader(file);
-                Scanner sc = new Scanner(fr);
-                if (sc.hasNext()) {
-                    byte[] bt = sc.nextLine().getBytes();
-                    for (int i = 0; i < bt.length; i++) {
-                        bt[i] = (byte) (bt[i] ^ (i + 18));
-                    }
-                    password = new String(bt, 0, bt.length);
 
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    fr.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return password;
-        } else return "";
-    }
+
 
     //获取当前时间
     public Date getCurrentTime() {
@@ -319,6 +201,7 @@ public class LoginService implements ILoginService {
         String encryptPassword = sb.toString();
         return encryptPassword;
     }
+    //改变用户的登录状态
     public void changeLoginState(){
         String accountNumber=user.getAccountNumber();
         User loginUser=userDao.queryUserByAccount(accountNumber);
@@ -326,6 +209,7 @@ public class LoginService implements ILoginService {
         exitUser.setLoginStatus(0);
         userDao.updateUser(loginUser,exitUser);
     }
+    //获取用户UserVo
     public UserVo getUserVo(){
         UserVo userVo=new UserVo();
         userVo.setStudentNumber(user.getStudentNumber());
@@ -338,8 +222,54 @@ public class LoginService implements ILoginService {
 
         return userVo;
     }
+    //返回用户User
     public static User getUser(){
         return user;
+    }
+    //读取文件
+        public  String read() throws FileNotFoundException {
+        File f=new File("src\\main\\java\\tyut\\selab\\desktop\\ui\\login\\Staff.manifest");
+        FileReader fr=null;
+
+        int i,j;
+        fr=new FileReader(f);
+        BufferedReader br=new BufferedReader(fr);
+        String str = null,text;
+        try {
+            while ((text=br.readLine())!=null)
+            {
+                str =str +"!"+text;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                fr.close(); // 涉及到IO流操作的时候一定要记得关闭文件，关闭最外层流即可关掉所有的流
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return str;
+    }
+//    保存文件
+    public   void save (boolean automaticLogin, boolean rememberNumber, JTextField uField, JPasswordField pFd) throws IOException {
+        char[] p1 = pFd.getPassword();
+        File f = new File("src\\main\\java\\tyut\\selab\\desktop\\ui\\login\\Staff.manifest");
+        if (f.exists()) {
+            f.delete();
+        }
+        f.createNewFile();
+        FileWriter fw = null;
+        fw = new FileWriter("src\\main\\java\\tyut\\selab\\desktop\\ui\\login\\Staff.manifest");
+        byte[] bytes = new String(p1).getBytes();
+        for (int i = 0; i < bytes.length; i++) {
+            bytes[i] = (byte) (bytes[i] ^ (i * 18));
+        }
+        String newPassword = new String(bytes, 0, bytes.length);
+
+        fw.write(automaticLogin+"\r\n"+rememberNumber+"\r\n"+uField.getText()+"\r\n"+newPassword);
+        fw.close();
     }
 
 

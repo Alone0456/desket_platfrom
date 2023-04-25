@@ -6,6 +6,8 @@ import tyut.selab.desktop.moudle.login.service.impl.LoginService;
 import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.userdao.IUserDao;
 import tyut.selab.desktop.moudle.student.userdao.impl.UserDao;
+import tyut.selab.desktop.ui.tools.component.panels.mainpanels.ManagerMainPanel;
+import tyut.selab.desktop.ui.tools.component.panels.mainpanels.UserMainPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -205,8 +207,16 @@ public class MainInterface extends JFrame  {
         panel.add(p,"Home");
         SystemAdministration p1=new SystemAdministration();
         panel.add(p1,"系统管理");
-        WeeklyReportManagement p2=new WeeklyReportManagement();
-        panel.add(p2,"周报管理");
+
+        if(LoginService.getUser().getRole().getDuty().equals("用户")){
+            JPanel jPanel=UserMainPanel.getUserPanel();
+            panel.add(jPanel,"周报管理");
+        }else{
+            JPanel managerPanel = ManagerMainPanel.getManagerPanel();
+            panel.add(managerPanel,"周报管理");
+        }
+
+
         addWindowListener(new WindowAdapter() {
 
 
@@ -294,13 +304,4 @@ public class MainInterface extends JFrame  {
 
     }
 
-//    public static void main(String[] args) {
-//        //界面渲染效果
-//        try {
-//            UIManager.setLookAndFeel( "javax.swing.plaf.nimbus.NimbusLookAndFeel");
-//            new MainInterface("321");
-//        } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException e) {
-//            JOptionPane.showMessageDialog(null, "系统异常", "你个老六", JOptionPane.WARNING_MESSAGE);
-//        }
-//    }
 }

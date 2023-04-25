@@ -4,7 +4,10 @@ import tyut.selab.desktop.moudle.login.domain.LoginLog;
 import tyut.selab.desktop.moudle.student.domain.vo.UserRegisterVo;
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 
+import javax.swing.*;
 import javax.xml.crypto.Data;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 public interface ILoginService {
@@ -20,20 +23,7 @@ public interface ILoginService {
      */
     String register(UserRegisterVo user);
 
-    /**
-     * 自动登录
-     */
-    void autoLogin() throws Exception;
 
-    /**
-     * 记住账号
-     */
-    void rememberAccount();
-
-    /**
-     * 记住密码
-     */
-    void rememberPassword();
 
     /**
      * 查询登录日志
@@ -48,6 +38,28 @@ public interface ILoginService {
      * @return
      */
     List<LoginLog> showLoginLog(Data startTime,Data endingTime) throws Exception;
-    public void changeLoginState();
-    public UserVo getUserVo();
+
+    /**
+     * 改变用户的的登录状态
+     */
+     void changeLoginState();
+     UserVo getUserVo();
+
+    /**
+     * 将账号，密码，记住密码和自动登录的选中状态保存到本地文件中
+     * @param automaticLogin
+     * @param rememberNumber
+     * @param uField
+     * @param pFd
+     * @throws IOException
+     */
+       void save(boolean automaticLogin, boolean rememberNumber, JTextField uField, JPasswordField pFd) throws IOException;
+
+    /**
+     * 从本地文件中读取账号，密码，记住账号和记住密码的选中状态
+     * @return
+     * @throws FileNotFoundException
+     */
+      String read() throws FileNotFoundException;
+
 }

@@ -5,7 +5,10 @@ import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.domain.vo.UserRegisterVo;
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 
+import javax.swing.*;
 import javax.xml.crypto.Data;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 public interface ILoginController {
@@ -22,21 +25,6 @@ public interface ILoginController {
     String register(UserRegisterVo user);
 
     /**
-     * 自动登录
-     */
-    void autoLogin() throws Exception;
-
-    /**
-     * 记住账号
-     */
-    void rememberAccount();
-
-    /**
-     * 记住密码
-     */
-    void rememberPassword();
-
-    /**
      * 查询登录日志
      * @return
      */
@@ -49,5 +37,8 @@ public interface ILoginController {
      * @return
      */
     List<LoginLog> showLoginLog(Data startTime, Data endingTime) throws Exception;
-    public UserVo getUserVo();
+     UserVo getUserVo();
+
+       void save(boolean automaticLogin, boolean rememberNumber, JTextField uField, JPasswordField pFd) throws IOException;
+      String read() throws FileNotFoundException;
 }
