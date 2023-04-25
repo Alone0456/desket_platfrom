@@ -76,6 +76,17 @@ public class LoginDemo extends JFrame {
                 }
             }
         });
+        RememberNumber.addItemListener(new ItemListener() {
+
+            @Override
+
+            public void itemStateChanged(ItemEvent e) {
+//当选择发生了改变时,
+                if (e.getStateChange() == ItemEvent.DESELECTED) {
+                    AutomaticLogin.setSelected(false);
+                }
+            }
+        });
         try {
             String str=read();
             String[] temp;
