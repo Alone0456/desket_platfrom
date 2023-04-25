@@ -149,7 +149,6 @@ public class UpFileDao implements IUpFileDao {
         int number = user.getStudentNumber().intValue();  // 与原参相比少了一个 r
 //        int useStudentNumber = 1;
         FileUp uf =null;
-        User temp = new User();
         List<FileUp> list = new ArrayList<>();
 
         while(true){
@@ -166,6 +165,8 @@ public class UpFileDao implements IUpFileDao {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+
+            User temp = new User();
             if(number == userStudentNumber){
                 String upFilePath = null;
                 Timestamp upTime = null; // 数据类型可能不匹配
