@@ -41,7 +41,6 @@ public class UpFileDao implements IUpFileDao {
 
         //得到数据
         FileUp uf =null;
-        User temp = new User();
         List<FileUp> list = new ArrayList<>();
         while(true){
             try {
@@ -51,11 +50,13 @@ public class UpFileDao implements IUpFileDao {
             }  // 数据类型与什么对应呢
 
 //            int userStudentNumber = 0;//不用展示
+            User temp = new User();
             int studentNumber = 0;
             String upFilePath = null;
             Timestamp upTime = null; // 数据类型可能不匹配
             String upIp = null;
             String week = null;
+            long upId=0;
 //            String accountNumber = null;
 //            String password = null;
 //            String name = null;
@@ -67,7 +68,7 @@ public class UpFileDao implements IUpFileDao {
 //            int loginStatus = 0;
 //            String duty = null;
             try {
-                long upId = rs.getLong("up_id");
+                upId = rs.getLong("up_id");
                 studentNumber = rs.getInt("user_student_number");
                 upFilePath = rs.getString("up_file_path");
                 upTime = rs.getTimestamp("up_time");
@@ -94,6 +95,7 @@ public class UpFileDao implements IUpFileDao {
             //uf.setUpId(Integer.valueOf((int) upId));  // 主键不用设置
 //            uf.getUser().setStudentNumber(Integer.valueOf((int) userStudentNumber));
             temp.setStudentNumber(studentNumber);
+            uf.setUpId((int) upId);
             uf.setUser(temp);
             uf.setUpFilePath(upFilePath);
             uf.setUpTime(upTime);
@@ -144,8 +146,8 @@ public class UpFileDao implements IUpFileDao {
             throw new RuntimeException(e);
         }
 
-        //int useStudentNumber = user.getStudentNumber().intValue();  // 与原参相比少了一个 r
-        int useStudentNumber = 1;
+        int number = user.getStudentNumber().intValue();  // 与原参相比少了一个 r
+//        int useStudentNumber = 1;
         FileUp uf =null;
         User temp = new User();
         List<FileUp> list = new ArrayList<>();
@@ -164,11 +166,12 @@ public class UpFileDao implements IUpFileDao {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            if(useStudentNumber == userStudentNumber){
+            if(number == userStudentNumber){
                 String upFilePath = null;
                 Timestamp upTime = null; // 数据类型可能不匹配
                 String upIp = null;
                 String week = null;
+                long upId=0;
 //                String accountNumber = null;
 //                String password = null;
 //                String name = null;
@@ -184,8 +187,9 @@ public class UpFileDao implements IUpFileDao {
                     upTime = rs.getTimestamp("up_time");
                     upIp = rs.getString("up_ip");
                     week = rs.getString("up_week");
+                    upId = rs.getLong("up_id");
 
-                   // int userId = rs.getInt("user_id");
+                    // int userId = rs.getInt("user_id");
 //                    accountNumber = rs.getString("account_number");
 //                    password = rs.getString("password");
 //                    name = rs.getString("name");
@@ -207,11 +211,13 @@ public class UpFileDao implements IUpFileDao {
                 uf = new FileUp();
                 //uf.setUpId(Integer.valueOf((int) upId));  // 主键不用设置
         //        uf.getUser().setStudentNumber(Integer.valueOf((int) userStudentNumber));
-                temp.setStudentNumber(useStudentNumber);
+                temp.setStudentNumber(number);
                 uf.setUpFilePath(upFilePath);
                 uf.setUpTime(upTime);
                 uf.setUpIp(upIp);
                 uf.setWeek(week);
+                uf.setUpId((int) upId);
+                uf.setUser(temp);
 //                uf.getUser().setAccountNumber(accountNumber);
 //                uf.getUser().setPassword(password);
 //                uf.getUser().setName(name);

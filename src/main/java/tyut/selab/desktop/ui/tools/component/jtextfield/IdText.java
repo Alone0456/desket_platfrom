@@ -18,7 +18,7 @@ import java.awt.event.MouseEvent;
  */
 @SuppressWarnings("all")
 public class IdText {
-    public static String id;
+    public static String id="";
 
     public static JTextField getIdText() {
         JTextField jTextField = new MyTextField("请输入用户学号");

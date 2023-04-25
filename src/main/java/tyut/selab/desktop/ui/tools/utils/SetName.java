@@ -17,6 +17,11 @@ import tyut.selab.desktop.ui.tools.component.dialogs.FileName;
 public class SetName {
     public static boolean setName(String fileName) {
         User user = FileChooser.fileUpVo.getUser();
+        user.setStudentNumber(2022005565);
+        user.setName("");
+        String studentNumber ="";
+        studentNumber= String.valueOf(user.getStudentNumber().intValue());
+        String stdentName = user.getName();
         String[] split1 = fileName.split("-");
         String number = split1[0];
         String temp;
@@ -27,7 +32,7 @@ public class SetName {
             split2 = temp.split("\\.");
             if (split2.length == 2) {
                 name = split2[0];
-                if(number.equals(user.getStudentNumber())&&name.equals(user.getName())){
+                if(number.equals(studentNumber)&&name.equals(stdentName)){
                     return true;
                 }
             }

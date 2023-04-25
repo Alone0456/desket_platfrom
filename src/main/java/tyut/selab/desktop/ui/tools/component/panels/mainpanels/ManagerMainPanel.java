@@ -1,5 +1,6 @@
 package tyut.selab.desktop.ui.tools.component.panels.mainpanels;
 
+import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.ui.tools.component.buttons.Download;
 import tyut.selab.desktop.ui.tools.component.buttons.query.Query;
 import tyut.selab.desktop.ui.tools.component.buttons.Upload;
@@ -8,6 +9,7 @@ import tyut.selab.desktop.ui.tools.component.panels.managerpanels.ManagerDownloa
 import tyut.selab.desktop.ui.tools.component.panels.managerpanels.ManagerQuery;
 import tyut.selab.desktop.ui.tools.component.panels.managerpanels.ManagerUpload;
 import tyut.selab.desktop.ui.tools.set.panelset.mainset.ManagerMain;
+import tyut.selab.desktop.ui.tools.utils.FileChooser;
 
 import javax.swing.*;
 
@@ -33,6 +35,12 @@ public class ManagerMainPanel {
                 ex.printStackTrace();
             }
         }
+        //获取用户信息
+//        User user = LoginService.getUser();
+        User user = new User();
+        FileChooser.fileUp.setUser(user);
+        FileChooser.fileUpVo.setUser(user);
+
         JButton upload = new Upload(ManagerMain.p8, ManagerUpload.getUploadPanel());
         JButton download = new Download(ManagerMain.p8, ManagerDownload.getDownloadPanel());
         JButton query = new Query(ManagerMain.p8, ManagerQuery.getQueryPanel());

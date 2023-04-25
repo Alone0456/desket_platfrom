@@ -3,7 +3,6 @@ package tyut.selab.desktop.ui.tools.utils;
 import tyut.selab.desktop.moudle.tools.client.controller.impl.FileController;
 import tyut.selab.desktop.moudle.tools.client.domain.FileUp;
 import tyut.selab.desktop.moudle.tools.client.domain.vo.FileUpVo;
-import tyut.selab.desktop.moudle.tools.client.service.impl.FileService;
 import tyut.selab.desktop.ui.tools.component.dialogs.Achieve;
 import tyut.selab.desktop.ui.tools.component.dropdownbox.Weeks;
 import tyut.selab.desktop.ui.tools.myexception.MyException;
