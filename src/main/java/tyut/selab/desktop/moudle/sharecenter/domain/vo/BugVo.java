@@ -1,6 +1,7 @@
 package tyut.selab.desktop.moudle.sharecenter.domain.vo;
 
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
+import tyut.selab.desktop.ui.sharecenter.boundary;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,13 +35,8 @@ public class BugVo {
 
     @Override
     public String toString() {
-        return "BugVo{" +
-                "bugTitle='" + bugTitle + '\'' +
-                ", bugSolve='" + bugSolve + '\'' +
-                ", releaseTime=" + releaseTime +
-                ", userVo=" + userVo +
-                ", bugType=" + bugType +
-                '}';
+        String s = boundary.jlistTextShow(bugTitle);
+        return  s  ;
     }
 
     public void addBugType(String bugType){

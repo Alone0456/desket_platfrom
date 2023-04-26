@@ -1,6 +1,7 @@
 package tyut.selab.desktop.ui.sharecenter;
 
 
+import jdk.swing.interop.SwingInterOpUtils;
 import tyut.selab.desktop.moudle.sharecenter.domain.vo.BugVo;
 
 
@@ -10,14 +11,19 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.RoundRectangle2D;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 
-public class boundary{
+public class boundary {
 
     //列表展示信息 (传入一个信息集合)
     private DefaultListModel defaultListModel = null;
@@ -40,11 +46,10 @@ public class boundary{
     private JMenuItem jMenuItem4 = null;
     //管理技术栈
     private JMenuItem jMenuItem5 = null;
-    //筛选
-    private JMenu jMenu2 = null;
-
     //按技术栈选择
-    private JMenuItem jMenuItem7 = null;
+    private JMenuItem jMenuItem6 = null;
+
+
 
 
     //报错信息以及头像时间
@@ -74,7 +79,7 @@ public class boundary{
     private JFrame stackCheck = null;
     private JPanel options = null;
     private JPanel buttons = null;
-    private JCheckBox[] checkBoxes = null;
+    private List<JCheckBox> checkBoxes = null;
 
     //用户筛选时确认的按钮
     private JButton sureJButton = null;
@@ -83,33 +88,37 @@ public class boundary{
     private JButton deleteJButton = null;
     private JButton updateJButton = null;
 
-    //添加报错信息
-    private JFrame addErrorShow = null;
+    //右键菜单
+    private JPopupMenu popupMenu = null;
+    private JMenuItem deleteItem = null;
+    private JMenuItem updateItem = null;
 
 
 
     public boundary() {
         this.defaultListModel = new DefaultListModel();
-//        defaultListModel.addAll();
         this.bugVoJList =new JList<>(defaultListModel);
 
         this.frame = new JFrame("这里在测试");
+
         this.jMenuBar = new JMenuBar();
-        this.jMenu = new JMenu("功能");
+//        this.jMenu = new JMenu("功能");
         this.jMenuItem1 = new JMenuItem("筛选");
         this.jMenuItem2 = new JMenuItem("添加");
         this.jMenuItem3 = new JMenuItem("我的");
         this.jMenuItem4 = new JMenuItem("全部");
 
         this.jMenuItem5 = new JMenuItem("管理技术栈");
-        this.jMenu2 = new JMenu("筛选");
-        this.jMenuItem7 = new JMenuItem("按技术栈选择");
+        this.jMenuItem6 = new JMenuItem("按技术栈选择");
+
 
 
         this.gridBag = new GridBagLayout();
         this.c = null;
         this.errorShow = new JPanel(gridBag);
         this.adminShow = new JButton();
+
+
         this.timeShow = new JLabel();
         this.informationShow = new JLabel();
         this.stackShow = new JLabel();
@@ -121,21 +130,45 @@ public class boundary{
         this.stackCheck = new JFrame("技术栈");
         this.options = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.buttons = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        this.checkBoxes = new JCheckBox[5];
+        this.checkBoxes = new ArrayList<>();
 
-        /**
-         * 这里需要给 checkBoxes = new JCheckBox[bugType.size()];
-         */
 
         this.sureJButton = new JButton("yes");
 
-        this.insertJButton = new JButton("insert");
-        this.deleteJButton = new JButton("delete");
-        this.updateJButton = new JButton("update");
 
-
-
+        this.popupMenu = new JPopupMenu();
+        this.deleteItem = new JMenuItem("删除");
+        this.updateItem = new JMenuItem("更改");
+        this.popupMenu.add(updateItem);
+        this.popupMenu.addSeparator();
+        this.popupMenu.add(deleteItem);
     }
+
+    public void setjMenu(JMenu jMenu) {
+        this.jMenu = jMenu;
+    }
+
+    public void setDefaultListModel(DefaultListModel defaultListModel) {
+        this.defaultListModel = defaultListModel;
+    }
+
+    public void setBugVoJList(JList<BugVo> bugVoJList) {
+        this.bugVoJList = bugVoJList;
+    }
+
+    public void setInsertJButton(JButton insertJButton) {
+        this.insertJButton = insertJButton;
+    }
+
+    public void setDeleteJButton(JButton deleteJButton) {
+        this.deleteJButton = deleteJButton;
+    }
+
+    public void setUpdateJButton(JButton updateJButton) {
+        this.updateJButton = updateJButton;
+    }
+
+
 
     //一些供外部使用的get方法
 
@@ -175,12 +208,8 @@ public class boundary{
         return jMenuItem5;
     }
 
-    public JMenu getjMenu2() {
-        return jMenu2;
-    }
-
-    public JMenuItem getjMenuItem7() {
-        return jMenuItem7;
+    public JMenuItem getjMenuItem6() {
+        return jMenuItem6;
     }
 
     public JFrame getStackCheck() {
@@ -196,7 +225,7 @@ public class boundary{
         return buttons;
     }
 
-    public JCheckBox[] getCheckBoxes() {
+    public List<JCheckBox> getCheckBoxes() {
         return checkBoxes;
     }
 
@@ -224,10 +253,30 @@ public class boundary{
         return bugVoJList;
     }
 
+    public JPopupMenu getPopupMenu() {
+        return popupMenu;
+    }
+
+    public JMenuItem getDeleteItem() {
+        return deleteItem;
+    }
+
+    public JMenuItem getUpdateItem() {
+        return updateItem;
+    }
+
+    @Override
+    public String toString() {
+        return "boundary{" +
+                "checkBoxes=" + checkBoxes +
+                '}';
+    }
+
     /**
      * 整个界面的组装
      */
     public void init(){
+
         //为板块设置大小
         setPreferredSize();
         //组装报错信息栏
@@ -239,6 +288,9 @@ public class boundary{
         jSplitPane();
         //窗口功能实现
         frame();
+        beautifyWindowAndMenu();
+        beautifyAdminShow();
+
     }
 
 
@@ -304,7 +356,6 @@ public class boundary{
 
         beautifyErrorShow();
         beautifySaveShow();
-        beautifyAdminShow();
 
     }
 
@@ -350,6 +401,25 @@ public class boundary{
                     beautifyErrorShow();
                     beautifySaveShow();
                     beautifyAdminShow();
+
+                    bugVoJList.addMouseListener(new MouseAdapter(){
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            super.mouseClicked(e);
+
+                            if(e.getButton()==MouseEvent.BUTTON3){
+                                int index= -1;
+                                index = bugVoJList.locationToIndex(e.getPoint());
+                                if(index != -1){
+                                    bugVoJList.setSelectedIndex(index);
+                                    popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                                    index = -1;
+                                }
+
+                            }
+                        }
+                    });
+
                 }
             }
 
@@ -466,6 +536,8 @@ public class boundary{
         Border lineBorder3 = BorderFactory.createLineBorder(Color.black,0);
         Border timeBorder = BorderFactory.createCompoundBorder(etchedRaisedBorder3, lineBorder3);
         timeShow.setBorder(timeBorder);
+        //报错信息
+        informationShow.setForeground(Color.RED);
     }
 
 
@@ -493,7 +565,16 @@ public class boundary{
      */
     public void beautifyAdminShow(){
         adminShow.setBorderPainted(false);
+        adminShow.setFocusPainted(false);
     }
+
+    /**
+     * 美化窗口和菜单条
+     */
+    public void beautifyWindowAndMenu(){
+
+    }
+
 
 
 
@@ -503,7 +584,6 @@ public class boundary{
      */
     public void frame(){
         frame.add(content);
-
         //打开窗口
         Object o = (Object)"欢迎进入Dug查看中心";
         frame.addWindowListener(new WindowAdapter() {
@@ -513,17 +593,26 @@ public class boundary{
 
             }
         });
-/**
- * 没导包
- */
-        //窗口风格
-//        try {
-//            JFrame.setDefaultLookAndFeelDecorated(true);
-//            UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+
+
+
+//        窗口风格
+//          try {
+//              JFrame.setDefaultLookAndFeelDecorated(true);
+//              UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        }catch(Exception e) {
+//            System.out.println(e);
+//        }
 
 
         //关闭程序
@@ -537,6 +626,7 @@ public class boundary{
         frame.setLocationRelativeTo(null);
         //不可改变大小
         frame.setResizable(false);
+//        frame.setUndecorated(true);
         //可视
         frame.setVisible(true);
 
@@ -616,12 +706,17 @@ public class boundary{
         return saveStringBuffer.toString();
     }
     public static String jlistTextShow(String s){
-        StringBuffer jlistStringBuffer = new StringBuffer();
-        char[] chars = s.toCharArray();
-        int jlistTextlength = 10;
-        jlistStringBuffer.append(chars,0,jlistTextlength);
-        jlistStringBuffer.append("……");
-        return jlistStringBuffer.toString();
+       int jlistTextlength = 10;
+        if(s.length()>jlistTextlength){
+            StringBuffer jlistStringBuffer = new StringBuffer();
+            char[] chars = s.toCharArray();
+
+            jlistStringBuffer.append(chars,0,jlistTextlength);
+            jlistStringBuffer.append("……");
+            return jlistStringBuffer.toString();
+        }else{
+            return s;
+        }
     }
 
 

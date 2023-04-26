@@ -11,6 +11,7 @@ import tyut.selab.desktop.moudle.student.domain.Role;
 import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,14 +27,20 @@ public class Test {
 //        BugMessage bugMessage = new BugMessage(22,"tyu","solve",new Date(),user,"java");
 //        System.out.println(bugMessage.getUserVo().getDuty());
         UserVo userVo = new UserVo();
+
         userVo.setDuty("用户");
         ShareCenterController controller = new ShareCenterController(userVo);
-
         controller.showBugInfo();
         controller.ShowBugInfo(userVo);
         controller.ShowBugInfo(new Vector<String>());
-        controller.queryAllType();
-        controller.insertBugInfo(new BugVo());
+
+        controller.addAllType();
+        BugVo bugVo = new BugVo();
+        bugVo.setUserVo(userVo);
+        bugVo.setBugType(new Vector<String>());
+
+        controller.insertBugInfo(bugVo);
+        controller.deleteBugInfo(bugVo);
         controller.getUi().init();
 
 //        ShareCenterService shareCenterService = new ShareCenterService();

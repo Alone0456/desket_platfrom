@@ -48,6 +48,18 @@ public class BugMessage {
         this.bugType = bugType;
     }
 
+    @Override
+    public String toString() {
+        return "BugMessage{" +
+                "bugId=" + bugId +
+                ", bugTitle='" + bugTitle + '\'' +
+                ", bugSolve='" + bugSolve + '\'' +
+                ", releaseTime=" + releaseTime +
+                ", user=" + user +
+                ", bugType='" + bugType + '\'' +
+                '}';
+    }
+
     public String getBugType() {
         return bugType;
     }

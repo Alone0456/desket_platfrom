@@ -271,7 +271,7 @@ public class ShareCenterDao extends BaseDao implements IShareCenterDao {
      * @return
      * @throws SQLException
      */
-    private int queryBugTypeId(String bugType) throws SQLException {
+    public int queryBugTypeId(String bugType) throws SQLException {
         String sql = "SELECT * FROM bug_type WHERE type = ?;";
         //获取连接
         Connection connection = MysqlConnect.getConnection();
