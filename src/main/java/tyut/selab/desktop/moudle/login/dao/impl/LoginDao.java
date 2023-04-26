@@ -10,6 +10,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,13 +31,13 @@ public class LoginDao implements ILoginDao {
         LoginLog loginlog = null;
         List<LoginLog> loginLogs = new ArrayList<>();
         while (rs.next()) {
-            String name = rs.getString("log_id");
+            String log_id = rs.getString("log_id");
             Integer userStudentNumber = rs.getInt("user_student_number");
             Date loginTime = rs.getDate("login_time");
             String loginIp = rs.getString("login_ip");
             //封装Loginlog对象
             loginlog = new LoginLog();
-            loginlog.setName(name);
+            loginlog.setName(log_id);
             loginlog.setStudentNumber(userStudentNumber);
             loginlog.setLoginTime(loginTime);
             loginlog.setLoginIp(loginIp);
@@ -56,21 +59,22 @@ public class LoginDao implements ILoginDao {
         Connection connection = MysqlConnect.getConnection();
         String sql = "select log_id,user_student_number," +
                 "login_time,login_ip from user_login_log " +
-                "where user_student_number=studentNumber";
+                "where user_student_number=?";
         //获取pstmt对象
         PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, studentNumber);
         //执行sql
         ResultSet rs = pstmt.executeQuery();
         LoginLog loginlog = null;
         List<LoginLog> loginLogs = new ArrayList<>();
         while (rs.next()) {
-            String name = rs.getString("log_id");
+            String log_id = rs.getString("log_id");
             Integer userStudentNumber = rs.getInt("user_student_number");
             Date loginTime = rs.getDate("login_time");
             String loginIp = rs.getString("login_ip");
             //封装Loginlog对象
             loginlog = new LoginLog();
-            loginlog.setName(name);
+            loginlog.setName(log_id);
             loginlog.setStudentNumber(userStudentNumber);
             loginlog.setLoginTime(loginTime);
             loginlog.setLoginIp(loginIp);
@@ -88,29 +92,31 @@ public class LoginDao implements ILoginDao {
 
     }
 
-    @Override
-    public List<LoginLog> showLoginLog(Data startTime, Data endingTime) throws Exception {
+
+    public List<LoginLog> showLoginLog(Date startTime, Date endingTime) throws Exception {
         //获取collection
         Connection connection = MysqlConnect.getConnection();
 
-        String sql =" select log_id,user_student_number," +
+        String sql = " select log_id,user_student_number," +
                 "login_time,login_ip from user_login_log where " +
-                "login_time between Data startTime and  Data endingTime";
+                "login_time between ? and   ?";
 
         //获取pstmt对象
         PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setDate(1, new java.sql.Date(startTime.getTime()));
+        pstmt.setDate(2, new java.sql.Date(endingTime.getTime()));
         //执行sql
         ResultSet rs = pstmt.executeQuery();
         LoginLog loginlog = null;
         List<LoginLog> loginLogs = new ArrayList<>();
         while (rs.next()) {
-            String name = rs.getString("log_id");
+            String log_id = rs.getString("log_id");
             Integer userStudentNumber = rs.getInt("user_student_number");
             Date loginTime = rs.getDate("login_time");
             String loginIp = rs.getString("login_ip");
             //封装Loginlog对象
             loginlog = new LoginLog();
-            loginlog.setName(name);
+            loginlog.setName(log_id);
             loginlog.setStudentNumber(userStudentNumber);
             loginlog.setLoginTime(loginTime);
             loginlog.setLoginIp(loginIp);
@@ -148,4 +154,6 @@ public class LoginDao implements ILoginDao {
         connection.close();
         return count;
     }
+
+
 }

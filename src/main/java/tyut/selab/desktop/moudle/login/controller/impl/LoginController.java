@@ -12,6 +12,7 @@ import javax.swing.*;
 import javax.xml.crypto.Data;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 public class LoginController implements ILoginController{
@@ -34,7 +35,7 @@ public class LoginController implements ILoginController{
     }
 
     @Override
-    public List<LoginLog> showLoginLog(Data startTime, Data endingTime) throws Exception {
+    public List<LoginLog> showLoginLog(Date startTime, Date endingTime) throws Exception {
         return loginService.showLoginLog(startTime,endingTime);
     }
 

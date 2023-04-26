@@ -165,7 +165,7 @@ public class LoginService implements ILoginService {
     }
 
     @Override
-    public List<LoginLog> showLoginLog(Data startTime, Data endingTime) throws Exception {
+    public List<LoginLog> showLoginLog(Date startTime, Date endingTime) throws Exception {
         return loginDao.showLoginLog(startTime, endingTime);
     }
 

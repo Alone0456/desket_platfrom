@@ -15,7 +15,7 @@ public class LoginDemo extends JFrame {
 
     public LoginDemo() throws Exception {
         super("登录界面");
-//        loginController.autoLogin();
+
         //      获取显示屏的大小
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int sw = screenSize.width;

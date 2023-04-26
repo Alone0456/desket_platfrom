@@ -205,8 +205,8 @@ public class MainInterface extends JFrame  {
         this.add(label);
         Home p=new Home();
         panel.add(p,"Home");
-        SystemAdministration p1=new SystemAdministration();
-        panel.add(p1,"系统管理");
+        SystemAdministration systemButton=new SystemAdministration();
+        panel.add(systemButton,"系统管理");
 
         if(LoginService.getUser().getRole().getDuty().equals("用户")){
             JPanel jPanel=UserMainPanel.getUserPanel();

@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.xml.crypto.Data;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 public interface ILoginController {
@@ -36,7 +37,7 @@ public interface ILoginController {
      * @param endingTime
      * @return
      */
-    List<LoginLog> showLoginLog(Data startTime, Data endingTime) throws Exception;
+    List<LoginLog> showLoginLog(Date startTime, Date endingTime) throws Exception;
      UserVo getUserVo();
 
        void save(boolean automaticLogin, boolean rememberNumber, JTextField uField, JPasswordField pFd) throws IOException;

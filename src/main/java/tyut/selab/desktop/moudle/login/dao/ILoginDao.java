@@ -5,6 +5,7 @@ import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 
 import javax.xml.crypto.Data;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 public interface ILoginDao {
@@ -27,7 +28,7 @@ public interface ILoginDao {
      * @param endingTime
      * @return
      */
-    List<LoginLog> showLoginLog(Data startTime, Data endingTime) throws Exception;
+    List<LoginLog> showLoginLog(Date startTime, Date endingTime) throws Exception;
 
     /**
      * 增加记录

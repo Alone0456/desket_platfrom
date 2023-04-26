@@ -1,6 +1,7 @@
 package tyut.selab.desktop.ui.login;
 
 
+import tyut.selab.desktop.moudle.login.controller.ILoginController;
 import tyut.selab.desktop.moudle.login.controller.impl.LoginController;
 
 import javax.swing.*;
