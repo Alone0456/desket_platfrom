@@ -6,6 +6,7 @@ import tyut.selab.desktop.moudle.login.service.impl.LoginService;
 import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.userdao.IUserDao;
 import tyut.selab.desktop.moudle.student.userdao.impl.UserDao;
+import tyut.selab.desktop.ui.sharecenter.sharecenter;
 import tyut.selab.desktop.ui.tools.component.panels.mainpanels.ManagerMainPanel;
 import tyut.selab.desktop.ui.tools.component.panels.mainpanels.UserMainPanel;
 
@@ -64,8 +65,8 @@ public class MainInterface extends JFrame  {
 
         ImageIcon image1=new ImageIcon("src\\img\\xtgl.png");//获取图片
         ImageIcon image2=change(image1,0.15);//这里是缩小两倍，可以按自己的需求放缩
-        JButton button1 = new JButton("系统管理", image2);    //登录按钮
-        button1.setToolTipText("系统管理");// 悬停显示
+        JButton button1 = new JButton("分享中心", image2);    //登录按钮
+        button1.setToolTipText("分享中心");// 悬停显示
         ImageIcon image3=new ImageIcon("src\\img\\zbgl.png");//获取图片
         ImageIcon image4=change(image3,0.15);//这里是缩小两倍，可以按自己的需求放缩
         JButton button2 = new JButton("周报管理",image4);    //重置按钮
@@ -205,12 +206,13 @@ public class MainInterface extends JFrame  {
         this.add(label);
         Home p=new Home();
         panel.add(p,"Home");
-        SystemAdministration systemButton=new SystemAdministration();
-        panel.add(systemButton,"系统管理");
+        sharecenter sharecenters=new sharecenter();
+
+        panel.add(sharecenters,"分享中心");
 
         if(LoginService.getUser().getRole().getDuty().equals("用户")){
-            JPanel jPanel=UserMainPanel.getUserPanel();
-            panel.add(jPanel,"周报管理");
+            JPanel userPanel=UserMainPanel.getUserPanel();
+            panel.add(userPanel,"周报管理");
         }else{
             JPanel managerPanel = ManagerMainPanel.getManagerPanel();
             panel.add(managerPanel,"周报管理");
@@ -231,7 +233,7 @@ public class MainInterface extends JFrame  {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panel, "系统管理");
+                cardLayout.show(panel, "分享中心");
 
             }
         });

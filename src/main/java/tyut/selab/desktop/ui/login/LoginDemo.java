@@ -223,6 +223,7 @@ public class LoginDemo extends JFrame {
                     new MainInterface(str);
                 } else JOptionPane.showMessageDialog(null, str, "警告", JOptionPane.WARNING_MESSAGE);
             } catch (Exception exception) {
+                exception.printStackTrace();
                 JOptionPane.showMessageDialog(null, "异常", "警告", JOptionPane.WARNING_MESSAGE);
             }
         }

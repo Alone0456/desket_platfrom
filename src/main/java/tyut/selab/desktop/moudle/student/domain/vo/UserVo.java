@@ -9,6 +9,19 @@ public class UserVo {
     private String post; //用户邮箱
     private String duty; //用户职责
 
+    public UserVo() {
+    }
+
+    public UserVo(Integer studentNumber, String name, String accountNumber, int gender, String phone, String post, String duty) {
+        this.studentNumber = studentNumber;
+        this.name = name;
+        this.accountNumber = accountNumber;
+        this.gender = gender;
+        this.phone = phone;
+        this.post = post;
+        this.duty = duty;
+    }
+
     @Override
     public String toString() {
         return "UserVo{" +

@@ -103,6 +103,15 @@ public class Home extends JPanel {
                 window.dispose();
                 replaceFileStr();
                 new LoginDemo();
+                try {
+                    UIManager.setLookAndFeel( "javax.swing.plaf.nimbus.NimbusLookAndFeel");
+                    new LoginDemo();
+                } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException g) {
+                    JOptionPane.showMessageDialog(null, "系统异常", "你个老六", JOptionPane.WARNING_MESSAGE);
+                } catch (Exception g) {
+                    g.printStackTrace();
+                }
+
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             } catch (Exception ex) {
