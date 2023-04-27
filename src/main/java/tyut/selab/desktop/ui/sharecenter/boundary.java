@@ -33,16 +33,22 @@ public class boundary extends JPanel{
     GridBagLayout gridBag = null;
     // 约束
     GridBagConstraints c = null;
+    GridBagLayout igridBag = null;
     private JPanel errorShow = null;
+    private JPanel iPanel = null;
+
+
     private JButton adminShow = null;
     private JLabel timeShow = null;
     private JLabel informationShow = null;
     private JLabel stackShow = null;
 
 
+
     //解决方案
     private JPanel saveShow = null;
     private JLabel saveInformation = null;
+    private JLabel saveImage = null;
 
 
     //创建一个垂直的分割面板
@@ -101,16 +107,19 @@ public class boundary extends JPanel{
 
 
         this.gridBag = new GridBagLayout();
+        this.igridBag = new GridBagLayout();
         this.c = null;
         this.errorShow = new JPanel(gridBag);
+        this.iPanel = new JPanel(igridBag);
         this.adminShow = new JButton();
 
 
         this.timeShow = new JLabel();
-        this.informationShow = new JLabel();
+        this.informationShow = new JLabel("",SwingConstants.CENTER);
         this.stackShow = new JLabel();
         this.saveShow = new JPanel(new BorderLayout());
-        this.saveInformation = new JLabel();
+        this.saveInformation = new JLabel("",SwingConstants.CENTER);
+
         this.right = new JSplitPane(JSplitPane.VERTICAL_SPLIT,errorShow,saveShow);
         this.content = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,new JScrollPane(bugVoJList),right);
 
@@ -127,16 +136,13 @@ public class boundary extends JPanel{
         this.deleteItem = new JMenuItem("删除");
         this.updateItem = new JMenuItem("更改");
 
+
+
+
+
     }
 
 
-    public void setDefaultListModel(DefaultListModel defaultListModel) {
-        this.defaultListModel = defaultListModel;
-    }
-
-    public void setBugVoJList(JList<BugVo> bugVoJList) {
-        this.bugVoJList = bugVoJList;
-    }
 
     public void setInsertJButton(JButton insertJButton) {
         this.insertJButton = insertJButton;
@@ -262,9 +268,10 @@ public class boundary extends JPanel{
         jSplitPane();
         //窗口功能实现
         homeJPanel();
-        beautifyWindowAndMenu();
         beautifyAdminShow();
-
+        beautifyErrorShow();
+        beautifySaveShow();
+        beautifyAdminShow();
     }
 
 
@@ -272,12 +279,12 @@ public class boundary extends JPanel{
      * 为界面的三个板块设置大小
      */
     public void setPreferredSize(){
-        bugVoJList.setPreferredSize(new Dimension(200,600));
-        errorShow.setPreferredSize(new Dimension(700,200));
-        saveShow.setPreferredSize(new Dimension(700,400));
+        bugVoJList.setPreferredSize(new Dimension(230,670));
+        errorShow.setPreferredSize(new Dimension(750,250));
+        saveShow.setPreferredSize(new Dimension(750,420));
     }
 
-//1010 700
+
     /**
      * 两个分隔条的设置
      */
@@ -300,38 +307,7 @@ public class boundary extends JPanel{
     }
 
 
-    /**
-     *列表最初显示
-     * 不管是查看所有信息，还是查看相关类型信息，还是增加或者删除后，把更新后的list传到该方法即可显示在界面。
-     */
-//    public void setDefaultJlist(List<BugVo> bugVos){
-//
-//        List<BugVo> bugVos1 = bugVos;
-//        bugVoJList.setSelectedIndex(0);
-//        bugVoJList.setSelectedValue(bugVos.get(0),true);
-//        adminShow.setText(bugVos.get(0).getUserVo().getName());
-//        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        timeShow.setText(sdf.format(bugVos.get(0).getReleaseTime()));
-//        informationShow.setText(bugVos.get(0).getBugTitle());
-//        StringBuffer stackBuffer = new StringBuffer();
-//        for(int i = 0;i<=bugVos.get(0).getBugType().size()-1;i++){
-//            stackBuffer.append(" ");
-//            stackBuffer.append(bugVos.get(0).getBugType().get(i));
-//            if(i!=bugVos.get(0).getBugType().size()-1){
-//                stackBuffer.append(",");
-//            }else{
-//                stackBuffer.append(" ");
-//            }
-//        }
-//        stackShow.setText(stackBuffer.toString());
-//
-//        //展示解决方案
-//        saveInformation.setText(bugVos.get(0).getBugSolve());
-//
-//        beautifyErrorShow();
-//        beautifySaveShow();
-//
-//    }
+
 
 
     /**
@@ -339,6 +315,26 @@ public class boundary extends JPanel{
      * 不管是查看所有信息，还是查看相关类型信息，还是增加或者删除后，把更新后的list传到该方法即可显示在界面。
      */
     public void setList(List<BugVo> informations){
+        if(informations.size() == 0){
+            bugVoJList.addMouseListener(new MouseAdapter(){
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+
+                    if(e.getButton()==MouseEvent.BUTTON3){
+
+                        int index = bugVoJList.locationToIndex(e.getPoint());
+
+                        bugVoJList.setSelectedIndex(index);
+                        popupMenu.show(e.getComponent(), e.getX(), e.getY());
+
+
+
+                    }
+                }
+            });
+        }
+
         bugVoJList.removeAll();
         bugVoJList.addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -352,11 +348,13 @@ public class boundary extends JPanel{
                         selectedIndex = 0;
                     }
 
+
 //                展示报错信息，用户，时间.
+
                     adminShow.setText(informations.get(selectedIndex).getUserVo().getName());
                     SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     timeShow.setText(sdf.format(informations.get(selectedIndex).getReleaseTime()));
-                    informationShow.setText(informations.get(selectedIndex).getBugTitle());
+                    informationShow.setText(boundary.errorLineFeed(informations.get(selectedIndex).getBugTitle()));
                     StringBuffer stackBuffer = new StringBuffer();
                     for(int i = 0;i<=informations.get(selectedIndex).getBugType().size()-1;i++){
                         stackBuffer.append(" ");
@@ -370,11 +368,9 @@ public class boundary extends JPanel{
                     stackShow.setText(stackBuffer.toString());
 
                     //展示解决方案
-                    saveInformation.setText(informations.get(selectedIndex).getBugSolve());
+                    saveInformation.setText(boundary.saveLineFeed(informations.get(selectedIndex).getBugSolve()));
 
-                    beautifyErrorShow();
-                    beautifySaveShow();
-                    beautifyAdminShow();
+
 
                     bugVoJList.addMouseListener(new MouseAdapter(){
                         @Override
@@ -382,13 +378,13 @@ public class boundary extends JPanel{
                             super.mouseClicked(e);
 
                             if(e.getButton()==MouseEvent.BUTTON3){
-                                int index= -1;
-                                index = bugVoJList.locationToIndex(e.getPoint());
-                                if(index != -1){
+
+                                int index = bugVoJList.locationToIndex(e.getPoint());
+
                                     bugVoJList.setSelectedIndex(index);
                                     popupMenu.show(e.getComponent(), e.getX(), e.getY());
-                                    index = -1;
-                                }
+
+
 
                             }
                         }
@@ -400,7 +396,6 @@ public class boundary extends JPanel{
 
         });
 
-
     }
 
 
@@ -409,9 +404,10 @@ public class boundary extends JPanel{
      */
     public void setErrorShow(){
         JScrollPane errorJScrollPane = new JScrollPane(informationShow,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        GridBagLayout igridBag = new GridBagLayout();    // 布局管理器
+        errorJScrollPane.setBackground(new Color(40,47,54));
+        errorJScrollPane.setForeground(new Color(40,47,54));
+           // 布局管理器
         GridBagConstraints ic = null;
-        JPanel iPanel = new JPanel(igridBag);
 
         ic = new GridBagConstraints();
 
@@ -495,23 +491,35 @@ public class boundary extends JPanel{
      * 美化errorShow里面的组件
      */
     public void beautifyErrorShow(){
-        //技术栈框
-        Border etchedRaisedBorder1 = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
-        Border lineBorder1 = BorderFactory.createLineBorder(Color.ORANGE,2);
-        Border stackBorder = BorderFactory.createCompoundBorder(etchedRaisedBorder1, lineBorder1);
-        stackShow.setBorder(stackBorder);
-        //信息框
-        Border etchedRaisedBorder2 = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
-        Border lineBorder2 = BorderFactory.createLineBorder(Color.GRAY,4);
-        Border informationBorder = BorderFactory.createCompoundBorder(etchedRaisedBorder2, lineBorder2);
-        informationShow.setBorder(informationBorder);
-        //时间框
-        Border etchedRaisedBorder3 = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
-        Border lineBorder3 = BorderFactory.createLineBorder(Color.black,0);
-        Border timeBorder = BorderFactory.createCompoundBorder(etchedRaisedBorder3, lineBorder3);
-        timeShow.setBorder(timeBorder);
+
+        errorShow.setOpaque(true);
+//        errorShow.setBackground(new Color(166,166,166));
+        errorShow.setBackground(new Color(40,47,54));
+        informationShow.setFont(new Font("宋体",Font.BOLD,25));
+        informationShow.setOpaque(true);
+        informationShow.setBackground(new Color(29,32,38));
+
+        timeShow.setForeground(new Color(166,166,166));
+
         //报错信息
-        informationShow.setForeground(Color.RED);
+        informationShow.setForeground(new Color(255,255,255));
+
+        stackShow.setOpaque(true);
+        stackShow.setBackground(new Color(24,189,209));
+        stackShow.setForeground(new Color(255,255,255));
+        stackShow.setFont(new Font("宋体",Font.BOLD,20));
+
+        iPanel.setOpaque(true);
+        iPanel.setBackground(new Color(40,47,54));
+        adminShow.setOpaque(true);
+        adminShow.setBorderPainted(false);//不绘制边框
+        adminShow.setFocusPainted(false);//选中后不绘制边框
+        adminShow.setContentAreaFilled(false);//不绘制按钮区域
+        adminShow.setFont(new Font("宋体", Font.BOLD,22));
+        adminShow.setForeground(new Color(127,133,143));
+
+
+
     }
 
 
@@ -519,18 +527,24 @@ public class boundary extends JPanel{
      * 组装saveShow(右上角栏)
      */
     public void setSaveShow(){
-        saveShow.add(new JScrollPane(saveInformation,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER),BorderLayout.CENTER);
-    }
 
+        saveShow.add(new JScrollPane(saveInformation,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER),BorderLayout.CENTER);
+
+    }
 
     /**
      * 美化saveShow里面的组件
      */
     public void beautifySaveShow(){
-        Border etchedRaisedBorder4 = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
-        Border lineBorder4 = BorderFactory.createLineBorder(Color.cyan,3);
-        Border saveBorder = BorderFactory.createCompoundBorder(etchedRaisedBorder4, lineBorder4);
-        saveInformation.setBorder(saveBorder);
+        saveInformation.setOpaque(true);
+        saveInformation.setFont(new Font("宋体", Font.ITALIC,18));
+        saveInformation.setForeground(new Color(24,189,209));
+        saveInformation.setBackground(new Color(29,32,38));
+//        saveInformation.setBackground(new Color(166,166,166));
+
+        bugVoJList.setBackground(new Color(29,32,38));
+//        bugVoJList.setBackground(new Color(166,166,166));
+        bugVoJList.setForeground(new Color(166,166,166));
     }
 
 
@@ -540,13 +554,6 @@ public class boundary extends JPanel{
     public void beautifyAdminShow(){
         adminShow.setBorderPainted(false);
         adminShow.setFocusPainted(false);
-    }
-
-    /**
-     * 美化窗口和菜单条
-     */
-    public void beautifyWindowAndMenu(){
-
     }
 
 
@@ -559,50 +566,7 @@ public class boundary extends JPanel{
     public void homeJPanel(){
         homeJPanel.setPreferredSize(new Dimension(1010,700));
         homeJPanel.add(content);
-        //打开窗口
-//        Object o = (Object)"欢迎进入Dug查看中心";
-//        frame.addWindowListener(new WindowAdapter() {
-//            @Override
-//            public void windowOpened(WindowEvent e) {
-//                JOptionPane.showMessageDialog(frame,o,"欢迎",JOptionPane.INFORMATION_MESSAGE);
-//
-//            }
-//        });
-
-
-
-//        窗口风格
-//          try {
-//              JFrame.setDefaultLookAndFeelDecorated(true);
-//              UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        }catch(Exception e) {
-//            System.out.println(e);
-//        }
-
-
-        //关闭程序
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        //窗口图标(还未设置)
-//        URL resource = boundary.class.getClassLoader().getResource("");
-//        Image image = new ImageIcon(resource).getImage();
-//        //窗口大小
-//        frame.setSize(600,500);
-//        //居中
-//        frame.setLocationRelativeTo(null);
-//        //不可改变大小
-//        frame.setResizable(false);
-//        frame.setUndecorated(true);
-//        //可视
+        homeJPanel.setBackground(new Color(40,47,54));
         homeJPanel.setVisible(true);
 
     }
@@ -622,22 +586,18 @@ public class boundary extends JPanel{
         StringBuffer errorStringBuffer = new StringBuffer();
         errorStringBuffer.append("<html><body>");
         int start = 0;
-        int end = 34;
+        int end = 40;
         int interval = 40;
         for(int i = 0;i< s.length()/interval+1;i++) {
-            if (i == 0) {
-                errorStringBuffer.append("<&nbsp<&nbsp<&nbsp<&nbsp<&nbsp<&nbsp");
+            if(end > s.length()){
+                end = s.length();
                 errorStringBuffer.append(s, start, end);
                 errorStringBuffer.append("<br>");
-                start = end;
-                if(start + interval > s.length()) {
-                    end = s.length();
-                }else {
-                    end = start + interval;
-                }
-            }else{
+                return errorStringBuffer.toString();
+            }
                 errorStringBuffer.append(s, start, end);
                 errorStringBuffer.append("<br>");
+
                 if (end < s.length() - interval ) {
                     start += interval;
                     end += interval;
@@ -646,7 +606,7 @@ public class boundary extends JPanel{
                     end = s.length();
                 }
             }
-        }
+
         errorStringBuffer.append("</body></html>");
         return errorStringBuffer.toString();
     }
@@ -656,16 +616,16 @@ public class boundary extends JPanel{
         saveStringBuffer.append("<html><body>");
 
         int start = 0;
-        int end = 31;
-        int interval = 31;
+        int end = 30;
+        int interval = 30;
         for(int i = 0;i< s.length()/interval+1;i++){
-            if(i == 0){
-                saveStringBuffer.append("<&nbsp<&nbsp<&nbsp<&nbsp<&nbsp<&nbsp");
-                saveStringBuffer.append(s,start,end);
+            if(end > s.length()){
+                end = s.length();
+                saveStringBuffer.append(s, start, end);
                 saveStringBuffer.append("<br>");
-                start = end;
-                end = start + interval;
-            }else {
+                return saveStringBuffer.toString();
+            }
+
                 saveStringBuffer.append(s, start, end);
                 saveStringBuffer.append("<br>");
                 if (end < s.length() - interval ) {
@@ -676,12 +636,12 @@ public class boundary extends JPanel{
                     end = s.length();
                 }
             }
-        }
+
         saveStringBuffer.append("</body></html>");
         return saveStringBuffer.toString();
     }
     public static String jlistTextShow(String s){
-       int jlistTextlength = 10;
+       int jlistTextlength = 70;
         if(s.length()>jlistTextlength){
             StringBuffer jlistStringBuffer = new StringBuffer();
             char[] chars = s.toCharArray();

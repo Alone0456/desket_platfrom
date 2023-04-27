@@ -10,6 +10,7 @@ import tyut.selab.desktop.moudle.sharecenter.service.IShareCenterService;
 import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 import tyut.selab.desktop.moudle.student.userdao.IUserDao;
+import tyut.selab.desktop.ui.sharecenter.boundary;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -29,32 +30,7 @@ public class ShareCenterService implements IShareCenterService{
     }
 
     @Override
-//    public List<BugVo> showBugInfo() {
-//        try {
-//            List<BugMessage> bugMessages = shareCenterDao.queryAllBugInfo();
-//            List<BugVo> bugVoList = new Vector<>();
-//            if (bugMessages.size()>=1){
-//                BugMessage bugMessage = bugMessages.get(0);
-//                BugVo BugVo = bugMessage.toBugVo();
-//                bugVoList.add(BugVo);
-//                for (int i = 1; i < bugMessages.size(); i++) {
-//                    bugMessage = bugMessages.get(i);
-//
-//                    if(bugMessage.getBugTitle().equals(bugMessages.get(i-1).getBugTitle())){
-//                        BugVo.addBugType(bugMessage.getBugType());
-//                    }else {
-//                        BugVo = bugMessage.toBugVo();
-//                        bugVoList.add(BugVo);
-//                    }
-//                }
-//                return bugVoList;
-//            } else {
-//                return bugVoList;
-//            }
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+
     public List<BugVo> showBugInfo() {
         try {
             List<BugMessage> bugMessages = shareCenterDao.queryAllBugInfo();
@@ -92,19 +68,23 @@ public class ShareCenterService implements IShareCenterService{
         try {
             List<BugMessage> bugMessages = shareCenterDao.queryBugInfoByType(bugType);
             List<BugVo> bugVoList = new Vector<>();
+            ArrayList<String> titleList = new ArrayList<>();
 
             if (bugMessages.size()>=1){
                 BugMessage bugMessage = bugMessages.get(0);
-                BugVo BugVo = bugMessage.toBugVo();
-                bugVoList.add(BugVo);
+                BugVo bugVo = bugMessage.toBugVo();
+                bugVoList.add(bugVo);
+                titleList.add(bugVo.getBugTitle());
                 for (int i = 1; i < bugMessages.size(); i++) {
                     bugMessage = bugMessages.get(i);
 
-                    if(bugMessage.getBugTitle().equals(bugMessages.get(i-1).getBugTitle())){
-                        BugVo.addBugType(bugMessage.getBugType());
+                    if (titleList.contains(bugMessage.getBugTitle())){
+                        int index = titleList.indexOf(bugMessage.getBugTitle());
+                        bugVoList.get(index).addBugType(bugMessage.getBugType());
                     }else {
-                        BugVo = bugMessage.toBugVo();
-                        bugVoList.add(BugVo);
+                        titleList.add(bugMessage.getBugTitle());
+                        bugVo = bugMessage.toBugVo();
+                        bugVoList.add(bugVo);
                     }
                 }
                 return bugVoList;
@@ -124,23 +104,29 @@ public class ShareCenterService implements IShareCenterService{
 
             List<BugMessage> bugMessages = shareCenterDao.ShowBugInfo(user);
             List<BugVo> bugVoList = new Vector<>();
+            ArrayList<String> titleList = new ArrayList<>();
 
             if (bugMessages.size()>=1){
                 BugMessage bugMessage = bugMessages.get(0);
-                BugVo BugVo = bugMessage.toBugVo();
-                bugVoList.add(BugVo);
+                BugVo bugVo = bugMessage.toBugVo();
+                bugVoList.add(bugVo);
+                titleList.add(bugVo.getBugTitle());
                 for (int i = 1; i < bugMessages.size(); i++) {
                     bugMessage = bugMessages.get(i);
 
-                    if(bugMessage.getBugTitle().equals(bugMessages.get(i-1).getBugTitle())){
-                        BugVo.addBugType(bugMessage.getBugType());
+                    if (titleList.contains(bugMessage.getBugTitle())){
+                        int index = titleList.indexOf(bugMessage.getBugTitle());
+                        bugVoList.get(index).addBugType(bugMessage.getBugType());
                     }else {
-                        BugVo = bugMessage.toBugVo();
-                        bugVoList.add(BugVo);
+                        titleList.add(bugMessage.getBugTitle());
+                        bugVo = bugMessage.toBugVo();
+                        bugVoList.add(bugVo);
                     }
                 }
+                return bugVoList;
+            } else {
+                return bugVoList;
             }
-            return bugVoList;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -148,10 +134,12 @@ public class ShareCenterService implements IShareCenterService{
 
     @Override
     public int insertBugInfo(BugVo bugVo) {
+
         User user = new User();
         user.setStudentNumber(bugVo.getUserVo().getStudentNumber());
         BugMessage bugMessage = new BugMessage(0, bugVo.getBugTitle(), bugVo.getBugSolve(),
                 bugVo.getReleaseTime(), user, bugVo.getBugType().get(0));
+
         try {
             shareCenterDao.insertBugInfo(bugMessage);
         } catch (Exception e) {
@@ -175,10 +163,11 @@ public class ShareCenterService implements IShareCenterService{
     public int updateBugInfo(BugVo newBugVo, BugVo oldBugVo) {
         User user = new User();
         user.setStudentNumber(oldBugVo.getUserVo().getStudentNumber());
-        BugMessage oldBugMessage = new BugMessage(0, oldBugVo.getBugTitle(), oldBugVo.getBugSolve(),
+        BugMessage oldBugMessage = new BugMessage(0,oldBugVo.getBugTitle(),oldBugVo.getBugSolve() ,
                 oldBugVo.getReleaseTime(), user, oldBugVo.getBugType().get(0));
-        BugMessage newBugMessage = new BugMessage(0, newBugVo.getBugTitle(), newBugVo.getBugSolve(),
+        BugMessage newBugMessage = new BugMessage(0, newBugVo.getBugTitle(),newBugVo.getBugSolve(),
                 newBugVo.getReleaseTime(), user, newBugVo.getBugType().get(0));
+
         try {
             shareCenterDao.updateBugInfo(newBugMessage, oldBugMessage);
         } catch (Exception e) {

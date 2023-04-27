@@ -4,8 +4,7 @@ import tyut.selab.desktop.moudle.sharecenter.dao.IShareCenterDao;
 import tyut.selab.desktop.moudle.sharecenter.domain.BugMessage;
 import tyut.selab.desktop.moudle.student.domain.Role;
 import tyut.selab.desktop.moudle.student.domain.User;
-import tyut.selab.desktop.utils.MysqlConnect;
-import tyut.selab.desktop.utils.MysqlConnect;
+import tyut.selab.desktop.utils.sharecenter.MysqlConnect;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -226,6 +225,7 @@ public class ShareCenterDao extends BaseDao implements IShareCenterDao {
     public int updateBugInfo(BugMessage newBugMessage, BugMessage oldBugMessage) throws SQLException {
         int oldBugId = queryBugId(oldBugMessage);
         int newBugId = queryBugId(newBugMessage);
+
         // 设置bugId值
         oldBugMessage.setBugId(oldBugId);
         newBugMessage.setBugId(newBugId);

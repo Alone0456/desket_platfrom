@@ -2,8 +2,7 @@ package tyut.selab.desktop.moudle.sharecenter.dao.impl;
 
 import tyut.selab.desktop.moudle.sharecenter.dao.IBugTypeDao;
 import tyut.selab.desktop.moudle.sharecenter.domain.BugType;
-import tyut.selab.desktop.utils.MysqlConnect;
-import tyut.selab.desktop.utils.MysqlConnect;
+import tyut.selab.desktop.utils.sharecenter.MysqlConnect;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

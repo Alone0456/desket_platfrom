@@ -1,6 +1,6 @@
 package tyut.selab.desktop.ui.login;
+
 import tyut.selab.desktop.moudle.login.controller.impl.LoginController;
-import tyut.selab.desktop.moudle.login.service.impl.LoginService;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicPanelUI;
@@ -108,9 +108,6 @@ public class LoginDemo extends JFrame {
                 uField.setText(temp[3]);
             }
             if(b>4&&RememberNumber.isSelected()){
-
-
-
 
                 byte[] bt =temp[4] .getBytes();
                 for (int i = 0; i < bt.length; i++) {

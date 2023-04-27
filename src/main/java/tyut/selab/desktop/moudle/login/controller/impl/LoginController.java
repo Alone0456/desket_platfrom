@@ -23,6 +23,7 @@ public class LoginController implements ILoginController{
 
     @Override
     public String register(UserRegisterVo user) {
+
         return loginService.register(user);
     }
 
@@ -31,7 +32,7 @@ public class LoginController implements ILoginController{
         return loginService.showLoginLog();
     }
 
-    @Override
+
     public List<LoginLog> showLoginLog(Date startTime, Date endingTime) throws Exception {
         return loginService.showLoginLog(startTime,endingTime);
     }

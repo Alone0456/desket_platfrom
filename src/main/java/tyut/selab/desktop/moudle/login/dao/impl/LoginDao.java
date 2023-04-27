@@ -36,6 +36,8 @@ public class LoginDao implements ILoginDao {
             loginlog.setLoginTime(loginTime);
             loginlog.setLoginIp(loginIp);
             loginLogs.add(loginlog);
+
+
         }
 
         rs.close();
@@ -45,7 +47,7 @@ public class LoginDao implements ILoginDao {
         return loginLogs;
     }
 
-    @Override
+
     public List<LoginLog> queryLoginLogByStudentNumber(String studentNumber) throws Exception {
         //获取collection
         Connection connection = MysqlConnect.getConnection();

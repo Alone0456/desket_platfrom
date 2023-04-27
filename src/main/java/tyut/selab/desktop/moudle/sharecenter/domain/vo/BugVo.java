@@ -36,7 +36,7 @@ public class BugVo {
     @Override
     public String toString() {
         String s = boundary.jlistTextShow(bugTitle);
-        return  "   " + s  ;
+        return  "    " + s  ;
     }
 
     public void addBugType(String bugType){
@@ -44,7 +44,8 @@ public class BugVo {
     }
 
     public String getBugTitle() {
-        return bugTitle;
+
+        return bugTitle ;
     }
 
     public void setBugTitle(String bugTitle) {
@@ -52,6 +53,7 @@ public class BugVo {
     }
 
     public String getBugSolve() {
+
         return bugSolve;
     }
 

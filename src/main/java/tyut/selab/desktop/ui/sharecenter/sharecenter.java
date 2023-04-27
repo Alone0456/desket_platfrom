@@ -1,7 +1,9 @@
 package tyut.selab.desktop.ui.sharecenter;
 
+import tyut.selab.desktop.moudle.login.service.impl.LoginService;
 import tyut.selab.desktop.moudle.sharecenter.controller.impl.ShareCenterController;
 import tyut.selab.desktop.moudle.sharecenter.domain.vo.BugVo;
+import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 
 import javax.swing.*;
@@ -10,22 +12,24 @@ import java.util.Vector;
 
 public class sharecenter extends JPanel {
     public sharecenter(){
-        UserVo userVo = new UserVo();
+        User user = LoginService.getUser();
+        UserVo userVo = new UserVo(user.getStudentNumber(), user.getName(), user.getAccountNumber(),
+                user.getGender(), user.getPhone(),
+                user.getPost(), user.getRole().getDuty());
+        function functions = new function(userVo);
+        add(functions.getUi().getHomeJPanel());
+        functions.showBugInfo();
+        functions.ShowBugInfo(userVo);
+        functions.ShowBugInfo(new Vector<String>());
 
-        userVo.setDuty("管理员");
-        ShareCenterController controller = new ShareCenterController(userVo);
-        add(controller.getUi().getHomeJPanel());
-        controller.showBugInfo();
-        controller.ShowBugInfo(userVo);
-        controller.ShowBugInfo(new Vector<String>());
-
-        controller.addAllType();
+        functions.addAllType();
         BugVo bugVo = new BugVo();
         bugVo.setUserVo(userVo);
         bugVo.setBugType(new Vector<String>());
+        functions.insertBugInfo(userVo);
+        functions.updateBugInfo(userVo);
+        functions.deleteBugInfo();
+        functions.getUi().init();
 
-        controller.insertBugInfo(bugVo);
-        controller.deleteBugInfo(bugVo);
-        controller.getUi().init();
     }
 }

@@ -11,6 +11,8 @@ import tyut.selab.desktop.ui.book.user.SystemOrdinaryUsers;
 import tyut.selab.desktop.ui.sharecenter.sharecenter;
 import tyut.selab.desktop.ui.student.manager.AdministratorInformation;
 import tyut.selab.desktop.ui.student.user.UserInformation;
+import tyut.selab.desktop.ui.todolist.component.ManagerBookManageComponent;
+import tyut.selab.desktop.ui.todolist.component.UserBookManageComponent;
 import tyut.selab.desktop.ui.tools.component.panels.mainpanels.ManagerMainPanel;
 import tyut.selab.desktop.ui.tools.component.panels.mainpanels.UserMainPanel;
 
@@ -239,6 +241,13 @@ public class MainInterface extends JFrame  {
         }
 //        Box box=Box.createHorizontalBox();
 //        panel.add(box,"任务清单");
+        if(LoginService.getUser().getRole().getDuty().equals("用户")){
+            UserBookManageComponent userBookManageComponent=new UserBookManageComponent(this);
+            panel.add(userBookManageComponent,"任务清单");
+        }else{
+            ManagerBookManageComponent managerBookManageComponent=new ManagerBookManageComponent(this);
+            panel.add(managerBookManageComponent,"任务清单");
+        }
 
 
         addWindowListener(new WindowAdapter() {

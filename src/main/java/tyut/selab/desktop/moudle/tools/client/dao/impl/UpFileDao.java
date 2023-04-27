@@ -6,9 +6,6 @@ import tyut.selab.desktop.moudle.tools.client.domain.FileUp;
 import tyut.selab.desktop.utils.MysqlConnect;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -74,7 +71,6 @@ public class UpFileDao implements IUpFileDao {
             }
             //封装成对象
             uf = new FileUp();
-
             temp.setStudentNumber(studentNumber);
             uf.setUpId((int) upId);
             uf.setUser(temp);
@@ -83,6 +79,7 @@ public class UpFileDao implements IUpFileDao {
             uf.setUpIp(upIp);
             uf.setWeek(week);
             //写在集合里
+
             list.add(uf);
 
         }
@@ -94,7 +91,10 @@ public class UpFileDao implements IUpFileDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         return list;
+
+
     }
 
     @Override
@@ -114,6 +114,7 @@ public class UpFileDao implements IUpFileDao {
         int number = user.getStudentNumber().intValue();  // 与原参相比少了一个 r
         FileUp uf =null;
         List<FileUp> list = new ArrayList<>();
+
         while(true){
             try {
                 if (!rs.next())
@@ -121,19 +122,23 @@ public class UpFileDao implements IUpFileDao {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+
             int userStudentNumber = 0; // 判断语句
             try {
                 userStudentNumber = rs.getInt("user_student_number");  //是用户类型的User
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+
             User temp = new User();
+
             if(number == userStudentNumber){
                 String upFilePath = null;
                 Timestamp upTime = null; // 数据类型可能不匹配
                 String upIp = null;
                 String week = null;
                 long upId=0;
+
                 try {
                     upFilePath = rs.getString("up_file_path");
                     upTime = rs.getTimestamp("up_time");
@@ -143,6 +148,9 @@ public class UpFileDao implements IUpFileDao {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+
+
+
                 //封装成对象
                 uf = new FileUp();
                 temp.setStudentNumber(number);
@@ -153,6 +161,7 @@ public class UpFileDao implements IUpFileDao {
                 uf.setUpId((int) upId);
                 uf.setUser(temp);
                 //写在集合里
+
                 list.add(uf);
             }
         }
@@ -200,7 +209,7 @@ public class UpFileDao implements IUpFileDao {
         try{
             psmt.setInt(1,studentNumber);
             psmt.setString(2,filePath);
-            psmt.setString(3, time.toString());
+            psmt.setDate(3, (java.sql.Date) time);//可能会报错
             psmt.setString(4,ip);
             psmt.setString(5,week);
         }catch (SQLException e){

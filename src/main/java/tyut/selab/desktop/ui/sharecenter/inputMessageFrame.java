@@ -14,13 +14,13 @@ public class inputMessageFrame {
     private  JButton jButton = null;
 
 
-    public inputMessageFrame(String title) {
+    public inputMessageFrame(String title,String initString) {
         this.title = title;
         frame = new JFrame(title);
         jp = new JPanel();
         jp2 = new JPanel();
 
-        jta = new JTextArea("请输入内容",7,30);
+        jta = new JTextArea(initString,7,30);
         jta.setLineWrap(true);    //设置文本域中的文本为自动换行
         jta.setForeground(Color.BLACK);    //设置组件的背景色
         jta.setFont(new Font("楷体",Font.BOLD,16));    //修改字体样式

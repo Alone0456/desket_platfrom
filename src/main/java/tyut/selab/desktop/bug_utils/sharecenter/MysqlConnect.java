@@ -1,9 +1,18 @@
-package tyut.selab.desktop.utils;
+package tyut.selab.desktop.utils.sharecenter;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.pool.DruidDataSourceFactory;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
+
+
+
+import javax.sql.DataSource;
 
 /**
  * 数据库连接,使用Druid连接池
