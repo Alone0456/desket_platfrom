@@ -1,4 +1,4 @@
-package tyut.selab.desktop.utils.utils;
+package tyut.selab.desktop.utils;
 
 
 import com.alibaba.druid.util.JdbcUtils;

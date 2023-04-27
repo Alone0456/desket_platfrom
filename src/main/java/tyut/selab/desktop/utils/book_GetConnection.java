@@ -19,6 +19,7 @@ public class book_GetConnection {
 
        return rows;
    }
+
    public <T> List<T> executeQuery(Class<T> clazz,String sql,Object...params) throws SQLException, InstantiationException, IllegalAccessException, NoSuchFieldException, ClassNotFoundException {
        List<T> list = new ArrayList<>();
        Connection connection = tyut.selab.desktop.utils.Book_MysqlConnect.getConnection();

@@ -4,12 +4,10 @@ import tyut.selab.desktop.moudle.login.controller.ILoginController;
 import tyut.selab.desktop.moudle.login.domain.LoginLog;
 import tyut.selab.desktop.moudle.login.service.ILoginService;
 import tyut.selab.desktop.moudle.login.service.impl.LoginService;
-import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.domain.vo.UserRegisterVo;
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
@@ -58,7 +56,4 @@ public class LoginController implements ILoginController{
     public void changeLoginState(){
         loginService.changeLoginState();
     }
-
-
-
 }
