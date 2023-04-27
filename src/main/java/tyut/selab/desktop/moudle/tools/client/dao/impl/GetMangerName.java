@@ -19,7 +19,8 @@ public class GetMangerName {
             //获取连接
             Connection con = MysqlConnect.getConnection();
             //sql语句
-            String sql = "select a.name from user a , user_role b where  b.duty like '%管理%'";
+            String sql =
+                    "select a.name from user a where a.role_id = (select user_role.role_id from user_role where duty like '%管理%')";
             //获取执行对象
             PreparedStatement ps = con.prepareStatement(sql);
             //执行

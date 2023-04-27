@@ -3,7 +3,6 @@ package tyut.selab.desktop.ui.tools.utils;
 import tyut.selab.desktop.moudle.tools.client.controller.impl.FileController;
 import tyut.selab.desktop.moudle.tools.client.domain.FileUp;
 import tyut.selab.desktop.moudle.tools.client.domain.vo.FileUpVo;
-import tyut.selab.desktop.moudle.tools.client.service.impl.FileService;
 import tyut.selab.desktop.ui.tools.component.dialogs.Achieve;
 import tyut.selab.desktop.ui.tools.component.dropdownbox.Weeks;
 import tyut.selab.desktop.ui.tools.myexception.MyException;
@@ -28,7 +27,8 @@ import java.net.InetAddress;
 public class FileChooser {
     public static String path = "";
     public static String fileName;
-    public static String allPath;
+    public static String userAllPath;
+    public static String managerAllPath;
     public static FileController fileController = new FileController();
     public static FileUpVo fileUpVo = new FileUpVo();
     public static FileUp fileUp = new FileUp();
@@ -43,6 +43,7 @@ public class FileChooser {
             FileFilter filter = new FileNameExtensionFilter("压缩包(.zip )", "zip");
             jf.setFileFilter(filter);
         }
+        //只能选文件夹
         if (name.equals("存放周报") || name.equals("存放任务")) {
             jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         }
@@ -61,7 +62,8 @@ public class FileChooser {
             if (temp.length > 1) {
                 fileName = temp[temp.length - 1];
             }
-            allPath = GetServerPath.getPathByUser() + "/" + fileName;
+            userAllPath = GetServerPath.getPathByUser() + fileName;
+            managerAllPath = GetServerPath.getPathByManager() + fileName;
         }
         //获取本地ip地址
         InetAddress addr = null;
@@ -77,11 +79,12 @@ public class FileChooser {
         ip = addr.getHostAddress();
         //点击确定后发生事件
         if (result == JFileChooser.APPROVE_OPTION) {
+            //用户上传
             if (name.equals("上传任务")) {
                 //设置文件命名规范
                 if (SetName.setName(fileName)) {
                     //  传给后台上传路径和本地路径
-                    fileUpVo.setUpFilePath(GetServerPath.getPathByManager());
+                    fileUpVo.setUpFilePath(managerAllPath);
                     int i = fileController.fileUpLoading(fileUpVo, path);
                     //上传成功与否的提示弹窗
                     if (i > 0) {
@@ -92,27 +95,30 @@ public class FileChooser {
                     GetServerPath.resetpath();
                 }
             }
+            //管理员上传
             if (name.equals("上传周报")) {
                 //设置文件命名规范
                 if (SetName.setName(fileName)) {
                     //传输给后台
-                    fileUpVo.setUpFilePath(GetServerPath.getPathByUser());
+                    fileUpVo.setUpFilePath(userAllPath);
                     int i = fileController.fileUpLoading(fileUpVo, path);
                     //上传成功与否的提示弹窗
                     if (i > 0) {
                         new Achieve("上传成功");
+                        //传输给数据库
+                        fileUp.setUpIp(ip);
+                        fileUp.setWeek(Weeks.week);
+                        fileUp.setUpTime(WeekNumber.date);
+                        fileUp.setUpFilePath(userAllPath);
+                        fileController.insertFileUp(fileUp);
                     } else {
                         new Achieve("上传失败");
                     }
                     GetServerPath.resetpath();
-                    //传输给数据库
-                    fileUp.setUpIp(ip);
-                    fileUp.setWeek(Weeks.week);
-                    fileUp.setUpTime(WeekNumber.date);
-                    fileUp.setUpFilePath(allPath);
-                    fileController.insertFileUp(fileUp);
+
                 }
             }
+            //用户下载
             if (name.equals("存放任务")) {
                 // 传输本地路径给后台
                 int i = fileController.fileDown(fileUpVo, path);
@@ -124,6 +130,7 @@ public class FileChooser {
                 }
                 GetServerPath.resetpath();
             }
+            //管理员下载
             if (name.equals("存放周报")) {
                 int i = fileController.fileDown(fileUpVo, path);
                 //下载成功与否的提示弹窗

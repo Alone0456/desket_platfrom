@@ -24,7 +24,7 @@ import java.awt.event.MouseEvent;
 public class Ensure extends JButton {
     public Ensure(){
         this.setText("确定");
-        this.setFont(new Font("华文行楷",Font.BOLD,15));
+        this.setFont(new Font("微软黑体",Font.BOLD,15));
         this.setBackground(Color.blue);
         this.setForeground(Color.black);
         this.setHorizontalAlignment(SwingConstants.CENTER);

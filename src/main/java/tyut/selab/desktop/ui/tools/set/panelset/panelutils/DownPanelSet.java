@@ -1,8 +1,8 @@
 package tyut.selab.desktop.ui.tools.set.panelset.panelutils;
 
 import tyut.selab.desktop.ui.tools.component.buttons.ChooseFile;
+import tyut.selab.desktop.ui.tools.component.dropdownbox.Managers;
 import tyut.selab.desktop.ui.tools.component.dropdownbox.Weeks;
-import tyut.selab.desktop.ui.tools.component.jtextfield.FileNameText;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,13 +34,12 @@ public class DownPanelSet extends JPanel {
 
         label1.setHorizontalAlignment(SwingConstants.CENTER);
 
+        JComboBox managers = Managers.getManagers();
         JComboBox weeks = Weeks.getWeek();
-
-        JTextField jTextField = FileNameText.getFileNameText();
-
 
         JButton chooseFile = new ChooseFile("选择存放位置", name2);
 
+        //以下为面板设置
         this.setLayout(new BorderLayout());
         JPanel p1 = new JPanel(new GridLayout(1, 3));
         JPanel p2 = new JPanel(new GridLayout(3, 1));
@@ -115,8 +114,8 @@ public class DownPanelSet extends JPanel {
         p15.add(p20);
         p15.add(p21);
         p15.add(p22);
-        p18.add(weeks);
-        p21.add(jTextField);
+        p18.add(managers);
+        p21.add(weeks);
     }
 }
 

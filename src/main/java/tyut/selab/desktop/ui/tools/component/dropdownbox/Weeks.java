@@ -24,7 +24,7 @@ public class Weeks {
 
     public static JComboBox getWeek() {
         JComboBox<String> jComboBox = new JComboBox<>();
-        jComboBox.setFont(new Font("华文行楷",Font.PLAIN,18));
+        jComboBox.setFont(new Font("微软黑体",Font.PLAIN,18));
         // 设置边框颜色
         jComboBox.setBorder(BorderFactory.createLineBorder(Color.blue));
         jComboBox.setForeground(Color.gray);

@@ -18,11 +18,11 @@ import java.awt.event.MouseEvent;
  */
 @SuppressWarnings("all")
 public class IdText {
-    public static String id;
+    public static String id="";
 
     public static JTextField getIdText() {
         JTextField jTextField = new MyTextField("请输入用户学号");
-        jTextField.setFont(new Font("华文行楷",Font.PLAIN,15));
+        jTextField.setFont(new Font("微软黑体",Font.PLAIN,18));
         jTextField.setBorder(BorderFactory.createLineBorder(Color.blue));
 
         jTextField.addMouseListener(new MouseAdapter() {

@@ -36,6 +36,7 @@ public class UserMain extends JPanel {
         welcome.setHorizontalAlignment(SwingConstants.CENTER);
         welcome.setForeground(Color.blue);
 
+        //以下为面板设置
         this.setLayout(new BorderLayout());
         JPanel p1 = new JPanel(new GridLayout(1, 2));
         JPanel p2 = new JPanel(new BorderLayout());

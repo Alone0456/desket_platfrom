@@ -33,6 +33,7 @@ public class QueryByIdSet extends JPanel {
 
         JButton ensure = new Ensure();
 
+        //以下为面板设置
         this.setLayout(new BorderLayout());
         JPanel p1 = new JPanel();
         JPanel p2 = new JPanel(new GridLayout(3, 1));

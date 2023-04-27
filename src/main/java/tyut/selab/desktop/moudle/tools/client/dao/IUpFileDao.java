@@ -3,7 +3,6 @@ package tyut.selab.desktop.moudle.tools.client.dao;
 import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.tools.client.domain.FileUp;
 
-import java.sql.SQLException;
 import java.util.List;
 
 
