@@ -36,20 +36,20 @@ public class Home extends JPanel {
         Left.setBounds(0, 0,3,700);
         this.add(Left);
 //        this.setBorder(BorderFactory.createLineBorder(Color.red, 3));
-        JLabel a = new JLabel("<html><body><p align=\"right\" style=\"font-family: 华文楷体;\">每天都要有好心情吖~</p></body></html>"); //文本设计
+        JLabel a = new JLabel("<html><body><p align=\"right\" style=\"line-height:2em;\" style=\"font-family: 华文楷体;\">每天都要有好心情吖~</p></body></html>"); //文本设计
         a.setFont(new Font("微软雅黑", Font.BOLD, 20));
         a.setForeground(new Color(0xFF07EAEA, true)); // 设置前景色
         a.setBounds(70, 160,500,50);
         this.add(a);
 
-        JLabel b = new JLabel("<html><body><p align=\"right\" style=\"font-family: 仿宋_GB2312;\"><b>欢&nbsp迎&nbsp来&nbsp到</b></p></body></html>"); //文本设计
+        JLabel b = new JLabel("<html><body><p align=\"right\" style=\"line-height:2em;\" style=\"font-family: 仿宋_GB2312;\"><b>欢&nbsp迎&nbsp来&nbsp到</b></p></body></html>"); //文本设计
         b.setFont(new Font("微软雅黑", Font.BOLD, 70));
         b.setForeground(new Color(0xFFFF4E4E, true)); // 设置前景色
         b.setBounds(70, 190,500,100);
         this.add(b);
 
 
-        JLabel c = new JLabel("<html><body><p align=\"right\" style=\"font-family: 仿宋_GB2312;\"><b>图书信息&nbsp管理系统</b></p></body></html>"); //文本设计
+        JLabel c = new JLabel("<html><body><p align=\"right\" style=\"line-height:2em;\" style=\"font-family: 仿宋_GB2312;\"><b>图书信息&nbsp管理系统</b></p></body></html>"); //文本设计
         c.setFont(new Font("微软雅黑", Font.BOLD, 30));
         c.setForeground(new Color(0xFFFF4E4E, true)); // 设置前景色
         c.setBounds(70, 260,500,100);
@@ -102,7 +102,6 @@ public class Home extends JPanel {
                 Window window = SwingUtilities.getWindowAncestor(this);
                 window.dispose();
                 replaceFileStr();
-                new LoginDemo();
                 try {
                     UIManager.setLookAndFeel( "javax.swing.plaf.nimbus.NimbusLookAndFeel");
                     new LoginDemo();

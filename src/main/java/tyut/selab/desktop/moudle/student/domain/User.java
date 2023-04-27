@@ -10,9 +10,6 @@ public class User {
     private int gender; //性别
     private String phone; //电话
     private String post; //邮箱
-    private Date registerTime; //登录时间
-    private int loginStatus; //登录状态
-    private Role role; //用户职责
 
     public String getAccountNumber() {
         return accountNumber;
@@ -91,8 +88,13 @@ public class User {
     }
 
     public void setRole(Role role) {
+
         this.role = role;
     }
+
+    private Date registerTime; //登录时间
+    private int loginStatus; //登录状态
+    private Role role; //用户职责
 
     public User() {
     }
@@ -122,7 +124,7 @@ public class User {
                 ", post='" + post + '\'' +
                 ", registerTime=" + registerTime +
                 ", loginStatus=" + loginStatus +
-                ", role=" + role+
+                ", role=" + role.getDuty() +
                 '}';
     }
 }

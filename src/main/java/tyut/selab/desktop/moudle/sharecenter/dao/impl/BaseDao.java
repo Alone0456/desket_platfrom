@@ -1,6 +1,7 @@
 package tyut.selab.desktop.moudle.sharecenter.dao.impl;
 
 import tyut.selab.desktop.utils.MysqlConnect;
+import tyut.selab.desktop.utils.Book_MysqlConnect;
 
 import java.lang.reflect.Field;
 import java.sql.*;
@@ -17,7 +18,7 @@ public abstract class BaseDao {
      */
     protected int executeUpdate(String sql,Object... args) throws SQLException {
 //        创建PreparedStatement对象，对sql预编译
-        Connection connection = MysqlConnect.getConnection();
+        Connection connection = Book_MysqlConnect.getConnection();
         PreparedStatement ps = connection.prepareStatement(sql);
         //设置?的值
         if(args != null && args.length>0){
@@ -47,7 +48,7 @@ public abstract class BaseDao {
      */
     protected <T>/*声明一个方法泛型*/ ArrayList<T> query(Class<T> clazz, String sql, Object... args) throws Exception {
         //获取连接
-        Connection connection = MysqlConnect.getConnection();
+        Connection connection = Book_MysqlConnect.getConnection();
         //创建PreparedStatement对象，对sql预编译
         PreparedStatement ps = connection.prepareStatement(sql);
         //设置?的值
