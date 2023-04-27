@@ -24,6 +24,7 @@ public class FileService implements IFileUpService {
 
     @Override
     public int fileDown(FileUpVo fileUpVo, String localFLiePath) {
+
         String managerName;
         String week;
         String sendMessage;
@@ -60,6 +61,7 @@ public class FileService implements IFileUpService {
                 if (len == -1){
                     break;
                 }
+
                 fileOutputStream.write(data,0,len);
             }
 
@@ -96,11 +98,13 @@ public class FileService implements IFileUpService {
         //从文件输入
         FileInputStream fileInputStream;
         //输出流的第一部分内容
+
         String upFilePath;
         //输出流的第二部分------->文件内容
         String localPath;
 
         byte[] sendBytes;              // 文件本身
+
         try {
             socket = new Socket("192.168.1.134",port);
             outputStream = socket.getOutputStream();
@@ -113,6 +117,7 @@ public class FileService implements IFileUpService {
             // 输出
             dataOutputStream = new DataOutputStream(outputStream);
             dataOutputStream.writeUTF(upFilePath);
+
             sendBytes = new byte[1024];            //文件
             while ((length = fileInputStream.read(sendBytes)) > 0){
                 dataOutputStream.write(sendBytes,0,length);
@@ -129,6 +134,7 @@ public class FileService implements IFileUpService {
             dataOutputStream.close();
             socket.close();
             fileInputStream.close();
+
             return success;
         }catch (Exception e){
             e.printStackTrace();
