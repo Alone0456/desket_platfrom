@@ -12,11 +12,6 @@ public class TaskDao implements ITaskDao {
     }
 
     @Override
-    public List<Task> queryAllTaskByUserName(String name) {
-        return null;
-    }
-
-    @Override
     public int insertTask(Task task) {
         return 0;
     }
