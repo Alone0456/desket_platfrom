@@ -21,7 +21,7 @@ public class BookBorrowDao implements IBookBorrowDao {
 
     @Override
     public int insertBorrowBookMessage(BookBorrow bookBorrow) throws SQLException {
-        String sql = "insert into user_book_borrow (user_student_number,book_id,borrow_user_student_number,borrow_book_time,return_book_time) values (?,?,?,?)";
+        String sql = "insert into user_book_borrow (user_student_number,book_id,borrow_user_student_number,borrow_book_time,return_book_time) values (?,?,?,?,?)";
         int flag = connection.executeUpdate(sql, bookBorrow.getUserStudentNumber(), bookBorrow.getBookId(), bookBorrow.getBorrowUserStudentNumber(), bookBorrow.getBorrowBookTime(), bookBorrow.getReturnBookTime());
         if(flag>0){
             return 1;

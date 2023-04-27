@@ -8,13 +8,13 @@ import java.util.Date;
  * 向ui展示的数据
  */
 public class BookVo {
-    private UserVo bookUserVo; //该图书拥有者的用户信息
-    private String BookName; //书名
-    private int bookStatus; //书的状态
-    private Double bookPrice; //书的价格
-    private UserVo borrowBookUserVo; //该图书借阅者的用户信息
-    private Date borrowBookTime; //借书时间
-    private Date returnBookTime; //还书时间
+    private UserVo bookUserVo;     //该图书拥有者的用户信息
+    private String bookName;       //书名
+    private int bookStatus;       //书的状态
+    private Double bookPrice;     //书的价格
+    private UserVo borrowBookUserVo;      //该图书借阅者的用户信息
+    private Date borrowBookTime;     //借书时间
+    private Date returnBookTime;      //还书时间
 
     public UserVo getBookUserVo() {
         return bookUserVo;
@@ -25,11 +25,11 @@ public class BookVo {
     }
 
     public String getBookName() {
-        return BookName;
+        return bookName;
     }
 
     public void setBookName(String bookName) {
-        BookName = bookName;
+        this.bookName = bookName;
     }
 
     public int getBookStatus() {

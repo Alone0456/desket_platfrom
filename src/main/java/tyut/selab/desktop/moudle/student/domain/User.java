@@ -10,10 +10,6 @@ public class User {
     private int gender; //性别
     private String phone; //电话
     private String post; //邮箱
-    private Date registerTime; //登录时间
-    private int loginStatus; //登录状态
-    private Role role; //用户职责
-
 
     public String getAccountNumber() {
         return accountNumber;
@@ -87,11 +83,32 @@ public class User {
         this.loginStatus = loginStatus;
     }
 
-    public Integer getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setRole(Role role) {
+
+        this.role = role;
+    }
+
+    private Date registerTime; //登录时间
+    private int loginStatus; //登录状态
+    private Role role; //用户职责
+
+    public User() {
+    }
+
+    public User(String accountNumber, String password, String name, Integer studentNumber, int gender, String phone, String post, Date registerTime, int loginStatus, Role role) {
+        this.accountNumber = accountNumber;
+        this.password = password;
+        this.name = name;
+        this.studentNumber = studentNumber;
+        this.gender = gender;
+        this.phone = phone;
+        this.post = post;
+        this.registerTime = registerTime;
+        this.loginStatus = loginStatus;
+        this.role = role;
     }
 }

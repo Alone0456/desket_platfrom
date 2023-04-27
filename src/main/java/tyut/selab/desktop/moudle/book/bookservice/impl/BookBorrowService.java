@@ -24,7 +24,6 @@ public class BookBorrowService implements IBookBorrowService {
     private IBookBorrowDao bookBorrowDao = new BookBorrowDao();
 
     private IBookMessageDao bookMessageDao = new BookMessageDao();
-    private IBookBorrowService bookBorrowService = new BookBorrowService();
     private IUserDao userDao;
 
     @Override
@@ -38,25 +37,20 @@ public class BookBorrowService implements IBookBorrowService {
         String bookName = book.getBookName();
         Integer studentNumber = book.getBookUserVo().getStudentNumber();
         Book queryBook = bookMessageDao.queryAsBook(studentNumber, bookName);
-        List<BookBorrow> bookBorrows = bookMessageDao.queryBorrowBookLog();
-        for (int i = 0; i < bookBorrows.size(); i++) {
-            if(bookBorrows.get(i).getBookId() == queryBook.getBookId()){
-                User user = userDao.queryUserByStudentNumber(bookBorrows.get(i).getBorrowUserStudentNumber());
-                UserVo userVo = userChangeUserVo(user);
-                book.setBorrowBookUserVo(userVo);
-                book.setBorrowBookTime(bookBorrows.get(i).getBorrowBookTime());
-                book.setReturnBookTime(bookBorrows.get(i).getReturnBookTime());
-                break;
-            }
-            }
+        BookBorrow bookBorrow = new BookBorrow();
+        bookBorrow.setBookId(queryBook.getBookId());
+        bookBorrow.setUserStudentNumber(book.getBookUserVo().getStudentNumber());
+        bookBorrow.setBorrowUserStudentNumber(book.getBorrowBookUserVo().getStudentNumber());
+        bookBorrow.setBorrowBookTime(book.getBorrowBookTime());
+        bookBorrow.setReturnBookTime(book.getReturnBookTime());
+        bookBorrowDao.insertBorrowBookMessage(bookBorrow);
         return book;
         }
     private UserVo userChangeUserVo(User user) {
         UserVo userVo = new UserVo();
         userVo.setName(user.getName());
         userVo.setGender(user.getGender());
-        Integer roleId = user.getRoleId();
-        String role = userDao.queryIdRole(roleId);
+        String role =  user.getRole().getDuty();
         userVo.setDuty(role);
         userVo.setStudentNumber(user.getStudentNumber());
         userVo.setPhone(user.getPhone());

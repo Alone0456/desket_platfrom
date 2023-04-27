@@ -5,7 +5,7 @@ public class Book {
     public static final int LENDED = 1;
     private int bookId;
     private Integer userStudentNumber;
-    private String BookName;
+    private String bookName;
     private int bookStatus;
     private Double bookPrice;
 
@@ -26,11 +26,11 @@ public class Book {
     }
 
     public String getBookName() {
-        return BookName;
+        return bookName;
     }
 
     public void setBookName(String bookName) {
-        BookName = bookName;
+        this.bookName = bookName;
     }
 
     public int getBookStatus() {

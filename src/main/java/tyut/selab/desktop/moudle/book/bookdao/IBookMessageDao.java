@@ -23,6 +23,10 @@ public interface IBookMessageDao {
     List<BookBorrow> queryBorrowBookLog() throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
 
     /**
+     * 根据借阅者学号查询未归还书籍
+     */
+    List<BookBorrow> queryBorrowBookByBorrowerId(Integer borrowerId) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
+    /**
      * 根据书名来查询借书记录
      * @param bookName
      * @return

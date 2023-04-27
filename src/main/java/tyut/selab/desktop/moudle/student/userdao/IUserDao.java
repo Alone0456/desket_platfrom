@@ -27,6 +27,13 @@ public interface IUserDao {
      */
     User queryUserByStudentNumber(Integer studentNumber);
 
+    /***
+     * 通过账号查询用户(包括角色)
+     * @param accountNumber
+     * @return
+     */
+    User queryUserByAccountNumber(String accountNumber);
+
     /**
      * 通过姓名查询用户(包括角色)
      * @param name
@@ -50,6 +57,14 @@ public interface IUserDao {
     int updateUser(String password,User oldUser);
 
     /**
+     * 修改用户信息
+     * @param oldUser
+     * @param newUser
+     * @return
+     */
+    int updateUser(User oldUser, User newUser);
+
+    /**
      * 删除学生
      * @param studentNumber
      * @return 成功返回1，失败返回-1
@@ -61,27 +76,13 @@ public interface IUserDao {
      * @return
      */
     List<Role> queryAllRole();
-    
-    /**
-     *  通过Id查询指定职责
-     *@return
-     */
-    String  queryIdRole(Integer roleId);
-    
+
     /**
      * 增加职责
      * @param role
      * @return
      */
     int insertRole(Role role);
-
-    /**
-     * 修改职责
-     * @param newRole
-     * @param oleRole
-     * @return
-     */
-    int updateRole(Role newRole ,Role oleRole);
 
     /**
      * 删除职责

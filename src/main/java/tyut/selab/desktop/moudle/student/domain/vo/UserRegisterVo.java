@@ -8,6 +8,84 @@ public class UserRegisterVo {
     private int gender; //用户性别
     private String phone; //用户电话
     private String post; //用户邮箱
+
+    public UserRegisterVo() {
+    }
+
+    public Integer getStudentNumber() {
+        return studentNumber;
+    }
+
+    public void setStudentNumber(Integer studentNumber) {
+        this.studentNumber = studentNumber;
+    }
+
+    public Integer getPassword() {
+        return password;
+    }
+
+    public void setPassword(Integer password) {
+        this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPost() {
+        return post;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
+    }
+
+    public String getDuty() {
+        return duty;
+    }
+
+    public void setDuty(String duty) {
+        this.duty = duty;
+    }
+
     private String duty; //用户职责
 
+    public UserRegisterVo(Integer studentNumber, Integer password, String name, String accountNumber, int gender, String phone, String post, String duty) {
+        this.studentNumber = studentNumber;
+        this.password = password;
+        this.name = name;
+        this.accountNumber = accountNumber;
+        this.gender = gender;
+        this.phone = phone;
+        this.post = post;
+        this.duty = duty;
+    }
 }

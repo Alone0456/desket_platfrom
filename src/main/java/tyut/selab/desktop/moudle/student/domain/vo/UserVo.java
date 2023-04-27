@@ -25,6 +25,27 @@ public class UserVo {
         this.name = name;
     }
 
+    public UserVo(String name, String accountNumber, int gender, String phone, String post) {
+        this.name = name;
+        this.accountNumber = accountNumber;
+        this.gender = gender;
+        this.phone = phone;
+        this.post = post;
+    }
+
+    public UserVo(){}
+
+    public UserVo(Integer studentNumber, String name, String accountNumber, int gender, String phone, String post, String duty) {
+        this.studentNumber = studentNumber;
+        this.name = name;
+        this.accountNumber = accountNumber;
+        this.gender = gender;
+        this.phone = phone;
+        this.post = post;
+        this.duty = duty;
+    }
+
+
     public String getAccountNumber() {
         return accountNumber;
     }
@@ -64,5 +85,4 @@ public class UserVo {
     public void setDuty(String duty) {
         this.duty = duty;
     }
-
 }

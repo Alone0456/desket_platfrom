@@ -30,7 +30,12 @@ public interface IBookMessageService {
      */
     List<BookVo> queryBorrowBookLog(String bookName) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
 
-    /**
+  /**
+   * 根据借阅者学号来查询未归还书籍
+   */
+  List<BookVo> queryBorrowBookByBorrowewrId(Integer borrowerId) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
+
+  /**
      * 根据学号来查询借书记录
      * @param studentNumber
      * @return
@@ -58,7 +63,12 @@ public interface IBookMessageService {
      */
     List<BookVo> queryBookByUserid(Integer userStudentNumber) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
 
-    /**
+  /**
+   * 通过用户id和书名查询书籍
+   */
+  BookVo queryBookLog(Integer userStudentNumber,String bookName) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
+
+  /**
      * 增加图书
      * @param book 书
      * @return 成功返回1，失败返回-1
@@ -70,7 +80,7 @@ public interface IBookMessageService {
      * @param book 更新
      * @return
      */
-    int updateBook(BookVo book) throws SQLException;
+    int updateBook(BookVo book) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
 
     /**
      * 删除图书
