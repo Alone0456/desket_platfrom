@@ -36,6 +36,7 @@ public class ManagerMain extends JPanel {
         welcome.setHorizontalAlignment(SwingConstants.CENTER);
         welcome.setForeground(Color.blue);
 
+
         this.setLayout(new BorderLayout());
         JPanel p1 = new JPanel(new GridLayout(1, 2));
         JPanel p2 = new JPanel(new BorderLayout());

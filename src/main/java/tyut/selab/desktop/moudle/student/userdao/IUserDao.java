@@ -27,6 +27,13 @@ public interface IUserDao {
      */
     User queryUserByStudentNumber(Integer studentNumber);
 
+    /***
+     * 通过账号查询用户(包括角色)
+     * @param accountNumber
+     * @return
+     */
+    User queryUserByAccountNumber(String accountNumber);
+
     /**
      * 通过姓名查询用户(包括角色)
      * @param name

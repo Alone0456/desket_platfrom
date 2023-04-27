@@ -8,7 +8,7 @@ import tyut.selab.desktop.moudle.student.userdao.impl.UserDao;
 import tyut.selab.desktop.moudle.tools.client.dao.impl.GetMangerName;
 import tyut.selab.desktop.moudle.tools.client.dao.impl.UpFileDao;
 import tyut.selab.desktop.moudle.tools.client.dao.IUpFileDao;
-import tyut.selab.desktop.moudle.tools.client.dao.IUpFileDao;
+
 import tyut.selab.desktop.moudle.tools.client.domain.FileUp;
 import tyut.selab.desktop.moudle.tools.client.domain.vo.FileUpVo;
 import tyut.selab.desktop.moudle.tools.client.service.IFileUpService;
@@ -27,36 +27,37 @@ public class FileService implements IFileUpService {
 
     @Override
     public int fileDown(FileUpVo fileUpVo, String localFLiePath) {
-        boolean success = false;
-        String fileName;            //  袁晓晶  (或文件名(2234-袁晓晶.zip))
-        String week;                //  第一周  (或次数(第一次))
+
+        String managerName;
+        String week;
         String sendMessage;
-        week = GetServerPath.getWeek();          // 静态得到 周数字符串
-        fileName = GetServerPath.getFileName();  // 静态得到 文件名字符串
-        sendMessage = week+"-"+fileName;  //"第一周"+"-"+"袁晓晶"
-        //sendMessage = "第一周"+"-"+"袁晓晶"; //测试
+        week = GetServerPath.getWeek();          // 静态得到 周数字符串 example:第一周
+        managerName = GetServerPath.getManagerName();  // 静态得到 组长名 字符串
+        sendMessage = week+"-"+managerName;
         //Socket连接
         Socket Socket;
-        //从本地输出到Socket
+        //从本地输出到Socket 的流
         OutputStream outStream;
         DataOutputStream dataOutStream;
 
-        //从Socket输入
+        //从Socket输入 的流
         InputStream inputStream;
         DataInputStream dataInputStream;
-        //输入流输出到文件
+        //将 输入流 输出某一路径 的 文件输出流
         FileOutputStream fileOutputStream;
-
+        int success = 0;
         try {
             //建立套接字
-            Socket = new Socket("localhost",port); //localhost  192.168.1.134
-            //输出数据部分
+            Socket = new Socket("192.168.1.134",port); // 192.168.1.134
+            //输出数据部分 的流
             outStream = Socket.getOutputStream();
             dataOutStream = new DataOutputStream(outStream);
             dataOutStream.writeUTF(sendMessage);
-            //输入部分
+            //输入部分  的流
             inputStream =Socket.getInputStream();
             dataInputStream = new DataInputStream(inputStream);
+            //文件输出流：将文件以写入数据到指定路径所代表的文件（可以理解为内部先输入，读取数据后作为输出流来用）
+
             fileOutputStream= new FileOutputStream(localFLiePath);
             byte[] data = new byte[1024];
             while (true){
@@ -64,20 +65,27 @@ public class FileService implements IFileUpService {
                 if (len == -1){
                     break;
                 }
-                System.out.println("len："+ len);
+
                 fileOutputStream.write(data,0,len);
             }
-            success = new File(localFLiePath).exists();
-            fileOutputStream.close();
-            dataInputStream.close();
+
+            // 从服务器 输入 信息(文件传输完毕信息) 以便客户端关闭 输入流
+            dataInputStream = new DataInputStream(inputStream);
+            success = dataInputStream.readInt();
+            if(success == 1){
+                dataInputStream.close();
+            }
+            outStream.flush();
+            outStream.close();
+            dataOutStream.flush();
             dataOutStream.close();
+            fileOutputStream.close();
             Socket.close();
-            if (success) return 1;
+            return success;
         }catch (Exception e){
             e.printStackTrace();
         }
-        //本地判断是否存在？
-        return 0;
+        return success;
     }
 
     @Override
@@ -94,12 +102,13 @@ public class FileService implements IFileUpService {
         //从文件输入
         FileInputStream fileInputStream;
         //输出流的第一部分内容
-        String upFilePath;;
+
+        String upFilePath;
         //输出流的第二部分------->文件内容
         String localPath;
 
-        byte[] sendBytes2;              // 文件本身
-        byte[] upFilePathBytes;
+        byte[] sendBytes;              // 文件本身
+
         try {
             socket = new Socket("192.168.1.134",port);
             outputStream = socket.getOutputStream();
@@ -112,14 +121,24 @@ public class FileService implements IFileUpService {
             // 输出
             dataOutputStream = new DataOutputStream(outputStream);
             dataOutputStream.writeUTF(upFilePath);
-            sendBytes2 = new byte[1024];            //文件
-            while ((length = fileInputStream.read(sendBytes2)) > 0){
-                dataOutputStream.write(sendBytes2,0,length);
+
+            sendBytes = new byte[1024];            //文件
+            while ((length = fileInputStream.read(sendBytes)) > 0){
+                dataOutputStream.write(sendBytes,0,length);
             }
-            //成功判断  --服务器判断文件是否存在
+            // 上传结束
+            String upOver = "上传结束";
+            dataOutputStream.writeUTF(upOver);
+            // 读取服务器的返回值，作为成功判断
             inputStream = socket.getInputStream();
             dataInputStream = new DataInputStream(inputStream);
-            success = dataInputStream.readInt();
+            success =  dataInputStream.readInt();
+
+            dataOutputStream.flush();
+            dataOutputStream.close();
+            socket.close();
+            fileInputStream.close();
+
             return success;
         }catch (Exception e){
             e.printStackTrace();

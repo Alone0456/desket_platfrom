@@ -23,7 +23,10 @@ import java.util.List;
  */
 @SuppressWarnings("all")
 public class QueryAllDate extends JScrollPane {
+<<<<<<< HEAD
     TableColumn column;
+=======
+>>>>>>> baizerong
     public QueryAllDate(){
         // 获取数据库中所有用户信息
         DefaultTableModel model = new DefaultTableModel();

@@ -1,5 +1,6 @@
 package tyut.selab.desktop.ui.tools.component.panels.mainpanels;
 
+<<<<<<< HEAD
 import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.ui.tools.component.buttons.Download;
 import tyut.selab.desktop.ui.tools.component.buttons.query.Query;
@@ -8,6 +9,17 @@ import tyut.selab.desktop.ui.tools.myexception.MyException;
 import tyut.selab.desktop.ui.tools.component.panels.managerpanels.ManagerDownload;
 import tyut.selab.desktop.ui.tools.component.panels.managerpanels.ManagerQuery;
 import tyut.selab.desktop.ui.tools.component.panels.managerpanels.ManagerUpload;
+=======
+import tyut.selab.desktop.moudle.login.service.impl.LoginService;
+import tyut.selab.desktop.moudle.student.domain.User;
+import tyut.selab.desktop.ui.tools.component.buttons.Download;
+import tyut.selab.desktop.ui.tools.component.buttons.Upload;
+import tyut.selab.desktop.ui.tools.component.buttons.query.Query;
+import tyut.selab.desktop.ui.tools.component.panels.managerpanels.ManagerDownload;
+import tyut.selab.desktop.ui.tools.component.panels.managerpanels.ManagerQuery;
+import tyut.selab.desktop.ui.tools.component.panels.managerpanels.ManagerUpload;
+import tyut.selab.desktop.ui.tools.myexception.MyException;
+>>>>>>> baizerong
 import tyut.selab.desktop.ui.tools.set.panelset.mainset.ManagerMain;
 import tyut.selab.desktop.ui.tools.utils.FileChooser;
 
@@ -35,9 +47,14 @@ public class ManagerMainPanel {
                 ex.printStackTrace();
             }
         }
+<<<<<<< HEAD
         //获取用户信息
 //        User user = LoginService.getUser();
         User user = new User();
+=======
+        //获取管理员信息
+        User user = LoginService.getUser();
+>>>>>>> baizerong
         FileChooser.fileUp.setUser(user);
         FileChooser.fileUpVo.setUser(user);
 

@@ -22,7 +22,11 @@ public class Query extends JButton {
 
     public Query(JPanel panel, JScrollPane switchPanel) {
         ButtonSet.setButton(getClass().getResource("/tyut/selab/desktop/ui/tools/imgs/query.png"), new Color(0, 206, 209), this);
+<<<<<<< HEAD
         this.setText("查询个人信息");
+=======
+        this.setText("查询上传信息");
+>>>>>>> baizerong
         this.setFont(new Font("微软雅黑", Font.BOLD, 25));
         this.addMouseListener(new MouseAdapter() {
             @Override

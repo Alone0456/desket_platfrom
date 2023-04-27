@@ -4,6 +4,10 @@ import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.tools.client.dao.IUpFileDao;
 import tyut.selab.desktop.moudle.tools.client.domain.FileUp;
 import tyut.selab.desktop.utils.MysqlConnect;
+<<<<<<< HEAD
+=======
+
+>>>>>>> baizerong
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,7 +53,10 @@ public class UpFileDao implements IUpFileDao {
                 throw new RuntimeException(e);
             }  // 数据类型与什么对应呢
 
+<<<<<<< HEAD
 //            int userStudentNumber = 0;//不用展示
+=======
+>>>>>>> baizerong
             User temp = new User();
             int studentNumber = 0;
             String upFilePath = null;
@@ -57,6 +64,7 @@ public class UpFileDao implements IUpFileDao {
             String upIp = null;
             String week = null;
             long upId=0;
+<<<<<<< HEAD
 //            String accountNumber = null;
 //            String password = null;
 //            String name = null;
@@ -67,6 +75,9 @@ public class UpFileDao implements IUpFileDao {
 //            Timestamp registerTime = null;
 //            int loginStatus = 0;
 //            String duty = null;
+=======
+
+>>>>>>> baizerong
             try {
                 upId = rs.getLong("up_id");
                 studentNumber = rs.getInt("user_student_number");
@@ -75,6 +86,7 @@ public class UpFileDao implements IUpFileDao {
                 upIp = rs.getString("up_ip");
                 week = rs.getString("up_week");
 
+<<<<<<< HEAD
 //                int userId = rs.getInt("user_id");
 //                accountNumber = rs.getString("account_number");
 //                password = rs.getString("password");
@@ -87,13 +99,18 @@ public class UpFileDao implements IUpFileDao {
 //                loginStatus = rs.getInt("login_status");
 //                int roleId = rs.getInt("role_id");
 //                duty = rs.getString("duty");
+=======
+>>>>>>> baizerong
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
             //封装成对象
             uf = new FileUp();
+<<<<<<< HEAD
             //uf.setUpId(Integer.valueOf((int) upId));  // 主键不用设置
 //            uf.getUser().setStudentNumber(Integer.valueOf((int) userStudentNumber));
+=======
+>>>>>>> baizerong
             temp.setStudentNumber(studentNumber);
             uf.setUpId((int) upId);
             uf.setUser(temp);
@@ -101,6 +118,7 @@ public class UpFileDao implements IUpFileDao {
             uf.setUpTime(upTime);
             uf.setUpIp(upIp);
             uf.setWeek(week);
+<<<<<<< HEAD
 //            uf.getUser().setAccountNumber(accountNumber);
 //            uf.getUser().setPassword(password);
 //            uf.getUser().setName(name);
@@ -113,6 +131,8 @@ public class UpFileDao implements IUpFileDao {
             // uf.getUser().setRole(roleId);  // 主键不用设置
 //            uf.getUser().getRole().setDuty(duty);
 
+=======
+>>>>>>> baizerong
             //写在集合里
 
             list.add(uf);
@@ -147,7 +167,10 @@ public class UpFileDao implements IUpFileDao {
         }
 
         int number = user.getStudentNumber().intValue();  // 与原参相比少了一个 r
+<<<<<<< HEAD
 //        int useStudentNumber = 1;
+=======
+>>>>>>> baizerong
         FileUp uf =null;
         List<FileUp> list = new ArrayList<>();
 
@@ -167,12 +190,17 @@ public class UpFileDao implements IUpFileDao {
             }
 
             User temp = new User();
+<<<<<<< HEAD
+=======
+
+>>>>>>> baizerong
             if(number == userStudentNumber){
                 String upFilePath = null;
                 Timestamp upTime = null; // 数据类型可能不匹配
                 String upIp = null;
                 String week = null;
                 long upId=0;
+<<<<<<< HEAD
 //                String accountNumber = null;
 //                String password = null;
 //                String name = null;
@@ -183,12 +211,16 @@ public class UpFileDao implements IUpFileDao {
 //                Timestamp registerTime = null;
 //                int loginStatus = 0;
 //                String duty = null;
+=======
+
+>>>>>>> baizerong
                 try {
                     upFilePath = rs.getString("up_file_path");
                     upTime = rs.getTimestamp("up_time");
                     upIp = rs.getString("up_ip");
                     week = rs.getString("up_week");
                     upId = rs.getLong("up_id");
+<<<<<<< HEAD
 
                     // int userId = rs.getInt("user_id");
 //                    accountNumber = rs.getString("account_number");
@@ -202,6 +234,8 @@ public class UpFileDao implements IUpFileDao {
 //                    loginStatus = rs.getInt("login_status");
 //                    int roleId = rs.getInt("role_id");
 //                    duty = rs.getString("duty");
+=======
+>>>>>>> baizerong
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -210,8 +244,11 @@ public class UpFileDao implements IUpFileDao {
 
                 //封装成对象
                 uf = new FileUp();
+<<<<<<< HEAD
                 //uf.setUpId(Integer.valueOf((int) upId));  // 主键不用设置
         //        uf.getUser().setStudentNumber(Integer.valueOf((int) userStudentNumber));
+=======
+>>>>>>> baizerong
                 temp.setStudentNumber(number);
                 uf.setUpFilePath(upFilePath);
                 uf.setUpTime(upTime);
@@ -219,6 +256,7 @@ public class UpFileDao implements IUpFileDao {
                 uf.setWeek(week);
                 uf.setUpId((int) upId);
                 uf.setUser(temp);
+<<<<<<< HEAD
 //                uf.getUser().setAccountNumber(accountNumber);
 //                uf.getUser().setPassword(password);
 //                uf.getUser().setName(name);
@@ -231,6 +269,8 @@ public class UpFileDao implements IUpFileDao {
 //                // uf.getUser().setRole(roleId);  // 主键不用设置
 //                uf.getUser().getRole().setDuty(duty);
 
+=======
+>>>>>>> baizerong
                 //写在集合里
 
                 list.add(uf);

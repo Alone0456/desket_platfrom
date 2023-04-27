@@ -5,6 +5,7 @@ import tyut.selab.desktop.moudle.sharecenter.domain.vo.BugVo;
 import tyut.selab.desktop.moudle.student.domain.User;
 
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IShareCenterDao {
@@ -12,28 +13,28 @@ public interface IShareCenterDao {
      * 查询所有bug信息
      * @return
      */
-    List<BugMessage> queryAllBugInfo();
+    List<BugMessage> queryAllBugInfo() throws Exception;
 
     /**
      * 根据bug类型查询bug
      * @param bugType
      * @return
      */
-    List<BugMessage> queryBugInfoByType(List<String> bugType);
+    List<BugMessage> queryBugInfoByType(List<String> bugType) throws SQLException;
 
     /**
      * 根据用户查询
      * @param user
      * @return
      */
-    List<BugMessage> ShowBugInfo(User user);
+    List<BugMessage> ShowBugInfo(User user) throws Exception;
 
     /**
      * 增加
      * @param bugMessage
      * @return
      */
-    int insertBugInfo(BugMessage bugMessage);
+    int insertBugInfo(BugMessage bugMessage) throws Exception;
 
     /**
      * 修改
@@ -41,12 +42,12 @@ public interface IShareCenterDao {
      * @param oldBugMessage
      * @return
      */
-    int updateBugInfo(BugMessage newBugMessage,BugMessage oldBugMessage);
+    int updateBugInfo(BugMessage newBugMessage,BugMessage oldBugMessage) throws SQLException;
 
     /**
      * 删除
      * @param bugMessage
      * @return
      */
-    int deleteBugInfo(BugMessage bugMessage);
+    int deleteBugInfo(BugMessage bugMessage) throws SQLException;
 }

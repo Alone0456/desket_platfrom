@@ -7,7 +7,11 @@ import java.awt.*;
  * ClassName:FileName
  * Package:tools.dialogs
  * Description:
+<<<<<<< HEAD
  *
+=======
+ * 文件命名规范提示
+>>>>>>> baizerong
  * @Author:14亿少女的梦-苏信玮
  * @Create:2023/04/16 - 17:06
  * @Version:v1.0
@@ -16,6 +20,10 @@ import java.awt.*;
 public class FileName extends JDialog {
     public FileName() {
         this.setTitle("提示信息");
+<<<<<<< HEAD
+=======
+
+>>>>>>> baizerong
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int sw = screenSize.width;
         int sh = screenSize.height;
@@ -23,7 +31,13 @@ public class FileName extends JDialog {
         this.setResizable(false);
         //设置为顶级窗口
         this.setModalityType(ModalityType.APPLICATION_MODAL);
+<<<<<<< HEAD
         JLabel jLabel = new JLabel("请按规范格式上传文件");
+=======
+
+        JLabel jLabel = new JLabel("请按规范格式上传文件");
+        jLabel.setFont(new Font("微软黑体",Font.PLAIN,15));
+>>>>>>> baizerong
         jLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         this.add(jLabel, BorderLayout.CENTER);

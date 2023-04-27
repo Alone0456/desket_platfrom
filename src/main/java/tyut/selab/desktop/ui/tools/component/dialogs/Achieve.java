@@ -7,7 +7,11 @@ import java.awt.*;
  * ClassName:Achieve
  * Package:tools.dialogs
  * Description:
+<<<<<<< HEAD
  *
+=======
+ * 上传或下载成功与否弹窗
+>>>>>>> baizerong
  * @Author:14亿少女的梦-苏信玮
  * @Create:2023/04/16 - 17:05
  * @Version:v1.0
@@ -16,6 +20,10 @@ import java.awt.*;
 public class Achieve extends JDialog {
     public Achieve(String isAchieve) {
         this.setTitle("提示信息");
+<<<<<<< HEAD
+=======
+
+>>>>>>> baizerong
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int sw = screenSize.width;
         int sh = screenSize.height;
@@ -23,7 +31,13 @@ public class Achieve extends JDialog {
         this.setResizable(false);
         //设置为顶级窗口
         this.setModalityType(ModalityType.APPLICATION_MODAL);
+<<<<<<< HEAD
         JLabel jLabel = new JLabel(isAchieve);
+=======
+
+        JLabel jLabel = new JLabel(isAchieve);
+        jLabel.setFont(new Font("微软黑体",Font.PLAIN,18));
+>>>>>>> baizerong
         jLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         this.add(jLabel, BorderLayout.CENTER);

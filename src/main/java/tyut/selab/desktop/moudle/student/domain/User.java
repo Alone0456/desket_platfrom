@@ -10,9 +10,6 @@ public class User {
     private String gender; //性别
     private String phone; //电话
     private String post; //邮箱
-    private Date registerTime; //登录时间
-    private int loginStatus; //登录状态
-    private Role role; //用户职责
 
     public String getAccountNumber() {
         return accountNumber;
@@ -46,8 +43,8 @@ public class User {
         this.studentNumber = studentNumber;
     }
 
-    public String getGender(String gender) {
-        return this.gender;
+    public String getGender() {
+        return gender;
     }
 
     public void setGender(String gender) {
@@ -91,6 +88,27 @@ public class User {
     }
 
     public void setRole(Role role) {
+
+        this.role = role;
+    }
+
+    private Date registerTime; //登录时间
+    private int loginStatus; //登录状态
+    private Role role; //用户职责
+
+
+    public User() {
+    }
+
+    public User(String accountNumber, String password, String name, Integer studentNumber, int gender, String phone, String post, Date registerTime, int loginStatus, Role role) {
+        this.accountNumber = accountNumber;
+        this.password = password;
+        this.name = name;
+        this.studentNumber = studentNumber;
+        this.phone = phone;
+        this.post = post;
+        this.registerTime = registerTime;
+        this.loginStatus = loginStatus;
         this.role = role;
     }
 
@@ -106,7 +124,7 @@ public class User {
                 ", post='" + post + '\'' +
                 ", registerTime=" + registerTime +
                 ", loginStatus=" + loginStatus +
-                ", role=" + role +
+                ", role=" + role.getDuty() +
                 '}';
     }
 }

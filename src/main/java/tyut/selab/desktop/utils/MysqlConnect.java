@@ -1,20 +1,9 @@
 package tyut.selab.desktop.utils;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.pool.DruidDataSourceFactory;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
-
-
-
-import javax.sql.DataSource;
 
 /**
  * 数据库连接,使用Druid连接池
@@ -22,11 +11,12 @@ import javax.sql.DataSource;
 public class MysqlConnect{
 
 
-    private static final String URL = "jdbc:mysql://localhost:3306/text";
+    private static final String URL = "jdbc:mysql://localhost:3306/desktop_platfrom";
     private static final String USER = "root";
-    private static final String PASSWORD = "211211";
+    private static final String PASSWORD = "123456";
 
     private static DruidDataSource dataSource;
+
     static {
         dataSource = new DruidDataSource();
         dataSource.setUrl(URL);
@@ -42,10 +32,9 @@ public class MysqlConnect{
         return dataSource.getConnection();
     }
 
-    public static void closeConnection(Connection conn, PreparedStatement ps) {
+    public static void close(Connection conn) {
         if (conn != null) {
             try {
-                ps.close();
                 conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();

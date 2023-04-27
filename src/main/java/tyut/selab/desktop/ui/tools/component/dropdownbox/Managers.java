@@ -25,9 +25,16 @@ public class Managers {
 
     public static JComboBox getManagers() {
         JComboBox<String> jComboBox = new JComboBox<>();
+<<<<<<< HEAD
         jComboBox.setFont(new Font("华文行楷", Font.PLAIN, 18));
         jComboBox.setBorder(BorderFactory.createLineBorder(Color.blue));
         jComboBox.setForeground(Color.gray);
+=======
+        jComboBox.setFont(new Font("微软黑体", Font.PLAIN, 18));
+        jComboBox.setBorder(BorderFactory.createLineBorder(Color.blue));
+        jComboBox.setForeground(Color.gray);
+        jComboBox.addItem("请选择组长");
+>>>>>>> baizerong
         //从数据库中提取管理员数据
         List<String> names = FileService.queryAllManger();
         for (String name : names) {
