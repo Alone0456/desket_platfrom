@@ -6,11 +6,16 @@ import tyut.selab.desktop.moudle.login.service.impl.LoginService;
 import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.userdao.IUserDao;
 import tyut.selab.desktop.moudle.student.userdao.impl.UserDao;
+import tyut.selab.desktop.ui.book.manager.SystemAdministration;
+import tyut.selab.desktop.ui.book.user.SystemOrdinaryUsers;
 import tyut.selab.desktop.ui.sharecenter.sharecenter;
+import tyut.selab.desktop.ui.student.manager.AdministratorInformation;
+import tyut.selab.desktop.ui.student.user.UserInformation;
 import tyut.selab.desktop.ui.tools.component.panels.mainpanels.ManagerMainPanel;
 import tyut.selab.desktop.ui.tools.component.panels.mainpanels.UserMainPanel;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicPanelUI;
 import java.awt.*;
@@ -18,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 
 public class MainInterface extends JFrame  {
 
@@ -27,8 +33,8 @@ public class MainInterface extends JFrame  {
     IUserDao userDao = new UserDao();
 
 
-    public MainInterface(String str) {
-        User user=userDao.queryUserByAccount(str);
+    public MainInterface(String str) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        User user=userDao.queryUserByAccountNumber(str);
         String name=user.getName();
         String acccount=user.getAccountNumber();
         Integer studentNumber=user.getStudentNumber() ;
@@ -43,7 +49,7 @@ public class MainInterface extends JFrame  {
              gen ="女";
         }
 //        <html><body><p align=\"left\">数据版本<br/>v1.0.0</p></body></html>
-        String abc ="<html><body><p align=\"left\" style=\"font-family: 华文新魏;\">姓名:"+name+"<br/>账号:"+acccount+"<br/>学号："+studentNumber+"<br/>性别："+gen+"<br/>电话:"+phone+"<br/>邮箱:"+post+"<br/>职责:"+duty+"</p></body></html>";
+        String abc ="<html><body><p align=\"left\" style=\"font-family: 华文新魏;\" style=\"line-height:3em;\">姓名:"+name+"<br/>账号:"+acccount+"<br/>学号:"+studentNumber+"<br/>性别:"+gen+"<br/>电话:"+phone+"<br/>邮箱:<font size =\"4\">"+post+"</font><br/>职责:"+duty+"</p></body></html>";
 
         //      获取显示屏的大小
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -65,24 +71,24 @@ public class MainInterface extends JFrame  {
 
         ImageIcon image1=new ImageIcon("src\\img\\xtgl.png");//获取图片
         ImageIcon image2=change(image1,0.15);//这里是缩小两倍，可以按自己的需求放缩
-        JButton button1 = new JButton("分享中心", image2);    //登录按钮
-        button1.setToolTipText("分享中心");// 悬停显示
+        JButton button1 = new JButton("  首    页", image2);    //登录按钮
+        button1.setToolTipText("  首    页");// 悬停显示
         ImageIcon image3=new ImageIcon("src\\img\\zbgl.png");//获取图片
         ImageIcon image4=change(image3,0.15);//这里是缩小两倍，可以按自己的需求放缩
-        JButton button2 = new JButton("周报管理",image4);    //重置按钮
-        button2.setToolTipText("周报管理");// 悬停显示
+        JButton button2 = new JButton("分享中心",image4);    //重置按钮
+        button2.setToolTipText("分享中心");// 悬停显示
         ImageIcon image5=new ImageIcon("src\\img\\grxx.png");//获取图片
         ImageIcon image6=change(image5,0.15);//这里是缩小两倍，可以按自己的需求放缩
-        JButton button3 = new JButton("个人信息",image6);    //重置按钮
-        button3.setToolTipText("个人信息");// 悬停显示
+        JButton button3 = new JButton("周报管理",image6);    //重置按钮
+        button3.setToolTipText("周报管理");// 悬停显示
         ImageIcon image7=new ImageIcon("src\\img\\gly.png");//获取图片
         ImageIcon image8=change(image7,0.15);//这里是缩小两倍，可以按自己的需求放缩
-        JButton button4 = new JButton("管理员界面",image8);    //重置按钮
-        button4.setToolTipText("管理员界面");// 悬停显示
+        JButton button4 = new JButton("个人信息",image8);    //重置按钮
+        button4.setToolTipText("个人信息");// 悬停显示
         ImageIcon image9=new ImageIcon("src\\img\\nzsz.png");//获取图片
         ImageIcon image10=change(image9,0.15);//这里是缩小两倍，可以按自己的需求放缩
-        JButton button5 = new JButton("闹钟设置",image10);    //重置按钮
-        button5.setToolTipText("闹钟设置");// 悬停显示
+        JButton button5 = new JButton("任务清单",image10);    //重置按钮
+        button5.setToolTipText("任务清单");// 悬停显示
         ImageIcon image11=new ImageIcon("src\\img\\tsgl.png");//获取图片
         ImageIcon image12=change(image11,0.15);//这里是缩小两倍，可以按自己的需求放缩
         JButton button6 = new JButton("图书管理",image12);    //重置按钮
@@ -91,8 +97,8 @@ public class MainInterface extends JFrame  {
         ImageIcon image14=change(image13,0.15);//这里是缩小两倍，可以按自己的需求放缩
         JButton button7 = new JButton("任务清单",image14);    //重置按钮
         button7.setToolTipText("任务清单");// 悬停显示
-//        ImageIcon image15=new ImageIcon("src\\img\\实验室logo.png");//获取图片
-//        ImageIcon image16=change(image15,0.51);//这里是缩小两倍，可以按自己的需求放缩
+        ImageIcon image15=new ImageIcon("src\\img\\实验室logo.png");//获取图片
+        ImageIcon image16=change(image15,0.51);//这里是缩小两倍，可以按自己的需求放缩
         JButton button = new JButton("图书信息管理系统");    //重置按钮
         button.setToolTipText("图书信息管理系统");// 悬停显
 
@@ -193,7 +199,7 @@ public class MainInterface extends JFrame  {
         contentPane.add(button4);
         contentPane.add(button5);
         contentPane.add(button6);
-        contentPane.add(button7);
+//        contentPane.add(button7);
         label.add(button);
         label.add(button1);
         label.add(button2);
@@ -201,14 +207,21 @@ public class MainInterface extends JFrame  {
         label.add(button4);
         label.add(button5);
         label.add(button6);
-        label.add(button7);
+//        label.add(button7);
         label.add(button123);
         this.add(label);
         Home p=new Home();
         panel.add(p,"Home");
         sharecenter sharecenters=new sharecenter();
-
         panel.add(sharecenters,"分享中心");
+        if(LoginService.getUser().getRole().getDuty().equals("用户")){
+            SystemOrdinaryUsers systemOrdinaryUsers=new SystemOrdinaryUsers();
+            panel.add(systemOrdinaryUsers,"图书管理");
+        }else{
+        SystemAdministration systemAdministration=new SystemAdministration();
+            panel.add(systemAdministration,"图书管理");
+        }
+
 
         if(LoginService.getUser().getRole().getDuty().equals("用户")){
             JPanel userPanel=UserMainPanel.getUserPanel();
@@ -217,6 +230,15 @@ public class MainInterface extends JFrame  {
             JPanel managerPanel = ManagerMainPanel.getManagerPanel();
             panel.add(managerPanel,"周报管理");
         }
+        if(LoginService.getUser().getRole().getDuty().equals("用户")){
+            JPanel userPanel= UserInformation.getUserPanel();
+            panel.add(userPanel,"个人信息");
+        }else{
+            JPanel adminPanel = AdministratorInformation.getAdminPanel();
+            panel.add(adminPanel,"个人信息");
+        }
+//        Box box=Box.createHorizontalBox();
+//        panel.add(box,"任务清单");
 
 
         addWindowListener(new WindowAdapter() {
@@ -233,7 +255,7 @@ public class MainInterface extends JFrame  {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panel, "分享中心");
+                cardLayout.show(panel, "Home");
 
             }
         });
@@ -242,14 +264,14 @@ public class MainInterface extends JFrame  {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                cardLayout.show(panel, "周报管理");
+                cardLayout.show(panel, "分享中心");
             }
         });
 
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panel, "个人信息");
+                cardLayout.show(panel, "周报管理");
 
             }
         });
@@ -257,14 +279,15 @@ public class MainInterface extends JFrame  {
         button4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panel, "管理员信息");
+
+                cardLayout.show(panel, "个人信息");
             }
         });
 
         button5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panel, "闹钟设置");
+                cardLayout.show(panel, "任务清单");
 
             }
         });
@@ -276,13 +299,13 @@ public class MainInterface extends JFrame  {
 
             }
         });
-        button7.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(panel, "任务清单");
-
-            }
-        });
+//        button7.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                cardLayout.show(panel, "任务清单");
+//
+//            }
+//        });
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

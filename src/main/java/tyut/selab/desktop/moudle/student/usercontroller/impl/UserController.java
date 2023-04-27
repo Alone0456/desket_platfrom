@@ -5,59 +5,94 @@ import tyut.selab.desktop.moudle.student.domain.vo.UserRegisterVo;
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 import tyut.selab.desktop.moudle.student.usercontroller.IUserController;
 import tyut.selab.desktop.moudle.student.userservice.IUserService;
+import tyut.selab.desktop.moudle.student.userservice.impl.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserController implements IUserController {
-    private IUserService userService;
+    private static IUserService userService=new UserService();
 
     @Override
     public List<UserVo> queryUser() {
-        return null;
+        List<UserVo> userVos= userService.queryUser();
+        return userVos;
     }
-
     @Override
     public UserVo queryUserByStudentNumber(Integer studentNumber) {
-        return null;
+        UserVo userVo=userService.queryUserByStudentNumber(studentNumber);
+        if(userVo == null){
+            return null;
+        }else {
+            return userVo;
+        }
     }
 
     @Override
     public UserVo queryUserByStudentName(String name) {
-        return null;
+        UserVo userVo=userService.queryUserByStudentName(name);
+        if(userVo == null){
+            return null;
+        }else {
+            return userVo;
+        }
     }
 
     @Override
     public int insertUser(UserRegisterVo user) {
-        return 0;
+        int judge=userService.insertUser(user);
+        return judge;
     }
 
     @Override
-    public int updateUserPassword(String password, UserVo user) {
-        return 0;
+    public int updateUserPassword(String password, UserRegisterVo user)
+    {
+        int judge=userService.updateUserPassword(password,user);
+        return judge;
+
     }
 
     @Override
     public int updateUser(UserVo oldUser, UserVo newUser) {
-        return 0;
+        int judge=userService.updateUser(oldUser,newUser);
+        return judge;
     }
 
     @Override
     public int deleteUser(Integer studentNumber) {
-        return 0;
+        int judge=userService.deleteUser(studentNumber);
+        return judge;
+
     }
 
     @Override
     public List<Role> queryAllRole() {
-        return null;
+        List<Role> list=userService.queryAllRole();
+        return list;
     }
 
     @Override
     public int insertRole(Role role) {
-        return 0;
+        int judge =userService.insertRole(role);
+        return judge;
     }
 
     @Override
     public int deleteRole(Role role) {
-        return 0;
+        int judge =userService.deleteRole(role);
+        return judge;
+    }
+
+    public static void main(String[] args) {
+        IUserController iUserController = new UserController();
+//        UserRegisterVo userRegisterVo = new UserRegisterVo();
+//        userRegisterVo.setAccountNumber("yyty");
+//        userRegisterVo.setGender(1);
+//        userRegisterVo.setDuty("daa");
+//        userRegisterVo.setName("ttom");
+//        userRegisterVo.setPhone("16424342");
+//        userRegisterVo.setStudentNumber(4534);
+//        userRegisterVo.setPost("dawe233");
+//        userRegisterVo.setPassword(232432);
     }
 }

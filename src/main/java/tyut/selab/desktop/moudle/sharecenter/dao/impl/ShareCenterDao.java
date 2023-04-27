@@ -5,6 +5,7 @@ import tyut.selab.desktop.moudle.sharecenter.domain.BugMessage;
 import tyut.selab.desktop.moudle.student.domain.Role;
 import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.utils.MysqlConnect;
+import tyut.selab.desktop.utils.MysqlConnect;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -2,17 +2,11 @@ package tyut.selab.desktop.moudle.login.dao.impl;
 
 import tyut.selab.desktop.moudle.login.dao.ILoginDao;
 import tyut.selab.desktop.moudle.login.domain.LoginLog;
-import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.utils.MysqlConnect;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

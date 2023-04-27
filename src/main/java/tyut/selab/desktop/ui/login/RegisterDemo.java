@@ -250,11 +250,12 @@ public class RegisterDemo extends JFrame {
         userRegisterVo.setAccountNumber(accountField.getText());//账号
         userRegisterVo.setName(nameField.getText());//姓名
         userRegisterVo.setPhone(phoneField.getText());//电话
-        String str = String.valueOf(gender);
+        String str = String.valueOf(gender.getSelectedItem());
+        System.out.println(str);
         if(str.equals("男")){
-            userRegisterVo.setGender(0);//性别
-        }else{
             userRegisterVo.setGender(1);//性别
+        }else{
+            userRegisterVo.setGender(0);//性别
         }
         userRegisterVo.setPost(postField.getText());//邮箱
         return loginController.register(userRegisterVo);//注册

@@ -122,7 +122,7 @@ public class LoginService implements ILoginService {
         user.setPassword(encryptPassword);
 
 
-        User userByAccount = userDao.queryUserByAccount(userRegisterVo.getAccountNumber());
+        User userByAccount = userDao.queryUserByAccountNumber(userRegisterVo.getAccountNumber());
         if (userByAccount != null && userByAccount.getAccountNumber() != null) {
             return "该账号已经存在";
         }
@@ -204,8 +204,8 @@ public class LoginService implements ILoginService {
     //改变用户的登录状态
     public void changeLoginState(){
         String accountNumber=user.getAccountNumber();
-        User loginUser=userDao.queryUserByAccount(accountNumber);
-        User exitUser=userDao.queryUserByAccount(accountNumber);
+        User loginUser=userDao.queryUserByAccountNumber(accountNumber);
+        User exitUser=userDao.queryUserByAccountNumber(accountNumber);
         exitUser.setLoginStatus(0);
         userDao.updateUser(loginUser,exitUser);
     }

@@ -2,6 +2,7 @@ package tyut.selab.desktop.moudle.book.bookcontroller;
 
 import tyut.selab.desktop.moudle.book.domain.vo.BookVo;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IBookMessageController {
@@ -10,7 +11,7 @@ public interface IBookMessageController {
      * @return
      * 管理员
      */
-    List<BookVo> queryBorrowBookLog();
+    List<BookVo> queryBorrowBookLog() throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
 
     /**
      * 查询某本书的借书记录
@@ -19,7 +20,7 @@ public interface IBookMessageController {
      * @return
      * 管理员
      */
-    BookVo queryBorrowBookLog(String bookName,Integer userStudentNumber);
+    BookVo queryBorrowBookLog(String bookName,Integer userStudentNumber) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
 
     /**
      * 根据书名来查询借书记录
@@ -27,7 +28,12 @@ public interface IBookMessageController {
      * @return
      * 管理员
      */
-    List<BookVo> queryBorrowBookLog(String bookName);
+    List<BookVo> queryBorrowBookLog(String bookName) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
+
+    /**
+     * 根据借阅者学号查询未归还书籍
+     */
+    List<BookVo> quereyBorrowBookByBorrowerId(Integer borrowerId) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
 
     /**
      * 根据学号来查询借书记录
@@ -35,41 +41,46 @@ public interface IBookMessageController {
      * @return
      * 管理员
      */
-    List<BookVo> queryBorrowBookLog(Integer studentNumber);
+    List<BookVo> queryBorrowBookLog(Integer studentNumber) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
 
     /**
      * 查询全部图书
      * @return 图书列表
      */
-    List<BookVo> queryAllBook();
+    List<BookVo> queryAllBook() throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
 
     /**
      * 通过图书名字查询图书
      * @param bookName 书名
      * @return 图书列表
      */
-    List<BookVo> queryBookByBookName(String bookName);
+    List<BookVo> queryBookByBookName(String bookName) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
 
     /**
      * 通过用户id查询该用户的图书
      * @param userStudentNumber 用户学号
      * @return 图书列表
      */
-    List<BookVo> queryBookByUserid(Integer userStudentNumber);
+    List<BookVo> queryBookByUserid(Integer userStudentNumber) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
+
+    /**
+     * 通过书名和用户id查询书籍
+     */
+    BookVo queryBookLog(Integer userStudentNumber,String bookName) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
 
     /**
      * 增加图书
      * @param book 书
      * @return 成功返回1，失败返回-1
      */
-    int insertBook(BookVo book);
+    int insertBook(BookVo book) throws SQLException;
 
     /**
      * 修改图书信息
      * @param book 更新
      * @return
      */
-    int updateBook(BookVo book);
+    int updateBook(BookVo book) throws SQLException;
 
     /**
      * 删除图书
@@ -77,5 +88,5 @@ public interface IBookMessageController {
      * @param bookName 书名
      * @return 成功返回1，失败返回-1
      */
-    int deleteBook(Integer userStudentNumber,String bookName);
+    int deleteBook(Integer userStudentNumber,String bookName) throws SQLException;
 }

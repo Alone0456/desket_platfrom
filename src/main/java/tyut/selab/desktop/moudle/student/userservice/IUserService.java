@@ -41,7 +41,7 @@ public interface IUserService {
      * @param user
      * @return 成功返回1，失败返回-1
      */
-    int updateUserPassword(String password,UserVo user);
+    int updateUserPassword(String password,UserRegisterVo user);
 
     /**
      * 修改用户信息
