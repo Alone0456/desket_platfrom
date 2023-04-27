@@ -30,12 +30,12 @@ public class UploadPanelSet extends JPanel {
     public UploadPanelSet(String name, String name2, String name3, String name4) {
         JLabel label1 = new JLabel(name);
         label1.setForeground(Color.yellow);
-        label1.setFont(new Font("微软黑体", Font.ITALIC, 30));
+        label1.setFont(new Font("微软黑体", Font.PLAIN, 30));
         // 自动换行
         String str = "<html>" + name2 + "</html>";
         JLabel label2 = new JLabel(str);
         label2.setForeground(Color.red);
-        label2.setFont(new Font("微软黑体", Font.ITALIC, 25));
+        label2.setFont(new Font("微软黑体", Font.PLAIN,25 ));
 
         label1.setHorizontalAlignment(SwingConstants.CENTER);
         label2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -45,6 +45,7 @@ public class UploadPanelSet extends JPanel {
 
         JButton chooseFile = new ChooseFile(name3, name4);
 
+        //以下为面板设置
         this.setLayout(new BorderLayout());
         JPanel p1 = new JPanel(new GridLayout(1, 3));
         JPanel p2 = new JPanel(new GridLayout(3, 1));

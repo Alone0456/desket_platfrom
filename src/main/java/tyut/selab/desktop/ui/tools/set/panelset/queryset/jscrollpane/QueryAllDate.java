@@ -6,6 +6,9 @@ import tyut.selab.desktop.ui.tools.utils.FileChooser;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.util.List;
 
@@ -23,19 +26,17 @@ public class QueryAllDate extends JScrollPane {
     public QueryAllDate(){
         // 获取数据库中所有用户信息
         DefaultTableModel model = new DefaultTableModel();
-        //创建表头
-        model.setColumnIdentifiers(new Object[]{"上传id", "周数", "上传时间", "上传ip","上传路径","学号"});
-
-        //JTable是将数据以表格的形式显示给用户看的一种组件，它包括行和列，其中每列代表一种属性
+        JTable table = JscrollSet.setJscrollPane(model);
         List<FileUp> fileUps = FileChooser.fileController.queryAllFileUpInfo();
         for (FileUp fileUp : fileUps) {
             //添加数据
             model.addRow(new Object[]{String.valueOf(fileUp.getUpId()), fileUp.getWeek(),
-                    String.valueOf(fileUp.getUpTime()), fileUp.getUpIp(),fileUp.getUpFilePath(),
-            fileUp.getUser().getStudentNumber()});
+                    fileUp.getUser().getStudentNumber(), fileUp.getUpIp(),
+                    String.valueOf(fileUp.getUpTime()),fileUp.getUpFilePath()});
         }
-        JTable fk = new JTable(model);
-        this.setViewportView(fk);
+
+        this.setViewportView(table);
+        this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         this.getViewport().getView().setBackground(Color.pink);
     }
 }
