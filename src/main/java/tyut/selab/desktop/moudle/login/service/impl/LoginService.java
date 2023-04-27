@@ -24,12 +24,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Pattern;
-import javax.xml.crypto.dsig.Transform;
 
-import static java.lang.System.currentTimeMillis;
-import static java.lang.System.setOut;
 
 public class LoginService implements ILoginService {
 
@@ -152,10 +148,8 @@ public class LoginService implements ILoginService {
         user.setRegisterTime(currentTime);
         int registAffectRows = userDao.insertUser(user);//获取注册用户在数据库中影响的行数
         if (registAffectRows > 0) {
-
             return "注册成功";
         }
-        ;
 
         return null;
     }
@@ -168,9 +162,6 @@ public class LoginService implements ILoginService {
     public List<LoginLog> showLoginLog(Date startTime, Date endingTime) throws Exception {
         return loginDao.showLoginLog(startTime, endingTime);
     }
-
-
-
 
 
     //获取当前时间
@@ -228,11 +219,11 @@ public class LoginService implements ILoginService {
     }
     //读取文件
         public  String read() throws FileNotFoundException {
-        File f=new File("src\\main\\java\\tyut\\selab\\desktop\\ui\\login\\Staff.manifest");
-        FileReader fr=null;
+        File f = new File("src\\main\\java\\tyut\\selab\\desktop\\ui\\login\\Staff.manifest");
+        FileReader fr = null;
 
         int i,j;
-        fr=new FileReader(f);
+        fr = new FileReader(f);
         BufferedReader br=new BufferedReader(fr);
         String str = null,text;
         try {
@@ -271,8 +262,4 @@ public class LoginService implements ILoginService {
         fw.write(automaticLogin+"\r\n"+rememberNumber+"\r\n"+uField.getText()+"\r\n"+newPassword);
         fw.close();
     }
-
-
-
-
 }

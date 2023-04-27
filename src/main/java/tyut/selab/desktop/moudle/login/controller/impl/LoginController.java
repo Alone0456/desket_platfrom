@@ -23,7 +23,6 @@ public class LoginController implements ILoginController{
 
     @Override
     public String register(UserRegisterVo user) {
-
         return loginService.register(user);
     }
 

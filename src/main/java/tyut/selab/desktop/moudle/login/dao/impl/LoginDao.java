@@ -36,8 +36,6 @@ public class LoginDao implements ILoginDao {
             loginlog.setLoginTime(loginTime);
             loginlog.setLoginIp(loginIp);
             loginLogs.add(loginlog);
-
-
         }
 
         rs.close();
