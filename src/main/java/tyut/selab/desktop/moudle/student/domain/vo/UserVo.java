@@ -65,6 +65,7 @@ public class UserVo {
         this.duty = duty;
     }
 
+
     @Override
     public String toString() {
         return "UserVo{" +
