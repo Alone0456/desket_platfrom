@@ -1,1 +1,0 @@
-INDEX VERSION 1.131+C:\Users\26580\Desktop\desket_platfrom-main\desket_platfrom_book\.metadata\.plugins\org.eclipse.jdt.core
