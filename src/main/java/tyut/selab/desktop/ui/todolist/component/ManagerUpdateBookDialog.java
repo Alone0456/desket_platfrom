@@ -1,7 +1,6 @@
 package tyut.selab.desktop.ui.todolist.component;
 
 
-
 import tyut.selab.desktop.moudle.todolist.controller.impl.TaskController;
 import tyut.selab.desktop.moudle.todolist.domain.vo.TaskVo;
 import tyut.selab.desktop.ui.todolist.listener.ActionDoneListener;
@@ -11,6 +10,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +23,7 @@ public class ManagerUpdateBookDialog extends JDialog {
     final int HEIGHT = 300;
     private String id;
     private ActionDoneListener listener;
-    private Map<String,Object> map;
+    private Map<String, Object> map;
 
     private JTextField nameField;
     private JTextField stockField;
@@ -33,12 +33,12 @@ public class ManagerUpdateBookDialog extends JDialog {
     JFrame jf = null;
 
 
-    public ManagerUpdateBookDialog(JTable table, Vector<Vector> tableData, DefaultTableModel tableModel, JFrame jf, String title, boolean isModel, ActionDoneListener listener, String id){
-        super(jf,title,isModel);
-        this.listener  = listener;
-        this.id=id;
+    public ManagerUpdateBookDialog(JTable table, Vector<Vector> tableData, DefaultTableModel tableModel, JFrame jf, String title, boolean isModel, ActionDoneListener listener, String id) {
+        super(jf, title, isModel);
+        this.listener = listener;
+        this.id = id;
         //组装视图
-        this.setBounds((ScreenUtils.getScreenWidth()-WIDTH)/2,(ScreenUtils.getScreenHeight()-HEIGHT)/2,WIDTH,HEIGHT);
+        this.setBounds((ScreenUtils.getScreenWidth() - WIDTH) / 2, (ScreenUtils.getScreenHeight() - HEIGHT) / 2, WIDTH, HEIGHT);
 
         Box vBox = Box.createVerticalBox();
 
@@ -72,7 +72,7 @@ public class ManagerUpdateBookDialog extends JDialog {
         //组装截止日期
         Box priceBox = Box.createHorizontalBox();
         JLabel priceLable = new JLabel("截止日期：");
-         priceField = new JTextField(15);
+        priceField = new JTextField(15);
         CalendarPanel p = new CalendarPanel(priceField, "yyyy-MM-dd");
         p.initCalendarPanel();
         add(p);
@@ -86,7 +86,7 @@ public class ManagerUpdateBookDialog extends JDialog {
         //组装任务介绍
         Box descBox = Box.createHorizontalBox();
         JLabel descLable = new JLabel("任务介绍：");
-        descArea = new JTextArea(3,15);
+        descArea = new JTextArea(3, 15);
 
         descBox.add(descLable);
         descBox.add(Box.createHorizontalStrut(20));
@@ -103,13 +103,19 @@ public class ManagerUpdateBookDialog extends JDialog {
 
                 //获取用户修改后在输入框中输入的内容
                 Integer taskID = Integer.valueOf(tableModel.getValueAt(selectedRow, 0).toString());
-                Integer userStudentNumber = Integer.valueOf(stockField.getText().trim());
+                Integer userStudentNumber;
+                try {
+                    userStudentNumber = Integer.valueOf(stockField.getText().trim());
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(jf, "请输入正确格式");
+                    return; // 结束查询操作
+                }
                 String taskST = null;
                 String taskET = priceField.getText().trim();
                 String taskContent = descArea.getText().trim();
 
-                SimpleDateFormat taskStartTimeFormat=new SimpleDateFormat("yyyy-MM-dd");
-                SimpleDateFormat taskEndTimeFormat=new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat taskStartTimeFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat taskEndTimeFormat = new SimpleDateFormat("yyyy-MM-dd");
 
                 Date taskStartTime = null;
                 Date taskEndTime = null;
@@ -117,10 +123,11 @@ public class ManagerUpdateBookDialog extends JDialog {
                     taskStartTime = new Date();
                     taskEndTime = taskEndTimeFormat.parse(taskET);
                 } catch (ParseException ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(jf, "请输入正确格式");
+                    return; // 结束查询操作
                 }
 
-                TaskVo taskVo = new TaskVo(taskID,userStudentNumber,taskContent,taskStartTime,taskEndTime);
+                TaskVo taskVo = new TaskVo(taskID, userStudentNumber, taskContent, taskStartTime, taskEndTime);
                 TaskController taskController = new TaskController();
                 try {
                     taskController.updateTask(taskVo);
@@ -128,9 +135,16 @@ public class ManagerUpdateBookDialog extends JDialog {
                     throw new RuntimeException(ex);
                 }
 
-                JOptionPane.showMessageDialog(jf,"修改成功");
+                JOptionPane.showMessageDialog(jf, "修改成功");
+
                 dispose();
-                listener.done(null);
+                try {
+                    listener.done(null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         //TODO 处理修改的行为
@@ -161,7 +175,7 @@ public class ManagerUpdateBookDialog extends JDialog {
     }
 
     //请求数据
-    public void requestData(){
+    public void requestData() {
 
     }
 

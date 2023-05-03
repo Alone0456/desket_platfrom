@@ -1,7 +1,9 @@
 package tyut.selab.desktop.ui.todolist.component;
 
 
+import com.alibaba.druid.pool.DruidDataSource;
 import tyut.selab.desktop.moudle.todolist.controller.impl.TaskController;
+import tyut.selab.desktop.moudle.todolist.dao.impl.JDBC;
 import tyut.selab.desktop.moudle.todolist.domain.vo.TaskVo;
 import tyut.selab.desktop.ui.todolist.listener.ActionDoneListener;
 import tyut.selab.desktop.ui.todolist.utils.AlarmClock01;
@@ -11,14 +13,14 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
 public class ManagerBookManageComponent extends Box {
     final int WIDTH = 850;
@@ -30,7 +32,7 @@ public class ManagerBookManageComponent extends Box {
     private Vector<Vector> tableData;
     private DefaultTableModel tableModel;
 
-    public ManagerBookManageComponent(JFrame jf) {
+    public ManagerBookManageComponent(JFrame jf) throws SQLException, IOException {
         //垂直布局
         super(BoxLayout.Y_AXIS);
         //组装视图
@@ -52,7 +54,13 @@ public class ManagerBookManageComponent extends Box {
         exitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                requestData();
+                try {
+                    requestData();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         queryBtn.addActionListener(new ActionListener() {
@@ -73,7 +81,7 @@ public class ManagerBookManageComponent extends Box {
                 //弹出一个对话框，让用户输入图书的信息
                 new ManagerAddBookDialog(jf, "增加任务", true, new ActionDoneListener() {
                     @Override
-                    public void done(Object result) {
+                    public void done(Object result) throws SQLException, IOException {
                         requestData();
                     }
                 }).setVisible(true);
@@ -96,7 +104,7 @@ public class ManagerBookManageComponent extends Box {
                 //弹出一个对话框，让用户修改
                 new ManagerUpdateBookDialog(table, tableData, tableModel, jf, "修改任务", true, new ActionDoneListener() {
                     @Override
-                    public void done(Object result) {
+                    public void done(Object result) throws SQLException, IOException {
                         requestData();
                     }
                 }, id).setVisible(true);
@@ -147,7 +155,13 @@ public class ManagerBookManageComponent extends Box {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-                requestData();
+                try {
+                    requestData();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
 
             }
         });
@@ -182,9 +196,36 @@ public class ManagerBookManageComponent extends Box {
         requestData();
 
     }
+    public void requestData() throws IOException, SQLException {
+        Connection conn = JDBC.getConnection();
+        String sql = "SELECT task_id, user_student_number, task_content, task_start_time, task_end_time FROM user_tasks_list";
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            List<List<Object>> data = new ArrayList<>();
+            while (rs.next()) {
+                List<Object> row = new ArrayList<>();
+                row.add(rs.getInt("task_id"));
+                row.add(rs.getString("user_student_number"));
+                row.add(rs.getString("task_content"));
+                row.add(rs.getDate("task_start_time"));
+                row.add(rs.getDate("task_end_time"));
+                data.add(row);
+            }
+            tableData.clear();
+            for (List<Object> row : data) {
+                Vector<Object> rowData = new Vector<>();
+                rowData.addAll(row);
+                tableData.add(rowData);
+            }
+            tableModel.fireTableDataChanged();
+
+        }
+        JDBC.free();
+
+    }
 
     //请求数据
-    public void requestData() {
+    public void requestData_() {
         // 连接数据库
         String url = "jdbc:mysql:///desket_platfrom";
         String username = "root";

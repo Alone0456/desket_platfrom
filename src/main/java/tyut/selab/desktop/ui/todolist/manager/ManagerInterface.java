@@ -15,6 +15,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class ManagerInterface {
     JFrame jf = new JFrame("创新实验室图书馆：管理员，欢迎您");
@@ -70,7 +72,13 @@ public class ManagerInterface {
                     sp.setRightComponent(new JLabel("这里进行用户管理..."));
                     sp.setDividerLocation(150);
                 }else if (bookManage.equals(lastPathComponent)){
-                    sp.setRightComponent(new ManagerBookManageComponent(jf));
+                    try {
+                        sp.setRightComponent(new ManagerBookManageComponent(jf));
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                     sp.setDividerLocation(150);
                 } if (borrowManage.equals(lastPathComponent)){
                     sp.setRightComponent(new JLabel("这里进行借阅管理..."));
