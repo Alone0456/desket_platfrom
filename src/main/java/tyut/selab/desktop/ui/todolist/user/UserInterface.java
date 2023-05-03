@@ -1,8 +1,9 @@
-package tyut.selab.desktop.ui.todolist.manager;
-
+package tyut.selab.desktop.ui.todolist.user;
 
 
 import tyut.selab.desktop.ui.todolist.component.ManagerBookManageComponent;
+import tyut.selab.desktop.ui.todolist.component.UserBookManageComponent;
+import tyut.selab.desktop.ui.todolist.manager.ManagerInterface;
 import tyut.selab.desktop.ui.todolist.utils.AlarmClock01;
 import tyut.selab.desktop.ui.todolist.utils.PathUtils;
 import tyut.selab.desktop.ui.todolist.utils.ScreenUtils;
@@ -16,8 +17,8 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import java.awt.*;
 import java.io.File;
 
-public class ManagerInterface {
-    JFrame jf = new JFrame("创新实验室图书馆：管理员，欢迎您");
+public class UserInterface {
+    JFrame jf = new JFrame("创新实验室图书馆：用户，欢迎您");
 
     final int WIDTH = 1000;
     final int HEIGHT = 600;
@@ -70,7 +71,7 @@ public class ManagerInterface {
                     sp.setRightComponent(new JLabel("这里进行用户管理..."));
                     sp.setDividerLocation(150);
                 }else if (bookManage.equals(lastPathComponent)){
-                    sp.setRightComponent(new ManagerBookManageComponent(jf));
+                    sp.setRightComponent(new UserBookManageComponent(jf));
                     sp.setDividerLocation(150);
                 } if (borrowManage.equals(lastPathComponent)){
                     sp.setRightComponent(new JLabel("这里进行借阅管理..."));
@@ -84,18 +85,18 @@ public class ManagerInterface {
         });
 
 
-        sp.setRightComponent(new ManagerBookManageComponent(jf));
+        sp.setRightComponent(new UserBookManageComponent(jf));
         sp.setLeftComponent(tree);
         jf.add(sp);
         jf.setVisible(true);
 
-        jf.setTitle("创新实验室图书馆：管理员,欢迎您");
+        jf.setTitle("创新实验室图书馆：用户，欢迎您");
 
     }
 
     public static void main(String[] args) {
         try {
-            new ManagerInterface().init();
+            new UserInterface().init();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package tyut.selab.desktop.moudle.todolist.service.impl;
 
 import tyut.selab.desktop.moudle.todolist.dao.ITaskDao;
+import tyut.selab.desktop.moudle.todolist.dao.impl.TaskDao;
 import tyut.selab.desktop.moudle.todolist.domain.Task;
 import tyut.selab.desktop.moudle.todolist.domain.vo.TaskVo;
 import tyut.selab.desktop.moudle.todolist.service.ITaskService;
@@ -12,6 +13,14 @@ import java.util.List;
 
 public class TaskService implements ITaskService {
     private ITaskDao taskDao;
+
+    {
+        try {
+            taskDao = new TaskDao();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     @Override

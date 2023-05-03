@@ -3,12 +3,13 @@ package tyut.selab.desktop.moudle.todolist.controller.impl;
 import tyut.selab.desktop.moudle.todolist.controller.ITaskController;
 import tyut.selab.desktop.moudle.todolist.domain.vo.TaskVo;
 import tyut.selab.desktop.moudle.todolist.service.ITaskService;
+import tyut.selab.desktop.moudle.todolist.service.impl.TaskService;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class TaskController implements ITaskController {
-    private ITaskService taskService;
+    private ITaskService taskService = new TaskService();
 
     @Override
     public void taskWarnTime(TaskVo taskVo) {

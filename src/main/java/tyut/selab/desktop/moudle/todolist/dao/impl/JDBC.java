@@ -12,7 +12,8 @@ import java.util.Properties;
 public class JDBC {
     private static DataSource ds;
     private static ThreadLocal<Connection> tl = new ThreadLocal<>();
-    static{
+
+    static {
         try {
             Properties pro = new Properties();
             pro.load(ClassLoader.getSystemResourceAsStream("druid.properties.properties"));
@@ -24,7 +25,7 @@ public class JDBC {
 
     public static Connection getConnection() throws SQLException {
         Connection connection = tl.get();
-        if(connection  == null){//当前线程还没有拿过连接，就给它从数据库连接池拿一个
+        if (connection == null) {//当前线程还没有拿过连接，就给它从数据库连接池拿一个
             connection = ds.getConnection();
             tl.set(connection);
         }
@@ -33,7 +34,7 @@ public class JDBC {
 
     public static void free() throws SQLException {
         Connection connection = tl.get();
-        if(connection != null){
+        if (connection != null) {
             tl.remove();
             connection.setAutoCommit(true);//避免还给数据库连接池的连接不是自动提交模式（建议）
             connection.close();

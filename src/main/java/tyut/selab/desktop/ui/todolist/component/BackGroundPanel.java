@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class BackGroundPanel extends JPanel {
-    //ÉùÃ÷Í¼Æ¬
+    //å£°æ˜Žå›¾ç‰‡
     private Image backIcon;
     public BackGroundPanel(Image backIcon){
         this.backIcon = backIcon;
@@ -13,7 +13,7 @@ public class BackGroundPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //»æÖÆ±³¾°
+        //ç»˜åˆ¶èƒŒæ™¯
         g.drawImage(backIcon,0,0,this.getWidth(),this.getHeight(),null);
 
     }

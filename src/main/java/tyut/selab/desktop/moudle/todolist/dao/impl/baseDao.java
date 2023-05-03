@@ -9,7 +9,7 @@ public class baseDao {
     public baseDao() throws SQLException {
     }
 
-    public   int executeUpdate(String sql, Object... parms) throws SQLException {
+    public int executeUpdate(String sql, Object... parms) throws SQLException {
         //从连接池拿连接，创小车
         Connection connection = JDBC.getConnection();
         PreparedStatement ps = connection.prepareStatement(sql);
@@ -44,32 +44,34 @@ public class baseDao {
             }
         }
 
-        ArrayList<T>list =new ArrayList<>();
-        ResultSet resultSet =preparedStatement.executeQuery();
+        ArrayList<T> list = new ArrayList<>();
+        ResultSet resultSet = preparedStatement.executeQuery();
 
         //对resultSet处理，把存在resultSet得数据放到二维数组（猜测），然后遍历把一行行封装成对象
-        ResultSetMetaData metaData =resultSet.getMetaData();
-        int  columCount =metaData.getColumnCount();//获得行数
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        int columCount = metaData.getColumnCount();//获得行数
 
-        while (resultSet.next()){
+        while (resultSet.next()) {
             //在循环接数据得对象实例化，同时要求对象需要有无参构造
             T t = clazz.newInstance();
 
 
-            for (int i = 0; i < columCount; i++) {
-                Object value =resultSet.getObject(i);
+            for (int i = 1; i < columCount+1; i++) {
+                Object value = resultSet.getObject(i);
                 //这是对象得属性值
-                String columName =metaData.getCatalogName(i);
-                Field field =clazz.getDeclaredField(columName);
+                String columName = metaData.getColumnLabel(i);
+                Field field = clazz.getDeclaredField(columName);
                 field.setAccessible(true);
-                field.set(t,value);
+//                Integer temp = Integer.parseInt(String.valueOf(value));
+
+                field.set(t, value);
             }
             list.add(t);
         }
 
         resultSet.close();
         preparedStatement.close();
-        if (connection.getAutoCommit()){
+        if (connection.getAutoCommit()) {
             JDBC.free();
 
         }
