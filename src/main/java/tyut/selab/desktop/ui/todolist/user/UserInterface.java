@@ -18,32 +18,32 @@ import java.awt.*;
 import java.io.File;
 
 public class UserInterface {
-    JFrame jf = new JFrame("´´ĞÂÊµÑéÊÒÍ¼Êé¹İ£ºÓÃ»§£¬»¶Ó­Äú");
+    JFrame jf = new JFrame("åˆ›æ–°å®éªŒå®¤å›¾ä¹¦é¦†ï¼šç”¨æˆ·ï¼Œæ¬¢è¿æ‚¨");
 
     final int WIDTH = 1000;
     final int HEIGHT = 600;
 
-    //×é×°ÊÓÍ¼
+    //ç»„è£…è§†å›¾
     public void init() throws Exception {
-        //¸ø´°¿ÚÉèÖÃÊôĞÔ
+        //ç»™çª—å£è®¾ç½®å±æ€§
         jf.setBounds((ScreenUtils.getScreenWidth() - WIDTH) / 2, (ScreenUtils.getScreenHeight() - HEIGHT) / 2, WIDTH, HEIGHT);
         jf.setResizable(false);
         jf.setIconImage(ImageIO.read(new File(PathUtils.getRealPath("logo.png"))));
 
-        //ÉèÖÃ·Ö¸îÃæ°å
+        //è®¾ç½®åˆ†å‰²é¢æ¿
         JSplitPane sp = new JSplitPane();
 
-        //Ö§³ÖÁ¬Ğø²¼¾Ö
+        //æ”¯æŒè¿ç»­å¸ƒå±€
         sp.setContinuousLayout(true);
         sp.setDividerLocation(150);
         sp.setDividerSize(7);
 
-        //ÉèÖÃ×ó²àÄÚÈİ
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("ÏµÍ³¹ÜÀí");
-        DefaultMutableTreeNode userManage = new DefaultMutableTreeNode("ÓÃ»§¹ÜÀí");
-        DefaultMutableTreeNode bookManage = new DefaultMutableTreeNode("ÈÎÎñÇåµ¥");
-        DefaultMutableTreeNode borrowManage = new DefaultMutableTreeNode("½èÔÄ¹ÜÀí");
-        DefaultMutableTreeNode statisticsManage = new DefaultMutableTreeNode("Í³¼Æ·ÖÎö");
+        //è®¾ç½®å·¦ä¾§å†…å®¹
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("ç³»ç»Ÿç®¡ç†");
+        DefaultMutableTreeNode userManage = new DefaultMutableTreeNode("ç”¨æˆ·ç®¡ç†");
+        DefaultMutableTreeNode bookManage = new DefaultMutableTreeNode("ä»»åŠ¡æ¸…å•");
+        DefaultMutableTreeNode borrowManage = new DefaultMutableTreeNode("å€Ÿé˜…ç®¡ç†");
+        DefaultMutableTreeNode statisticsManage = new DefaultMutableTreeNode("ç»Ÿè®¡åˆ†æ");
 
         root.add(userManage);
         root.add(bookManage);
@@ -58,26 +58,26 @@ public class UserInterface {
         tree.setCellRenderer(myRenderer);
 
         tree.setBackground(color);
-        //ÉèÖÃµ±Ç°treeÄ¬ÈÏÑ¡ÖĞÍ¼Êé¹ÜÀí
+        //è®¾ç½®å½“å‰treeé»˜è®¤é€‰ä¸­å›¾ä¹¦ç®¡ç†
         tree.setSelectionRow(2);
         tree.addTreeSelectionListener(new TreeSelectionListener() {
-            //µ±ÌõÄ¿Ñ¡ÖĞ±ä»¯ºó£¬Õâ¸ö·½·¨»áÖ´ĞĞ
+            //å½“æ¡ç›®é€‰ä¸­å˜åŒ–åï¼Œè¿™ä¸ªæ–¹æ³•ä¼šæ‰§è¡Œ
             @Override
             public void valueChanged(TreeSelectionEvent e) {
-                //µÃµ½µ±Ç°Ñ¡ÖĞµÄ½áµã¶ÔÏó
+                //å¾—åˆ°å½“å‰é€‰ä¸­çš„ç»“ç‚¹å¯¹è±¡
                 Object lastPathComponent = e.getNewLeadSelectionPath().getLastPathComponent();
 
                 if (userManage.equals(lastPathComponent)){
-                    sp.setRightComponent(new JLabel("ÕâÀï½øĞĞÓÃ»§¹ÜÀí..."));
+                    sp.setRightComponent(new JLabel("è¿™é‡Œè¿›è¡Œç”¨æˆ·ç®¡ç†..."));
                     sp.setDividerLocation(150);
                 }else if (bookManage.equals(lastPathComponent)){
                     sp.setRightComponent(new UserBookManageComponent(jf));
                     sp.setDividerLocation(150);
                 } if (borrowManage.equals(lastPathComponent)){
-                    sp.setRightComponent(new JLabel("ÕâÀï½øĞĞ½èÔÄ¹ÜÀí..."));
+                    sp.setRightComponent(new JLabel("è¿™é‡Œè¿›è¡Œå€Ÿé˜…ç®¡ç†..."));
                     sp.setDividerLocation(150);
                 } if (statisticsManage.equals(lastPathComponent)){
-                    sp.setRightComponent(new JLabel("ÕâÀï½øĞĞÍ³¼Æ·ÖÎö..."));
+                    sp.setRightComponent(new JLabel("è¿™é‡Œè¿›è¡Œç»Ÿè®¡åˆ†æ..."));
                     sp.setDividerLocation(150);
                 }
 
@@ -90,7 +90,7 @@ public class UserInterface {
         jf.add(sp);
         jf.setVisible(true);
 
-        jf.setTitle("´´ĞÂÊµÑéÊÒÍ¼Êé¹İ£ºÓÃ»§£¬»¶Ó­Äú");
+        jf.setTitle("åˆ›æ–°å®éªŒå®¤å›¾ä¹¦é¦†ï¼šç”¨æˆ·ï¼Œæ¬¢è¿æ‚¨");
 
     }
 
@@ -104,7 +104,7 @@ public class UserInterface {
         alarmClock01.start();
     }
 
-    //×Ô¶¨Òå½áµã»æÖÆÆ÷
+    //è‡ªå®šä¹‰ç»“ç‚¹ç»˜åˆ¶å™¨
     private class MyRenderer extends DefaultTreeCellRenderer {
         private ImageIcon rootIcon = null;
         private ImageIcon userManageIcon = null;
@@ -121,10 +121,10 @@ public class UserInterface {
 
         }
 
-        //µ±»æÖÆÊ÷µÄÃ¿¸ö½áµãÊ±£¬¶¼»áµ÷ÓÃÕâ¸ö·½·¨
+        //å½“ç»˜åˆ¶æ ‘çš„æ¯ä¸ªç»“ç‚¹æ—¶ï¼Œéƒ½ä¼šè°ƒç”¨è¿™ä¸ªæ–¹æ³•
         @Override
         public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
-            //Ê¹ÓÃÄ¬ÈÏ»æÖÆ
+            //ä½¿ç”¨é»˜è®¤ç»˜åˆ¶
             super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 
             ImageIcon image = null;

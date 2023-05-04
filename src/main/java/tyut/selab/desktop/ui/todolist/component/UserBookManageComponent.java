@@ -1,6 +1,19 @@
 package tyut.selab.desktop.ui.todolist.component;
 
+import com.alibaba.druid.pool.DruidDataSource;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.Vector;
+import com.alibaba.druid.pool.DruidDataSource;
+import tyut.selab.desktop.moudle.login.service.impl.LoginService;
 import tyut.selab.desktop.moudle.todolist.controller.impl.TaskController;
 import tyut.selab.desktop.moudle.todolist.domain.vo.TaskVo;
 import tyut.selab.desktop.ui.todolist.listener.ActionDoneListener;
@@ -11,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -181,10 +195,11 @@ public class UserBookManageComponent extends Box {
         super(axis);
     }
 
+
     //请求数据
     public void requestData(){
         //获取用户的录入
-        Integer taskID = 2022005553;
+        Integer taskID =LoginService.getUser().getStudentNumber();
 
         //查询数据
         TaskController taskController = new TaskController();
@@ -204,7 +219,7 @@ public class UserBookManageComponent extends Box {
 
         tableData.clear();
         for (TaskVo vo: data) {
-            java.util.List<Object> row = new ArrayList<Object>();
+            List<Object> row = new ArrayList<Object>();
             row.add(vo.getTaskId());
             row.add(vo.getUserStudentNumber());
             row.add(vo.getTaskContent());

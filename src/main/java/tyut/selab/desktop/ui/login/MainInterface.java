@@ -25,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class MainInterface extends JFrame  {
@@ -35,7 +36,7 @@ public class MainInterface extends JFrame  {
     IUserDao userDao = new UserDao();
 
 
-    public MainInterface(String str) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public MainInterface(String str) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         User user=userDao.queryUserByAccountNumber(str);
         String name=user.getName();
         String acccount=user.getAccountNumber();

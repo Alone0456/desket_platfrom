@@ -1,6 +1,7 @@
 package tyut.selab.desktop.ui.todolist.component;
 
 
+import tyut.selab.desktop.moudle.login.service.impl.LoginService;
 import tyut.selab.desktop.moudle.todolist.controller.impl.TaskController;
 import tyut.selab.desktop.moudle.todolist.domain.vo.TaskVo;
 import tyut.selab.desktop.ui.todolist.listener.ActionDoneListener;
@@ -10,6 +11,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -105,15 +107,7 @@ public class UserUpdateBookDialog extends JDialog {
 
 
 
-
-
-
-
-
-                Integer userStudentNumber = 2022005553;
-
-
-
+                Integer userStudentNumber = LoginService.getUser().getStudentNumber();
 
 
 
@@ -134,7 +128,8 @@ public class UserUpdateBookDialog extends JDialog {
                     taskStartTime = new Date();
                     taskEndTime = taskEndTimeFormat.parse(taskET);
                 } catch (ParseException ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(jf, "请输入正确格式");
+                    return; // 结束查询操作
                 }
 
                 TaskVo taskVo = new TaskVo(taskID,userStudentNumber,taskContent,taskStartTime,taskEndTime);
@@ -146,7 +141,13 @@ public class UserUpdateBookDialog extends JDialog {
                 }
                 JOptionPane.showMessageDialog(jf,"修改成功");
                 dispose();
-                listener.done(null);
+                try {
+                    listener.done(null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         //TODO 处理修改的行为
@@ -158,18 +159,18 @@ public class UserUpdateBookDialog extends JDialog {
 //        vBox.add(stockBox);
 //        vBox.add(Box.createVerticalStrut(15));
 //        vBox.add(authorBox);
-        vBox.add(Box.createVerticalStrut(15));
+        vBox.add(Box.createVerticalStrut(50));
         vBox.add(priceBox);
-        vBox.add(Box.createVerticalStrut(15));
+        vBox.add(Box.createVerticalStrut(50));
         vBox.add(descBox);
-        vBox.add(Box.createVerticalStrut(15));
+        vBox.add(Box.createVerticalStrut(50));
         vBox.add(btnBox);
 
         //为了左右有间距，在vBox外层封装一个水平的Box，添加间隔
         Box hBox = Box.createHorizontalBox();
-        hBox.add(Box.createHorizontalStrut(20));
+        hBox.add(Box.createHorizontalStrut(60));
         hBox.add(vBox);
-        hBox.add(Box.createHorizontalStrut(20));
+        hBox.add(Box.createHorizontalStrut(60));
 
         this.add(hBox);
         //回显数据

@@ -1,6 +1,7 @@
 package tyut.selab.desktop.ui.todolist.component;
 
 
+import tyut.selab.desktop.moudle.login.service.impl.LoginService;
 import tyut.selab.desktop.moudle.todolist.controller.impl.TaskController;
 import tyut.selab.desktop.moudle.todolist.domain.vo.TaskVo;
 import tyut.selab.desktop.ui.todolist.listener.ActionDoneListener;
@@ -10,6 +11,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -90,7 +92,8 @@ public class UserAddBookDialog extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 //获取用户的录入
                 Integer taskID = null;
-                Integer userStudentNumber = 2022005553;
+                LoginService loginService=new LoginService();
+                Integer userStudentNumber = loginService.getUser().getStudentNumber();
                 String taskST = null;
                 String taskET = priceField.getText().trim();
 
@@ -105,7 +108,8 @@ public class UserAddBookDialog extends JDialog {
                     taskStartTime = new Date();
                     taskEndTime = taskEndTimeFormat.parse(taskET);
                 } catch (ParseException ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(jf, "请输入正确格式");
+                    return; // 结束查询操作
                 }
 
                 //添加数据
@@ -119,7 +123,13 @@ public class UserAddBookDialog extends JDialog {
                 JOptionPane.showMessageDialog(jf, "添加成功");
 
                 dispose();
-                listener.done(null);
+                try {
+                    listener.done(null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 

@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,10 +41,10 @@ public class quarryUserDialog extends JDialog {
         //组装用户编号
         Box stockBox = Box.createHorizontalBox();
         JLabel stockLable = new JLabel("用户编号：");
-        JTextField stockField = new JTextField(15);
+        JTextField stockField = new JTextField(10);
 
         stockBox.add(stockLable);
-        stockBox.add(Box.createHorizontalStrut(20));
+        stockBox.add(Box.createHorizontalStrut(15));
         stockBox.add(stockField);
 
         //组装任务简介
@@ -116,7 +117,7 @@ public class quarryUserDialog extends JDialog {
 
                 tableData.clear();
                 for (TaskVo vo: data) {
-                    java.util.List<Object> row = new ArrayList<Object>();
+                    List<Object> row = new ArrayList<Object>();
                     row.add(vo.getTaskId());
                     row.add(vo.getUserStudentNumber());
                     row.add(vo.getTaskContent());
@@ -133,15 +134,21 @@ public class quarryUserDialog extends JDialog {
                 JOptionPane.showMessageDialog(jf, "查询成功");
 
                 dispose();
-                listener.done(null);
+                try {
+                    listener.done(null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
-//        btnBox.add(addBtn);
+        btnBox.add(quarryBtn);
 
 //        vBox.add(Box.createVerticalStrut(20));
 //        vBox.add(nameBox);
-        vBox.add(Box.createVerticalStrut(110));
+        vBox.add(Box.createVerticalStrut(100));
         vBox.add(stockBox);
 //        vBox.add(Box.createVerticalStrut(15));
 //        vBox.add(descBox);
@@ -150,14 +157,14 @@ public class quarryUserDialog extends JDialog {
 //        vBox.add(Box.createVerticalStrut(15));
 //        vBox.add(priceBox);
 
-        vBox.add(Box.createVerticalStrut(110));
+        vBox.add(Box.createVerticalStrut(100));
         vBox.add(btnBox);
 
         //为了左右有间距，在vBox外层封装一个水平的Box，添加间隔
         Box hBox = Box.createHorizontalBox();
-        hBox.add(Box.createHorizontalStrut(40));
+        hBox.add(Box.createHorizontalStrut(5));
         hBox.add(vBox);
-        hBox.add(Box.createHorizontalStrut(40));
+        hBox.add(Box.createHorizontalStrut(5));
 
         this.add(hBox);
     }

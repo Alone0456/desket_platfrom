@@ -1,7 +1,5 @@
 package tyut.selab.desktop.moudle.todolist.dao.impl;
 
-import tyut.selab.desktop.ui.todolist.utils.JDBC;
-
 import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
