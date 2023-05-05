@@ -22,6 +22,7 @@ public class AdminPanel extends JPanel {
     private JPanel panel;
     public AdminPanel(){
     setSize(1010, 700);
+    setBackground(new Color(0,120,159));
     JDesktopPane desktopPane = new JDesktopPane();
     desktopPane.setBounds(0, 0, 1010, 50);
     desktopPane.setBackground(new Color(7, 184, 149));

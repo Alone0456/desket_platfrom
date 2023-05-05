@@ -4,11 +4,11 @@ import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.domain.vo.UserRegisterVo;
 import tyut.selab.desktop.moudle.student.usercontroller.impl.UserController;
 import tyut.selab.desktop.ui.student.manager.studentUtils;
+import tyut.selab.desktop.ui.student.user.Massage;
 
 import javax.swing.*;
-import java.awt.Color;
+import java.awt.*;
 import javax.swing.GroupLayout.Alignment;
-import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -18,6 +18,7 @@ public class passwordUpdate extends JPanel {
     private JTextField againPassword;
     public passwordUpdate(User user) {
         setBackground(new Color(255, 255, 255));
+        setOpaque(false);
         setSize(1010,610);
 
         //设置标签和文本框
@@ -27,6 +28,7 @@ public class passwordUpdate extends JPanel {
         oldPassword = new JTextField();
         oldPassword.setFont(new Font("幼圆", Font.BOLD, 30));
         oldPassword.setColumns(10);
+        oldPassword.setOpaque(false);
 
         JLabel newPasswordText = new JLabel("请输入新密码:");
         newPasswordText.setFont(new Font("幼圆", Font.BOLD, 30));
@@ -34,6 +36,7 @@ public class passwordUpdate extends JPanel {
         newPassword = new JTextField();
         newPassword.setFont(new Font("幼圆", Font.BOLD, 30));
         newPassword.setColumns(10);
+        newPassword.setOpaque(false);
 
         JLabel againText = new JLabel("再次输入新密码:");
         againText.setFont(new Font("幼圆", Font.BOLD, 30));
@@ -41,9 +44,11 @@ public class passwordUpdate extends JPanel {
         againPassword = new JTextField();
         againPassword.setFont(new Font("幼圆", Font.BOLD, 30));
         againPassword.setColumns(10);
+        againPassword.setOpaque(false);
 
         //确认按钮
         JButton SureButton = new JButton("确认");
+        SureButton.setOpaque(false);
         SureButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if(studentUtils.isNotNull(oldPassword)&&studentUtils.isNotNull(newPassword)&&studentUtils.isNotNull(againPassword)){
@@ -56,6 +61,7 @@ public class passwordUpdate extends JPanel {
             }
         });
         SureButton.setFont(new Font("幼圆", Font.BOLD, 25));
+
 
         //设置布局器
         GroupLayout groupLayout = new GroupLayout(this);

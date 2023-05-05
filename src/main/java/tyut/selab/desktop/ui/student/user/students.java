@@ -4,8 +4,8 @@ import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 import tyut.selab.desktop.moudle.student.usercontroller.impl.UserController;
 import tyut.selab.desktop.ui.student.manager.studentUtils;
 
+import java.awt.*;
 import java.awt.Dialog.ModalityType;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,7 +17,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
-import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -31,7 +30,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import static java.awt.Dialog.ModalityType.APPLICATION_MODAL;
-import java.awt.Color;
 
 public class students extends JPanel {
 
@@ -39,6 +37,7 @@ public class students extends JPanel {
     private  Object obj[][];
     private JButton NameButton;
     private JButton studentNumberButton;
+    private Image background;
     private boolean isName=true;
 
     //对表头内容设置
@@ -58,6 +57,7 @@ public class students extends JPanel {
         table = new JTable();
         table.setModel(content);
         table.getTableHeader().setReorderingAllowed(false);
+        table.setOpaque(false);
 
         //设置布局器
         JScrollPane scrollPane = new JScrollPane();
@@ -103,6 +103,7 @@ public class students extends JPanel {
 
             }
         });
+        background = new ImageIcon(Massage.class.getResource("pngs/background.png")).getImage();
 
         //设置布局器
         GroupLayout gl_contentPane = new GroupLayout(this);
@@ -156,7 +157,7 @@ public class students extends JPanel {
     //初始化表格数据
     private void AllSelect(){
         UserController userController=new UserController();
-        obj=userController.queryUser().stream().map(p->new Object[]{p.getStudentNumber(),p.getName(),p.getAccountNumber(),p.getGender()==0?"女":"男",p.getPhone(),p.getPost(),p.getDuty()}).toArray(Object[][]::new);
+        obj=userController.queryUser().stream().map(p->new Object[]{p.getStudentNumber(),p.getName(),p.getAccountNumber(),p.getGender()==0?"男":"女",p.getPhone(),p.getPost(),p.getDuty()}).toArray(Object[][]::new);
         content=new DefaultTableModel(obj
                 ,
                 new String[] {
@@ -177,7 +178,7 @@ public class students extends JPanel {
                 String name = textField.getText();
                 UserVo user=userController.queryUserByStudentName(name);
                 if(studentUtils.isSelect(user)) {
-                    String gender = user.getGender() == 0 ? "女" : "男";
+                    String gender = user.getGender() == 0 ? "男" : "女";
                     obj = new Object[][]{{user.getStudentNumber(), user.getName(), user.getAccountNumber(), gender, user.getPhone(), user.getPost(), user.getDuty()}};
                     content = new DefaultTableModel(obj
                             ,
@@ -192,7 +193,7 @@ public class students extends JPanel {
                     Integer studentNumber = Integer.parseInt(textField.getText());
                     UserVo user = userController.queryUserByStudentNumber(studentNumber);
                     if (studentUtils.isSelect(user)) {
-                        String gender = user.getGender() == 0 ? "女" : "男";
+                        String gender = user.getGender() == 0 ? "男" : "女";
                         obj = new Object[][]{{user.getStudentNumber(), user.getName(), user.getAccountNumber(), gender, user.getPhone(), user.getPost(), user.getDuty()}};
                         content = new DefaultTableModel(obj
                                 ,
@@ -215,5 +216,10 @@ public class students extends JPanel {
     private boolean ClickstudentNumber(){
         isName=false;
         return  isName;
+    }
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(background, 0, 0,getWidth(),getHeight(),this);
     }
 }

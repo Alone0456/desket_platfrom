@@ -5,6 +5,7 @@ import org.w3c.dom.Text;
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 import tyut.selab.desktop.moudle.student.usercontroller.impl.UserController;
 import tyut.selab.desktop.ui.student.manager.innerPanels.SureDeleteDialog;
+import tyut.selab.desktop.ui.student.user.Massage;
 
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -13,7 +14,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.Font;
+import java.awt.*;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -26,14 +27,14 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.Color;
+
 public class studentsAdmin extends JPanel {
     private JTable table;
     private  Object obj[][];
     private JButton NameButton;
     private JButton studentNumberButton;
     private boolean isName=true;
-    private boolean SureDelete=false;
+    private Image background;
     //对表头内容设置
     private DefaultTableModel content=new DefaultTableModel(obj
             ,
@@ -87,6 +88,7 @@ public class studentsAdmin extends JPanel {
         //姓名按钮
         NameButton = new JButton("姓名");
         NameButton.setBackground(Color.gray);
+        NameButton.setFont(new Font("幼圆", Font.BOLD, 13));
         NameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -99,6 +101,7 @@ public class studentsAdmin extends JPanel {
         //学号按钮
         studentNumberButton = new JButton("学号");
         studentNumberButton.setBackground(new Color(255, 255, 255));
+        studentNumberButton.setFont(new Font("幼圆", Font.BOLD, 13));
         studentNumberButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setName(false);
@@ -119,6 +122,7 @@ public class studentsAdmin extends JPanel {
                 settings.ColorChange();
             }
         });
+        background = new ImageIcon(Massage.class.getResource("pngs/background.png")).getImage();
 
         //设置布局器
         GroupLayout gl_contentPane = new GroupLayout(this);
@@ -179,7 +183,7 @@ public class studentsAdmin extends JPanel {
     //初始化表格数据
     public void AllSelect(){
         UserController userController=new UserController();
-        obj=userController.queryUser().stream().map(p->new Object[]{p.getStudentNumber(),p.getName(),p.getAccountNumber(),p.getGender()==0?"女":"男",p.getPhone(),p.getPost(),p.getDuty()}).toArray(Object[][]::new);
+        obj=userController.queryUser().stream().map(p->new Object[]{p.getStudentNumber(),p.getName(),p.getAccountNumber(),p.getGender()==0?"男":"女",p.getPhone(),p.getPost(),p.getDuty()}).toArray(Object[][]::new);
         content=new DefaultTableModel(obj
                 ,
                 new String[] {
@@ -204,7 +208,7 @@ public class studentsAdmin extends JPanel {
                 String name = textField.getText();
                 UserVo user=userController.queryUserByStudentName(name);
                 if(isSelect(user)) {
-                    String gender = user.getGender() == 0 ? "女" : "男";
+                    String gender = user.getGender() == 0 ? "男" : "女";
                     obj = new Object[][]{{user.getStudentNumber(), user.getName(), user.getAccountNumber(), gender, user.getPhone(), user.getPost(), user.getDuty()}};
                     content = new DefaultTableModel(obj
                             ,
@@ -220,7 +224,7 @@ public class studentsAdmin extends JPanel {
                     System.out.println(studentNumber);
                     UserVo user = userController.queryUserByStudentNumber(studentNumber);
                     if (isSelect(user)) {
-                        String gender = user.getGender() == 0 ? "女" : "男";
+                        String gender = user.getGender() == 0 ? "男" : "女";
                         obj = new Object[][]{{user.getStudentNumber(), user.getName(), user.getAccountNumber(), gender, user.getPhone(), user.getPost(), user.getDuty()}};
                         content = new DefaultTableModel(obj
                                 ,
@@ -251,7 +255,6 @@ public class studentsAdmin extends JPanel {
         UserController userController=new UserController();
         if(studentUtils.isSuccess(userController.deleteUser(user.getStudentNumber()))){
             JOptionPane.showMessageDialog(null,"注销成功");
-            setSureDelete(false);
         }else{
             JOptionPane.showMessageDialog(null,"注销失败");
         }
@@ -267,9 +270,9 @@ public class studentsAdmin extends JPanel {
         UserVo user=new UserVo((Integer)rowData[0], (String) rowData[1],(String) rowData[2],((String)rowData[3])=="女"?0:1,(String)rowData[4],(String)rowData[5],(String)rowData[6]);
         return user;
     }
-
-    //确认是否注销
-    public void setSureDelete(boolean sureDelete) {
-        SureDelete = sureDelete;
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(background, 0, 0,getWidth(),getHeight(),this);
     }
 }

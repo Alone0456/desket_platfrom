@@ -2,17 +2,13 @@ package tyut.selab.desktop.ui.student.manager;
 
 import tyut.selab.desktop.ui.student.manager.innerPanels.updateUser;
 import tyut.selab.desktop.ui.student.manager.innerPanels.insertUser;
+import tyut.selab.desktop.ui.student.user.Massage;
 
-import javax.swing.JPanel;
-import javax.swing.GroupLayout;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 
-import java.awt.CardLayout;
-import java.awt.Color;
-import javax.swing.JDesktopPane;
+import java.awt.*;
 import javax.swing.border.LineBorder;
-import javax.swing.JButton;
-import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -22,14 +18,16 @@ public class MassageSettings extends JPanel {
     private JButton insertUser;
     private CardLayout cardLayout=new CardLayout();
     private JPanel panel;
+    private Image background;
     public MassageSettings() {
         setBackground(new Color(255, 255, 255));
         setSize(1010,650);
         JDesktopPane desktopPane = new JDesktopPane();
-        desktopPane.setBorder(new LineBorder(new Color(0, 0, 0)));
+        desktopPane.setOpaque(false);
         desktopPane.setBackground(new Color(255, 255, 255));
 
         panel = new JPanel();
+        panel.setOpaque(false);
         panel.setBackground(new Color(255, 255, 255));
         panel.setLayout(cardLayout);
         tyut.selab.desktop.ui.student.manager.innerPanels.insertUser insert = new insertUser();
@@ -37,6 +35,7 @@ public class MassageSettings extends JPanel {
         panel.add(insert,"insert");
         panel.add(update,"update");
         cardLayout.show(panel, "update");
+        background = new ImageIcon(Massage.class.getResource("pngs/background.png")).getImage();
 
         //设置布局器
         GroupLayout groupLayout = new GroupLayout(this);
@@ -96,5 +95,10 @@ public class MassageSettings extends JPanel {
     public void ColorChange(){
         insertUser.setBackground(new Color(46, 218, 226));
         UpdateUser.setBackground(Color.white);
+    }
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(background, 0, 0,getWidth(),getHeight(),this);
     }
 }

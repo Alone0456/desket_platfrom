@@ -26,10 +26,10 @@ public class UserPanel extends JPanel {
     private JPanel panel;
     private JButton updateButton;
     IUserDao userDao = new UserDao();
-    private User user=userDao.queryUserByStudentName(LoginService.getUser().getName());
-
+    private User user=userDao.queryUserByStudentNumber(LoginService.getUser().getStudentNumber());
     public UserPanel() {
-        setBackground(new Color(255, 255, 255));
+        setBackground(new Color(0, 120, 159));
+
         setSize(1010, 700);
         JDesktopPane desktopPane = new JDesktopPane();
         desktopPane.setBounds(0, 0, 1010, 50);

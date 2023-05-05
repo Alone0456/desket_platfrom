@@ -3,15 +3,11 @@ package tyut.selab.desktop.ui.student.user;
 import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.ui.student.user.innerPanels.MassageUpdate;
 import tyut.selab.desktop.ui.student.user.innerPanels.passwordUpdate;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Font;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JDesktopPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
@@ -20,23 +16,27 @@ public class updatemassage extends JPanel {
     private JButton UpdatePassword;
     private CardLayout cardLayout=new CardLayout();
     private JPanel panel;
+    private Image background;
     public updatemassage(User user,Massage parentPanel) {
-        setBackground(new Color(255, 255, 255));
-        setSize(1010,650);
+        setBackground(new Color(0,120,159));
+        setBounds(0,50,1010,650);
+        setOpaque(false);
         JDesktopPane desktopPane = new JDesktopPane();
-        desktopPane.setBorder(new LineBorder(new Color(0, 0, 0)));
-        desktopPane.setBackground(new Color(255, 255, 255));
+        desktopPane.setBackground(new Color(255, 150,100 ));
+        desktopPane.setBounds(0,50,1010,40);
+        desktopPane.setOpaque(false);
 
         //设置卡片布局器
         panel = new JPanel();
         panel.setBackground(new Color(255, 255, 255));
+        panel.setOpaque(false);
         panel.setLayout(cardLayout);
         MassageUpdate updateM =new MassageUpdate(user,parentPanel);
         passwordUpdate updateP = new passwordUpdate(user);
         panel.add(updateM,"massage");
         panel.add(updateP,"password");
         cardLayout.show(panel, "massage");
-
+        background = new ImageIcon(Massage.class.getResource("pngs/background.png")).getImage();
         //设置布局器
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
@@ -83,6 +83,11 @@ public class updatemassage extends JPanel {
         UpdatePassword.setBounds(176, 0, 171, 40);
         desktopPane.add(UpdatePassword);
         setLayout(groupLayout);
+    }
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(background, 0, 0,getWidth(),getHeight(),this);
     }
 
 }

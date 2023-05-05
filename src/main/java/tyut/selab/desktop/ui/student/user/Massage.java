@@ -23,6 +23,7 @@ public class Massage extends JPanel {
     private JLabel Email;
     private JLabel Duty;
     private Image image;
+    private Image background;
     /**
      * Create the panel.
      */
@@ -90,34 +91,30 @@ public class Massage extends JPanel {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        background = new ImageIcon(Massage.class.getResource("pngs/background.png")).getImage();
 
         //设置布局器
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
                 groupLayout.createParallelGroup(Alignment.TRAILING)
                         .addGroup(groupLayout.createSequentialGroup()
-                                .addContainerGap(86, Short.MAX_VALUE)
+                                .addGap(86)
                                 .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-                                        .addGroup(groupLayout.createSequentialGroup()
-                                                .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-                                                        .addComponent(PhoneText)
-                                                        .addComponent(EmailText, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE))
-                                                .addGap(35))
-                                        .addGroup(groupLayout.createSequentialGroup()
-                                                .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                                        .addComponent(AccountNumberText, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(studentNumberText)
-                                                        .addComponent(NameText, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
-                                                .addGap(35)))
-                                .addPreferredGap(ComponentPlacement.UNRELATED)
+                                        .addComponent(PhoneText)
+                                        .addComponent(EmailText, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                                                .addComponent(AccountNumberText, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(studentNumberText)
+                                                .addComponent(NameText, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)))
+                                .addGap(35)
                                 .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
                                         .addGroup(groupLayout.createSequentialGroup()
                                                 .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                                        .addComponent(Phone, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                                                        .addComponent(AccountNumber, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                                                        .addComponent(studentNumber, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                                                        .addComponent(Email, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE))
-                                                .addGap(93))
+                                                        .addComponent(Phone, GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                                                        .addComponent(AccountNumber, GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                                                        .addComponent(studentNumber, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                                                        .addComponent(Email, GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE))
+                                                .addGap(50))
                                         .addGroup(groupLayout.createSequentialGroup()
                                                 .addComponent(Name, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(ComponentPlacement.RELATED)))
@@ -166,7 +163,7 @@ public class Massage extends JPanel {
     public void initData(User user) {
         Name.setText(user.getName());
         studentNumber.setText(String.valueOf(user.getStudentNumber()));
-        Gender.setText(user.getGender()==0?"女":"男");
+        Gender.setText(user.getGender()==0?"男":"女");
         Email.setText(user.getPost());
         Phone.setText(user.getPhone());
         AccountNumber.setText(user.getAccountNumber());
@@ -176,6 +173,7 @@ public class Massage extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        g.drawImage(background, 0, 0,getWidth(),getHeight(),this);
         g.drawImage(image, 420, 20,120,120,null);
     }
 }

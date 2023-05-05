@@ -3,12 +3,12 @@ package tyut.selab.desktop.ui.student.manager.innerPanels;
 import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 import tyut.selab.desktop.moudle.student.usercontroller.impl.UserController;
 import tyut.selab.desktop.ui.student.manager.studentUtils;
+import tyut.selab.desktop.ui.student.user.Massage;
 
 import javax.swing.*;
-import java.awt.Color;
+import java.awt.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,7 +18,7 @@ public class updateUser extends JPanel {
     private JTextField StudentNumber;
     private JTextField Phone;
     private JTextField Email;
-    private JTextField Duty;
+    private JComboBox Duty;
     private JButton NameButton;
     private JButton studentNumberButton;
     private JTextField textField;
@@ -27,6 +27,7 @@ public class updateUser extends JPanel {
     public updateUser() {
         setBackground(new Color(255, 255, 255));
         setSize(1010,610);
+        setOpaque(false);
 
         //设定固定文本和文本框
         JLabel NameText = new JLabel("姓名:");
@@ -37,7 +38,9 @@ public class updateUser extends JPanel {
 
         Gender = new JComboBox();
         Gender.setFont(new Font("宋体", Font.PLAIN, 25));
-        Gender.setModel(new DefaultComboBoxModel(new String[] {"女", "男"}));
+        Gender.setModel(new DefaultComboBoxModel(new String[] {"男", "女"}));
+        Gender.setOpaque(false);
+
 
         JLabel AccountNumberText = new JLabel("账号:");
         AccountNumberText.setFont(new Font("幼圆", Font.BOLD, 25));
@@ -57,26 +60,32 @@ public class updateUser extends JPanel {
         Name = new JTextField();
         Name.setFont(new Font("宋体", Font.PLAIN, 25));
         Name.setColumns(10);
+        Name.setOpaque(false);
 
         AccountNumber = new JTextField();
         AccountNumber.setFont(new Font("宋体", Font.PLAIN, 25));
         AccountNumber.setColumns(10);
+        AccountNumber.setOpaque(false);
 
         StudentNumber = new JTextField();
         StudentNumber.setFont(new Font("宋体", Font.PLAIN, 25));
         StudentNumber.setColumns(10);
+        StudentNumber.setOpaque(false);
 
         Phone = new JTextField();
         Phone.setFont(new Font("宋体", Font.PLAIN, 25));
         Phone.setColumns(10);
+        Phone.setOpaque(false);
 
         Email = new JTextField();
         Email.setFont(new Font("宋体", Font.PLAIN, 25));
         Email.setColumns(10);
+        Email.setOpaque(false);
 
-        Duty = new JTextField();
+        Duty = new JComboBox();
+        Duty.setModel(new DefaultComboBoxModel(new String[] {"用户"}));
         Duty.setFont(new Font("宋体", Font.PLAIN, 25));
-        Duty.setColumns(10);
+        Duty.setOpaque(false);
 
         //提交按钮
         JButton submitButton = new JButton("修改");
@@ -93,6 +102,7 @@ public class updateUser extends JPanel {
         //姓名按钮
         NameButton = new JButton("姓名");
         NameButton.setFont(new Font("幼圆", Font.BOLD, 20));
+        NameButton.setOpaque(false);
         NameButton.setBackground(Color.gray);
         NameButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -106,6 +116,7 @@ public class updateUser extends JPanel {
         //学号按钮
         studentNumberButton = new JButton("学号");
         studentNumberButton.setFont(new Font("幼圆", Font.BOLD, 20));
+        studentNumberButton.setOpaque(false);
         studentNumberButton.setBackground(new Color(255, 255, 255));
         studentNumberButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -127,7 +138,6 @@ public class updateUser extends JPanel {
                     initData(Select());
             }
         });
-
         //设置布局器
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
@@ -162,7 +172,7 @@ public class updateUser extends JPanel {
                                                         .addComponent(GenderText, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addGap(18)
                                                 .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                                        .addComponent(Email, 279, 279, 279)
+                                                        .addComponent(Email, 279, 326, 450)
                                                         .addComponent(Gender, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
                                                 .addGap(100))
                                         .addGroup(groupLayout.createSequentialGroup()
@@ -246,16 +256,20 @@ public class updateUser extends JPanel {
             String accountNumber=AccountNumber.getText();
             String  email=Email.getText();
             String phone=Phone.getText();
-            String duty=Duty.getText();
-            //连接数据库进行修改
-            UserController usercontroller=new UserController();
-            UserVo oldUser=Select();
-            UserVo newUser=new UserVo(studentNumber,name ,accountNumber,gender,phone,email,duty);
-           if(studentUtils.isSuccess(usercontroller.updateUser(oldUser,newUser))){
-               JOptionPane.showMessageDialog(null,"修改成功");
-               clearText();
+            String duty="用户";
+            if(studentUtils.isEmail(Email)&&studentUtils.isPhone(Phone)) {
+                //连接数据库进行修改
+                UserController usercontroller = new UserController();
+                UserVo oldUser = Select();
+                UserVo newUser = new UserVo(studentNumber, name, accountNumber, gender, phone, email, duty);
+                if (studentUtils.isSuccess(usercontroller.updateUser(oldUser, newUser))) {
+                    JOptionPane.showMessageDialog(null, "修改成功");
+                    clearText();
+                } else {
+                    JOptionPane.showMessageDialog(null, "修改失败");
+                }
             }else{
-               JOptionPane.showMessageDialog(null,"修改失败");
+                JOptionPane.showMessageDialog(null,"电话号或邮箱输入格式有误");
             }
         }
     }
@@ -266,7 +280,7 @@ public class updateUser extends JPanel {
         AccountNumber.setText("");
         Email.setText("");
         Phone.setText("");
-        Duty.setText("");
+        Duty.setSelectedIndex(0);
     }
     public void setIsName(boolean name) {
         isName = name;
@@ -304,7 +318,7 @@ public class updateUser extends JPanel {
             Email.setText(user.getPost());
             Phone.setText(user.getPhone());
             AccountNumber.setText(user.getAccountNumber());
-            Duty.setText(user.getDuty());
+            Duty.setSelectedIndex(0);
         }
     }
 }

@@ -3,12 +3,12 @@ package tyut.selab.desktop.ui.student.manager.innerPanels;
 import tyut.selab.desktop.moudle.student.domain.vo.UserRegisterVo;
 import tyut.selab.desktop.moudle.student.usercontroller.impl.UserController;
 import tyut.selab.desktop.ui.student.manager.studentUtils;
+import tyut.selab.desktop.ui.student.user.Massage;
 
 import javax.swing.*;
-import java.awt.Color;
+import java.awt.*;
 
 import javax.swing.GroupLayout.Alignment;
-import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -19,11 +19,13 @@ public class insertUser extends JPanel {
     private JTextField StudentNumber;
     private JTextField Phone;
     private JTextField Email;
-    private JTextField Duty;
+    private JComboBox Duty;
     private JComboBox Gender;
+
     public insertUser() {
         setBackground(new Color(255, 255, 255));
         setSize(1010,610);
+        setOpaque(false);
 
         //设置固定标签和文本框
         JLabel PrintText = new JLabel("请输入用户信息:");
@@ -37,7 +39,8 @@ public class insertUser extends JPanel {
 
         Gender = new JComboBox();
         Gender.setFont(new Font("宋体", Font.PLAIN, 25));
-        Gender.setModel(new DefaultComboBoxModel(new String[] {"女", "男"}));
+        Gender.setModel(new DefaultComboBoxModel(new String[] {"男", "女"}));
+        Gender.setOpaque(false);
 
         JLabel AccountNumberText = new JLabel("账号:");
         AccountNumberText.setFont(new Font("幼圆", Font.BOLD, 25));
@@ -60,33 +63,40 @@ public class insertUser extends JPanel {
         Name = new JTextField();
         Name.setFont(new Font("宋体", Font.PLAIN, 25));
         Name.setColumns(10);
+        Name.setOpaque(false);
 
         AccountNumber = new JTextField();
         AccountNumber.setFont(new Font("宋体", Font.PLAIN, 25));
         AccountNumber.setColumns(10);
+        AccountNumber.setOpaque(false);
 
         Password = new JTextField();
         Password.setFont(new Font("宋体", Font.PLAIN, 25));
         Password.setColumns(10);
+        Password.setOpaque(false);
 
         StudentNumber = new JTextField();
         StudentNumber.setFont(new Font("宋体", Font.PLAIN, 25));
         StudentNumber.setColumns(10);
+        StudentNumber.setOpaque(false);
 
         Phone = new JTextField();
         Phone.setFont(new Font("宋体", Font.PLAIN, 25));
         Phone.setColumns(10);
+        Phone.setOpaque(false);
 
         Email = new JTextField();
         Email.setFont(new Font("宋体", Font.PLAIN, 25));
         Email.setColumns(10);
+        Email.setOpaque(false);
 
-        Duty = new JTextField();
+        Duty =  new JComboBox();
+        Duty.setModel(new DefaultComboBoxModel(new String[] {"用户"}));
         Duty.setFont(new Font("宋体", Font.PLAIN, 25));
-        Duty.setColumns(10);
+        Duty.setOpaque(false);
 
-        //提交按钮
-        JButton submitButton = new JButton("提交");
+        //添加按钮
+        JButton submitButton = new JButton("添加");
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 insertData();
@@ -198,24 +208,28 @@ public class insertUser extends JPanel {
     private void insertData() {
         if(studentUtils.isNotNull(Name)&&studentUtils.isNotNull(StudentNumber)&&studentUtils.isNotNull(Email)&&studentUtils.isNotNull(Phone)&&studentUtils.isNotNull(AccountNumber)&&studentUtils.isNotNull(Password)) {
             //获取填入的信息
-            String name=Name.getText();
-            Integer studentNumber= Integer.valueOf(StudentNumber.getText());
-            String accountNumber=AccountNumber.getText();
-            String email=Email.getText();
-            String phone=Phone.getText();
-            String duty=Duty.getText();
-            String password=Password.getText();
-            int gender=Gender.getSelectedIndex();
-            //添加进入数据库
-            if(studentUtils.isNumber(StudentNumber)) {
-                UserController userController = new UserController();
-                UserRegisterVo newUser = new UserRegisterVo(studentNumber, password, name, accountNumber, gender, phone, email, duty);
-                if(studentUtils.isSuccess(userController.insertUser(newUser))){
-                    JOptionPane.showMessageDialog(null,"添加成功");
-                    clearText();
-                }else{
-                    JOptionPane.showMessageDialog(null,"添加失败");
+            String name = Name.getText();
+            Integer studentNumber = Integer.valueOf(StudentNumber.getText());
+            String accountNumber = AccountNumber.getText();
+            String email = Email.getText();
+            String phone = Phone.getText();
+            String duty = "用户";
+            String password = Password.getText();
+            int gender = Gender.getSelectedIndex();
+            if (studentUtils.isPhone(Phone) && studentUtils.isEmail(Email)) {
+                //添加进入数据库
+                if (studentUtils.isNumber(StudentNumber)) {
+                    UserController userController = new UserController();
+                    UserRegisterVo newUser = new UserRegisterVo(studentNumber, password, name, accountNumber, gender, phone, email, duty);
+                    if (studentUtils.isSuccess(userController.insertUser(newUser))) {
+                        JOptionPane.showMessageDialog(null, "添加成功");
+                        clearText();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "添加失败");
+                    }
                 }
+            }else{
+                JOptionPane.showMessageDialog(null,"电话号或邮箱格式有误");
             }
         }
     }
@@ -227,7 +241,7 @@ public class insertUser extends JPanel {
         AccountNumber.setText("");
         Email.setText("");
         Phone.setText("");
-        Duty.setText("");
+        Duty.setSelectedIndex(0);
         Password.setText("");
     }
 }
