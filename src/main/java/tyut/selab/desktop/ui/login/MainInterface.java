@@ -27,6 +27,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.TimerTask;
+import java.util.Timer;
 
 public class MainInterface extends JFrame  {
 
@@ -37,22 +39,6 @@ public class MainInterface extends JFrame  {
 
 
     public MainInterface(String str) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
-        User user=userDao.queryUserByAccountNumber(str);
-        String name=user.getName();
-        String acccount=user.getAccountNumber();
-        Integer studentNumber=user.getStudentNumber() ;
-         int gender= user.getGender();
-         String phone = user.getPhone();
-         String post= user.getPost();
-         String duty = user.getRole().getDuty();
-        String gen;
-        if(gender ==1){
-             gen ="男";
-        }else{
-             gen ="女";
-        }
-//        <html><body><p align=\"left\">数据版本<br/>v1.0.0</p></body></html>
-        String abc ="<html><body><p align=\"left\" style=\"font-family: 华文新魏;\" style=\"line-height:3em;\">姓名:"+name+"<br/>账号:"+acccount+"<br/>学号:"+studentNumber+"<br/>性别:"+gen+"<br/>电话:"+phone+"<br/>邮箱:<font size =\"4\">"+post+"</font><br/>职责:"+duty+"</p></body></html>";
 
         //      获取显示屏的大小
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -105,8 +91,8 @@ public class MainInterface extends JFrame  {
         JButton button = new JButton("图书信息管理系统");    //重置按钮
         button.setToolTipText("图书信息管理系统");// 悬停显
 
-        JButton button123 = new JButton(abc);    //重置按钮
-        button123.setToolTipText(abc);// 悬停显
+        JButton button123 = new JButton("");    //重置按钮
+        button123.setToolTipText("");// 悬停显
 
 //      字体设置
         button1.setFont(new Font("微软雅黑", Font.BOLD, 18));
@@ -212,6 +198,39 @@ public class MainInterface extends JFrame  {
         label.add(button6);
 //        label.add(button7);
         label.add(button123);
+        Timer timer = new Timer();
+
+        // 创建计划任务对象
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                // 在事件分派线程中更新标签文本
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        User user=userDao.queryUserByAccountNumber(str);
+                        String name=user.getName();
+                        String acccount=user.getAccountNumber();
+                        Integer studentNumber=user.getStudentNumber() ;
+                        int gender= user.getGender();
+                        String phone = user.getPhone();
+                        String post= user.getPost();
+                        String duty = user.getRole().getDuty();
+                        String gen;
+                        if(gender==0){
+                            gen ="男";
+                        }else{
+                            gen ="女";
+                        }
+                        String abc ="<html><body><p align=\"left\" style=\"font-family: 华文新魏;\">姓名:"+name+"<br/>账号:"+acccount+"<br/>学号："+studentNumber+"<br/>性别："+gen+"<br/>电话:"+phone+"<br/>邮箱:"+post+"<br/>职责:"+duty+"</p></body><ml>";
+
+                        button123.setText(abc);
+                    }
+                });
+            }
+        };
+
+        timer.schedule(task, 0, 500);
         this.add(label);
         Home p=new Home();
         panel.add(p,"Home");
