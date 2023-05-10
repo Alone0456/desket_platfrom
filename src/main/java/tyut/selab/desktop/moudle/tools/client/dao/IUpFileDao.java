@@ -5,11 +5,10 @@ import tyut.selab.desktop.moudle.tools.client.domain.FileUp;
 
 import java.util.List;
 
-
 public interface IUpFileDao {
-    List<FileUp> queryAllFileUpInfo() ;
+    List<FileUp> queryAllFileUpInfo();
 
-    List<FileUp> queryFileUpByUser(User user) ;
+    List<FileUp> queryFileUpByUser(User user);
 
     int insertFileUp(FileUp fileUp);
 }

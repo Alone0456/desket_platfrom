@@ -2,7 +2,6 @@ package tyut.selab.desktop.moudle.todolist.controller;
 
 import tyut.selab.desktop.moudle.todolist.domain.vo.TaskVo;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface ITaskController {
@@ -16,26 +15,26 @@ public interface ITaskController {
      * @param studentNumber
      * @return
      */
-    List<TaskVo> queryAllTask(Integer studentNumber) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException;
+    List<TaskVo> queryAllTask(Integer studentNumber);
 
     /**
      * 增加用户任务
      * @param task
      * @return
      */
-    int insertTask(TaskVo task) throws SQLException;
+    int insertTask(TaskVo task);
 
     /**
      * 更新
      * @param task
      * @return
      */
-    int updateTask(TaskVo task) throws SQLException;
+    int updateTask(TaskVo task);
 
     /**
      * 删除
      * @param task
      * @return
      */
-    int deleteTask(TaskVo task) throws SQLException;
+    int deleteTask(TaskVo task);
 }

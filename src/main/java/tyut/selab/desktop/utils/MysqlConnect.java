@@ -1,44 +1,57 @@
 package tyut.selab.desktop.utils;
 
-import com.alibaba.druid.pool.DruidDataSource;
-
+import javax.sql.DataSource;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
+import com.alibaba.druid.pool.DruidDataSourceFactory;
+import com.alibaba.druid.util.JdbcUtils;
 
 /**
  * 数据库连接,使用Druid连接池
  */
 public class MysqlConnect{
 
-
-    private static final String URL = "jdbc:mysql://localhost:3306/library";
-    private static final String USER = "root";
-    private static final String PASSWORD = "abc123";
-
-    private static DruidDataSource dataSource;
+    private static DataSource dataSource = null;
+    public static ThreadLocal<Connection> threadLocal = new ThreadLocal<>();
     static {
-        dataSource = new DruidDataSource();
-        dataSource.setUrl(URL);
-        dataSource.setUsername(USER);
-        dataSource.setPassword(PASSWORD);
-        dataSource.setInitialSize(5);
-        dataSource.setMinIdle(5);
-        dataSource.setMaxActive(10);
-        dataSource.setMaxWait(30000);
-    }
+        // TODO: 先读取配置文件，调用工厂类的静态方法去创建一个DataSource类对象
+        Properties properties = new Properties();
+        FileInputStream resourceAsStream = null;
+        try {
+           resourceAsStream = new FileInputStream(JdbcUtils.class.getResource("/").getPath() + "druid.properties");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
-    public static Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
-    }
-
-    public static void close(Connection conn) {
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        try {
+            properties.load(resourceAsStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            dataSource =  DruidDataSourceFactory.createDataSource(properties);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
+    public static Connection getConnection() throws SQLException {
+        if( threadLocal.get() == null){
+            Connection connection = dataSource.getConnection();
+            threadLocal.set(connection);
+        }
+        return threadLocal.get();
+    }
+    public static void closeConnection() throws SQLException {
+        if(threadLocal.get() !=null){
+            Connection connection = threadLocal.get();
+            connection.close();
+            threadLocal.remove();
+        }
+    }
 }

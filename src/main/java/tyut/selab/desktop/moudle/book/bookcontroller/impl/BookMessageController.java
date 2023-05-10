@@ -73,7 +73,7 @@ public class BookMessageController implements  IBookMessageController{
     }
 
     @Override
-    public int updateBook(BookVo book) throws SQLException {
+    public int updateBook(BookVo book) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         int flag = bookMessageService.updateBook(book);
         return flag;
     }

@@ -3,37 +3,34 @@ package tyut.selab.desktop.moudle.todolist.controller.impl;
 import tyut.selab.desktop.moudle.todolist.controller.ITaskController;
 import tyut.selab.desktop.moudle.todolist.domain.vo.TaskVo;
 import tyut.selab.desktop.moudle.todolist.service.ITaskService;
-import tyut.selab.desktop.moudle.todolist.service.impl.TaskService;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class TaskController implements ITaskController {
-    private ITaskService taskService = new TaskService();
+    private ITaskService taskService;
 
     @Override
     public void taskWarnTime(TaskVo taskVo) {
-        taskService.taskWarnTime(taskVo);
+
     }
 
     @Override
-    public List<TaskVo> queryAllTask(Integer studentNumber) throws SQLException, NoSuchFieldException, InstantiationException, IllegalAccessException {
-        return taskService.queryAllTask(studentNumber);
+    public List<TaskVo> queryAllTask(Integer studentNumber) {
+        return null;
     }
 
     @Override
-    public int insertTask(TaskVo taskVo) throws SQLException {
-        return taskService.insertTask(taskVo);
+    public int insertTask(TaskVo task) {
+        return 0;
     }
 
     @Override
-    public int updateTask(TaskVo taskVo) throws SQLException {
-        return taskService.updateTask(taskVo);
+    public int updateTask(TaskVo task) {
+        return 0;
     }
 
     @Override
-    public int deleteTask(TaskVo taskVo) throws SQLException {
-        return taskService.deleteTask(taskVo);
+    public int deleteTask(TaskVo task) {
+        return 0;
     }
 }
-
