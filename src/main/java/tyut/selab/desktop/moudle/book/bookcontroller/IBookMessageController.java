@@ -81,6 +81,7 @@ public interface IBookMessageController {
      * @return
      */
     int updateBook(BookVo book) throws SQLException;
+    int updateBook(BookVo book) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException;
 
     /**
      * 删除图书

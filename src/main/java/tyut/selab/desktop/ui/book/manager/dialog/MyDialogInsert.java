@@ -20,6 +20,8 @@ public class MyDialogInsert extends JDialog {
 
             public MyDialogInsert(Vector<Vector> dataV, Vector titlesV, DefaultTableModel defaultTableModel,JTable jt) {
                 ImageIcon imageIcon = new ImageIcon(System.getProperty("user.dir") + "\\src\\ManagerGui\\ddot.png");
+            public MyDialogInsert(Vector<Vector> dataV, Vector titlesV, DefaultTableModel defaultTableModel) {
+                ImageIcon imageIcon = new ImageIcon("src/main/java/tyut/selab/desktop/ui/book/ddot.png");
                 setIconImage(imageIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
 
                 setTitle("增加书籍");
@@ -92,6 +94,7 @@ public class MyDialogInsert extends JDialog {
                             vector.add(jlOwnerConter.getText().trim());
                             vector.add(jlOwnerStudentIdConter.getText().trim());
                             vector.add(jlPrice.getText().trim());
+                            vector.add(jlPriceConter.getText().trim());
                             vector.add("未借出");
                             vector.add("");
                             vector.add("");

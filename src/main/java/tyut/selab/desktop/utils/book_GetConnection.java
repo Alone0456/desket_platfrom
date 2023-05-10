@@ -16,7 +16,7 @@ public class book_GetConnection {
       }
        int rows = preparedStatement.executeUpdate();
       preparedStatement.close();
-
+      Book_MysqlConnect.closeConnection();
        return rows;
    }
 

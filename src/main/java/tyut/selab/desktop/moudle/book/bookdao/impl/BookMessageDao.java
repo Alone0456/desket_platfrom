@@ -64,6 +64,8 @@ public class BookMessageDao implements IBookMessageDao{
         }
         Object[] lists = list.toArray();
         List<Book> books = connection.executeQuery(Book.class,sql,lists);
+        String sql = "SELECT book_id as bookId,book_name as bookName,user_student_number as userStudentNumber,book_status as bookStatus,book_price as bookPrice FROM user_book WHERE book_name REGEXP ?";
+        List<Book> books = connection.executeQuery(Book.class,sql,bookName);
         return books;
     }
 
@@ -104,6 +106,7 @@ public class BookMessageDao implements IBookMessageDao{
     public int updateBook(Book newBook, Book oldBook) throws SQLException {
         String sql = "UPDATE user_book SET book_price = ?,book_status = ? WHERE book_id = ?;";
         int flag = connection.executeUpdate(sql, newBook.getBookPrice(), newBook.getBookStatus(), newBook.getBookId());
+        int flag = connection.executeUpdate(sql, newBook.getBookPrice(), newBook.getBookStatus(), oldBook.getBookId());
         return flag;
     }
 

@@ -16,7 +16,7 @@ import com.alibaba.druid.util.JdbcUtils;
 public class Book_MysqlConnect {
 
     private static DataSource dataSource = null;
-    public static ThreadLocal<Connection> threadLocal = null;
+    public static ThreadLocal<Connection> threadLocal = new ThreadLocal<>();
     static {
         // TODO: 先读取配置文件，调用工厂类的静态方法去创建一个DataSource类对象
         Properties properties = new Properties();
@@ -41,7 +41,6 @@ public class Book_MysqlConnect {
     }
 
     public static Connection getConnection() throws SQLException {
-        threadLocal = new ThreadLocal<>();
         if( threadLocal.get() == null){
             Connection connection = dataSource.getConnection();
             threadLocal.set(connection);
