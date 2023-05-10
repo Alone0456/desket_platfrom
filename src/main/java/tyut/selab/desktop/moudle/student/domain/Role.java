@@ -20,11 +20,4 @@ public class Role {
     }
 
     private String duty;
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "duty='" + duty + '\'' +
-                '}';
-    }
 }

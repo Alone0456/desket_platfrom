@@ -85,17 +85,4 @@ public class UserVo {
     public void setDuty(String duty) {
         this.duty = duty;
     }
-
-    @Override
-    public String toString() {
-        return "UserVo{" +
-                "studentNumber=" + studentNumber +
-                ", name='" + name + '\'' +
-                ", accountNumber='" + accountNumber + '\'' +
-                ", gender=" + gender +
-                ", phone='" + phone + '\'' +
-                ", post='" + post + '\'' +
-                ", duty='" + duty + '\'' +
-                '}';
-    }
 }

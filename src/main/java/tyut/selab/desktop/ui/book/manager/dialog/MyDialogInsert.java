@@ -18,8 +18,6 @@ public class MyDialogInsert extends JDialog {
     UserController userController = new UserController();
     BookMessageController bookMessageController = new BookMessageController();
 
-            public MyDialogInsert(Vector<Vector> dataV, Vector titlesV, DefaultTableModel defaultTableModel,JTable jt) {
-                ImageIcon imageIcon = new ImageIcon(System.getProperty("user.dir") + "\\src\\ManagerGui\\ddot.png");
             public MyDialogInsert(Vector<Vector> dataV, Vector titlesV, DefaultTableModel defaultTableModel) {
                 ImageIcon imageIcon = new ImageIcon("src/main/java/tyut/selab/desktop/ui/book/ddot.png");
                 setIconImage(imageIcon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
@@ -93,7 +91,7 @@ public class MyDialogInsert extends JDialog {
                             vector.add(jlNameContent.getText().trim());
                             vector.add(jlOwnerConter.getText().trim());
                             vector.add(jlOwnerStudentIdConter.getText().trim());
-                            vector.add(jlPrice.getText().trim());
+
                             vector.add(jlPriceConter.getText().trim());
                             vector.add("未借出");
                             vector.add("");
@@ -107,7 +105,6 @@ public class MyDialogInsert extends JDialog {
                             bookVo.setBookUserVo(userVo);
                             bookVo.setBookStatus(Book.LENDABLE);
                             try {
-                                System.out.println(bookMessageController + "=======");
                                 bookMessageController.insertBook(bookVo);
                             } catch (SQLException ex) {
                                 throw new RuntimeException(ex);

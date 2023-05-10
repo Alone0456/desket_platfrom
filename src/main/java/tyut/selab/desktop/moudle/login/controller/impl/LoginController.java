@@ -3,57 +3,47 @@ package tyut.selab.desktop.moudle.login.controller.impl;
 import tyut.selab.desktop.moudle.login.controller.ILoginController;
 import tyut.selab.desktop.moudle.login.domain.LoginLog;
 import tyut.selab.desktop.moudle.login.service.ILoginService;
-import tyut.selab.desktop.moudle.login.service.impl.LoginService;
+import tyut.selab.desktop.moudle.student.domain.User;
 import tyut.selab.desktop.moudle.student.domain.vo.UserRegisterVo;
-import tyut.selab.desktop.moudle.student.domain.vo.UserVo;
 
-import javax.swing.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Date;
+import javax.xml.crypto.Data;
 import java.util.List;
 
 public class LoginController implements ILoginController{
-    private ILoginService loginService=new LoginService();
+    private ILoginService loginService;
 
     @Override
-    public String login(String accountNumber, String password) throws Exception {
-        return loginService.login(accountNumber,password);
+    public String login(String accountNumber, String password) {
+        return null;
     }
 
     @Override
     public String register(UserRegisterVo user) {
-
-        return loginService.register(user);
+        return null;
     }
 
     @Override
-    public List<LoginLog> showLoginLog() throws Exception {
-        return loginService.showLoginLog();
-    }
+    public void autoLogin() {
 
-
-    public List<LoginLog> showLoginLog(Date startTime, Date endingTime) throws Exception {
-        return loginService.showLoginLog(startTime,endingTime);
     }
 
     @Override
-    public UserVo getUserVo() {
-        return loginService.getUserVo();
+    public void rememberAccount() {
+
     }
 
     @Override
-    public void save(boolean automaticLogin, boolean rememberNumber, JTextField uField, JPasswordField pFd) throws IOException {
-        loginService.save( automaticLogin,  rememberNumber,  uField,  pFd);
-    }
+    public void rememberPassword() {
 
+    }
 
     @Override
-    public String read() throws FileNotFoundException {
-        return loginService.read();
+    public List<LoginLog> showLoginLog() {
+        return null;
     }
 
-    public void changeLoginState(){
-        loginService.changeLoginState();
+    @Override
+    public List<LoginLog> showLoginLog(Data startTime, Data endingTime) {
+        return null;
     }
 }

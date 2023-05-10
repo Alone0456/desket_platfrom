@@ -111,20 +111,4 @@ public class User {
         this.loginStatus = loginStatus;
         this.role = role;
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "accountNumber='" + accountNumber + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", studentNumber=" + studentNumber +
-                ", gender=" + gender +
-                ", phone='" + phone + '\'' +
-                ", post='" + post + '\'' +
-                ", registerTime=" + registerTime +
-                ", loginStatus=" + loginStatus +
-                ", role=" + role.getDuty() +
-                '}';
-    }
 }

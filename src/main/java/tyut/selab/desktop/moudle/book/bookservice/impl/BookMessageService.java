@@ -23,7 +23,6 @@ public class BookMessageService implements IBookMessageService {
     private IBookMessageDao bookMessageDao = new BookMessageDao();
     private IBookBorrowDao bookBorrowDao = new BookBorrowDao();
     private IUserService userService = new UserService();
-    private IUserDao userDao = new UserDao();
     private IUserService iUserService = new UserService();
 
     @Override
@@ -33,13 +32,9 @@ public class BookMessageService implements IBookMessageService {
         for (int i = 0; i < bookBorrows.size(); i++) {
             BookVo bookVo = new BookVo();
             Integer borrowUserStudentNumber = bookBorrows.get(i).getBorrowUserStudentNumber();
-            User userBorrow = userDao.queryUserByStudentNumber(borrowUserStudentNumber);
-            UserVo userVoBorrow = userChangeUserVo(userBorrow);
             UserVo userVoBorrow = userService.queryUserByStudentNumber(borrowUserStudentNumber);
             bookVo.setBorrowBookUserVo(userVoBorrow);
             Integer userStudentNumber = bookBorrows.get(i).getUserStudentNumber();
-            User userUser = userDao.queryUserByStudentNumber(userStudentNumber);
-            UserVo userVoUser = userChangeUserVo(userUser);
             UserVo userVoUser = userService.queryUserByStudentNumber(userStudentNumber);
             bookVo.setBookUserVo(userVoUser);
             bookVo.setBorrowBookTime(bookBorrows.get(i).getBorrowBookTime());
@@ -58,18 +53,6 @@ public class BookMessageService implements IBookMessageService {
         return bookVos;
     }
 
-    private UserVo userChangeUserVo(User user) {
-        UserVo userVo = new UserVo();
-        userVo.setName(user.getName());
-        userVo.setGender(user.getGender());
-        String role =  user.getRole().getDuty();
-        userVo.setDuty(role);
-        userVo.setStudentNumber(user.getStudentNumber());
-        userVo.setPhone(user.getPhone());
-        userVo.setPost(user.getPost());
-        userVo.setAccountNumber(user.getAccountNumber());
-        return userVo;
-    }
 
     @Override
     public BookVo queryBorrowBookLog(String bookName, Integer userStudentNumber) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException {
@@ -79,12 +62,8 @@ public class BookMessageService implements IBookMessageService {
         for (int i = 0; i < bookBorrows.size(); i++) {
             if (bookBorrows.get(i).getBookId() == book.getBookId()) {
                 Integer borrowUserStudentNumber = bookBorrows.get(i).getBorrowUserStudentNumber();
-                User userBorrow = userDao.queryUserByStudentNumber(borrowUserStudentNumber);
-                UserVo userVoBorrow = userChangeUserVo(userBorrow);
                 UserVo userVoBorrow = userService.queryUserByStudentNumber(borrowUserStudentNumber);
                 bookVo.setBorrowBookUserVo(userVoBorrow);
-                User userUser = userDao.queryUserByStudentNumber(userStudentNumber);
-                UserVo userVoUser = userChangeUserVo(userUser);
                 UserVo userVoUser = userService.queryUserByStudentNumber(userStudentNumber);
                 bookVo.setBookUserVo(userVoUser);
                 bookVo.setBorrowBookTime(bookBorrows.get(i).getBorrowBookTime());
@@ -108,13 +87,10 @@ public class BookMessageService implements IBookMessageService {
                 if(books.get(j).getBookId() == bookBorrows.get(i).getBookId()) {
                     BookVo bookVo = new BookVo();
                     Integer borrowUserStudentNumber = bookBorrows.get(i).getBorrowUserStudentNumber();
-                    User userBorrow = userDao.queryUserByStudentNumber(borrowUserStudentNumber);
-                    UserVo userVoBorrow = bookMessageService.userChangeUserVo(userBorrow);
+
                     UserVo userVoBorrow = userService.queryUserByStudentNumber(borrowUserStudentNumber);
                     bookVo.setBorrowBookUserVo(userVoBorrow);
                     Integer userStudentNumber = bookBorrows.get(i).getUserStudentNumber();
-                    User userUser = userDao.queryUserByStudentNumber(userStudentNumber);
-                    UserVo userVoUser = userChangeUserVo(userUser);
                     UserVo userVoUser = userService.queryUserByStudentNumber(userStudentNumber);
                     bookVo.setBookUserVo(userVoUser);
                     bookVo.setBorrowBookTime(bookBorrows.get(i).getBorrowBookTime());
@@ -137,13 +113,10 @@ public class BookMessageService implements IBookMessageService {
         for (int i = 0; i < bookBorrows.size(); i++) {
             BookVo bookVo = new BookVo();
             Integer borrowUserStudentNumber = bookBorrows.get(i).getBorrowUserStudentNumber();
-            User userBorrow = userDao.queryUserByStudentNumber(borrowUserStudentNumber);
-            UserVo userVoBorrow = userChangeUserVo(userBorrow);
+
             UserVo userVoBorrow = userService.queryUserByStudentNumber(borrowUserStudentNumber);
             bookVo.setBorrowBookUserVo(userVoBorrow);
             Integer userStudentNumber = bookBorrows.get(i).getUserStudentNumber();
-            User userUser = userDao.queryUserByStudentNumber(userStudentNumber);
-            UserVo userVoUser = userChangeUserVo(userUser);
             UserVo userVoUser = userService.queryUserByStudentNumber(userStudentNumber);
             bookVo.setBookUserVo(userVoUser);
             bookVo.setBorrowBookTime(bookBorrows.get(i).getBorrowBookTime());
@@ -173,12 +146,8 @@ public class BookMessageService implements IBookMessageService {
                 if(books.get(j).getBookId() == bookBorrows.get(i).getBookId()) {
                     BookVo bookVo = new BookVo();
                     Integer borrowUserStudentNumber = bookBorrows.get(i).getBorrowUserStudentNumber();
-                    User userBorrow = userDao.queryUserByStudentNumber(borrowUserStudentNumber);
-                    UserVo userVoBorrow = userChangeUserVo(userBorrow);
                     UserVo userVoBorrow = userService.queryUserByStudentNumber(borrowUserStudentNumber);
                     bookVo.setBorrowBookUserVo(userVoBorrow);
-                    User userUser = userDao.queryUserByStudentNumber(userStudentNumber);
-                    UserVo userVoUser = userChangeUserVo(userUser);
                     UserVo userVoUser = userService.queryUserByStudentNumber(userStudentNumber);
                     bookVo.setBookUserVo(userVoUser);
                     bookVo.setBorrowBookTime(bookBorrows.get(i).getBorrowBookTime());
@@ -202,8 +171,6 @@ public class BookMessageService implements IBookMessageService {
             List<BookBorrow> bookBorrows = bookMessageDao.queryBorrowBookLog();
             for (Book book:books) {
                 Integer userStudentNumber = book.getUserStudentNumber();
-                User user = userDao.queryUserByStudentNumber(userStudentNumber);
-                UserVo userVo = userChangeUserVo(user);
                 UserVo userVo = userService.queryUserByStudentNumber(userStudentNumber);
                 BookVo bookVo = new BookVo();
                 bookVo.setBookName(book.getBookName());
@@ -216,8 +183,6 @@ public class BookMessageService implements IBookMessageService {
                             bookVo.setBorrowBookTime(bookBorrows.get(i).getBorrowBookTime());
                             bookVo.setReturnBookTime(bookBorrows.get(i).getReturnBookTime());
                             Integer borrowUserStudentNumber = bookBorrows.get(i).getBorrowUserStudentNumber();
-                            User userBorrow = userDao.queryUserByStudentNumber(borrowUserStudentNumber);
-                            UserVo userVoBorrow = userChangeUserVo(userBorrow);
                             UserVo userVoBorrow = userService.queryUserByStudentNumber(borrowUserStudentNumber);
                             bookVo.setBorrowBookUserVo(userVoBorrow);
                             break;
@@ -236,30 +201,13 @@ public class BookMessageService implements IBookMessageService {
             List<BookBorrow> bookBorrows = bookMessageDao.queryBorrowBookLog();
             List<BookVo> bookVos = new ArrayList<>();
             books.forEach(book -> {
-//            if(book.getBookStatus() == Book.LENDED){
-//                for (int i = 0; i < bookBorrows.size(); i++) {
-//                    if (book.getBookId() == bookBorrows.get(i).getBookId()) {
                 BookVo bookVo = new BookVo();
                 Integer userStudentNumber = book.getUserStudentNumber();
-                User user = userDao.queryUserByStudentNumber(userStudentNumber);
-                UserVo userVo = userChangeUserVo(user);
                 UserVo userVo = userService.queryUserByStudentNumber(userStudentNumber);
                 bookVo.setBookUserVo(userVo);
                 bookVo.setBookName(book.getBookName());
                 bookVo.setBookStatus(book.getBookStatus());
                 bookVo.setBookPrice(book.getBookPrice());
-//                        bookVo.setBorrowBookTime(bookBorrows.get(i).getBorrowBookTime());
-//                        bookVo.setReturnBookTime(bookBorrows.get(i).getReturnBookTime());
-//                        Integer borrowUserStudentNumber = bookBorrows.get(i).getBorrowUserStudentNumber();
-//                        User userBorrow = userDao.queryUserByStudentNumber(borrowUserStudentNumber);
-//                        UserVo userVoBorrow = userChangeUserVo(userBorrow);
-//                        bookVo.setBorrowBookUserVo(userVoBorrow);
-                bookVos.add(bookVo);
-//                       break;
-//                    }
-//                }
-//            }
-            });
                 if(book.getBookStatus() == Book.LENDED) {
                     for (int i = 0; i < bookBorrows.size(); i++) {
                         if (book.getBookId() == bookBorrows.get(i).getBookId()) {
@@ -286,8 +234,6 @@ public class BookMessageService implements IBookMessageService {
             List<BookVo> bookVos = new ArrayList<>();
             for (Book book:books) {
                 BookVo bookVo = new BookVo();
-                User user = userDao.queryUserByStudentNumber(userStudentNumber);
-                UserVo userVo = userChangeUserVo(user);
                 UserVo userVo = userService.queryUserByStudentNumber(userStudentNumber);
                 bookVo.setBookUserVo(userVo);
                 bookVo.setBookName(book.getBookName());
@@ -331,19 +277,14 @@ public class BookMessageService implements IBookMessageService {
         }
 
         @Override
-        public int updateBook (BookVo book) throws SQLException {
         public int updateBook (BookVo book) throws SQLException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException {
             Book newBook = new Book();
             Book oldBook = new Book();
             oldBook.setBookName(book.getBookName());
-            oldBook.setBookPrice(book.getBookPrice());
-            oldBook.setBookStatus(book.getBookStatus());
             oldBook.setUserStudentNumber(book.getBookUserVo().getStudentNumber());
-            newBook.setBookName(book.getBookName());
             oldBook = bookMessageDao.queryAsBook(book.getBookUserVo().getStudentNumber(), book.getBookName());
             newBook.setBookStatus(book.getBookStatus());
             newBook.setBookPrice(book.getBookPrice());
-            newBook.setUserStudentNumber(book.getBookUserVo().getStudentNumber());
             int flag = bookMessageDao.updateBook(newBook,oldBook);
             if(book.getBookStatus() == Book.LENDED){
             }
@@ -360,10 +301,6 @@ public class BookMessageService implements IBookMessageService {
             int bookId = bookBorrow.getBookId();
             Integer borrowUserStudentNumber = bookBorrow.getBorrowUserStudentNumber();
             Integer userStudentNumber = bookBorrow.getUserStudentNumber();
-            User userBorrow = userDao.queryUserByStudentNumber(borrowUserStudentNumber);
-            UserVo userVoBorrow = userChangeUserVo(userBorrow);
-            User userUser = userDao.queryUserByStudentNumber(userStudentNumber);
-            UserVo userVoUser = userChangeUserVo(userUser);
             UserVo userVoBorrow = userService.queryUserByStudentNumber(borrowUserStudentNumber);
             UserVo userVoUser = userService.queryUserByStudentNumber(userStudentNumber);
             BookVo bookVo = new BookVo();

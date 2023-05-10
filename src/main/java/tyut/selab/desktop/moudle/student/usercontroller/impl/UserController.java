@@ -18,24 +18,21 @@ public class UserController implements IUserController {
         List<UserVo> userVos= userService.queryUser();
         return userVos;
     }
+
+    public static void main(String[] args) {
+        System.out.println(userService.queryUser());
+    }
+
     @Override
     public UserVo queryUserByStudentNumber(Integer studentNumber) {
         UserVo userVo=userService.queryUserByStudentNumber(studentNumber);
-        if(userVo == null){
-            return null;
-        }else {
-            return userVo;
-        }
+        return userVo;
     }
 
     @Override
     public UserVo queryUserByStudentName(String name) {
         UserVo userVo=userService.queryUserByStudentName(name);
-        if(userVo == null){
-            return null;
-        }else {
-            return userVo;
-        }
+        return userVo;
     }
 
     @Override
@@ -45,7 +42,7 @@ public class UserController implements IUserController {
     }
 
     @Override
-    public int updateUserPassword(String password, UserRegisterVo user)
+    public int updateUserPassword(String password, UserVo user)
     {
         int judge=userService.updateUserPassword(password,user);
         return judge;
@@ -81,18 +78,5 @@ public class UserController implements IUserController {
     public int deleteRole(Role role) {
         int judge =userService.deleteRole(role);
         return judge;
-    }
-
-    public static void main(String[] args) {
-        IUserController iUserController = new UserController();
-//        UserRegisterVo userRegisterVo = new UserRegisterVo();
-//        userRegisterVo.setAccountNumber("yyty");
-//        userRegisterVo.setGender(1);
-//        userRegisterVo.setDuty("daa");
-//        userRegisterVo.setName("ttom");
-//        userRegisterVo.setPhone("16424342");
-//        userRegisterVo.setStudentNumber(4534);
-//        userRegisterVo.setPost("dawe233");
-//        userRegisterVo.setPassword(232432);
     }
 }

@@ -12,33 +12,32 @@ public class UserService implements IUserService {
     private IUserDao userDao=new UserDao();
     @Override
     public List<UserVo> queryUser() {
+
         List<UserVo> list = new ArrayList<>();
+        UserVo userVo = new UserVo();
         for (User user : userDao.queryUser()) {
-            UserVo userVo = new UserVo();
             list.add(User_UserVo(userVo, user));
         }
         return list;
     }
+
+    public static void main(String[] args) {
+        UserService U= new UserService();
+        System.out.println(U.queryUser());
+    }
+
     @Override
     public UserVo queryUserByStudentNumber(Integer studentNumber) {
         UserVo userVo = new UserVo();
         User user = userDao.queryUserByStudentNumber(studentNumber);
-        if(user == null){
-            return  null;
-        }else {
-            return User_UserVo(userVo, user);
-        }
+        return User_UserVo(userVo, user);
     }
 
     @Override
     public UserVo queryUserByStudentName(String name) {
         UserVo userVo = new UserVo();
         User user = userDao.queryUserByStudentName(name);
-        if(user == null){
-            return null;
-        }else {
-            return User_UserVo(userVo, user);
-        }
+        return User_UserVo(userVo, user);
     }
 
     @Override
@@ -57,18 +56,9 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public int updateUserPassword(String password, UserRegisterVo user) {
+    public int updateUserPassword(String password, UserVo user) {
         User use = new User();
-        Role role = new Role();
-        use.setStudentNumber(user.getStudentNumber());
-        use.setName(user.getName());
-        use.setAccountNumber(user.getAccountNumber());
-        use.setGender(user.getGender());
-        use.setPost(user.getPost());
-        use.setPhone(user.getPhone());
-        role.setDuty(user.getDuty());
-        use.setRole(role);
-        use.setPassword(user.getPassword());
+        use = UserVo_User(user, use);
         return judge(userDao.updateUser(password, use));
     }
 
@@ -112,8 +102,7 @@ public class UserService implements IUserService {
         userVo.setGender(user.getGender());
         userVo.setPhone(user.getPhone());
         userVo.setPost(user.getPost());
-        Role role = user.getRole();
-        userVo.setDuty(role.getDuty());
+        userVo.setDuty(String.valueOf(user.getRole()));
         return userVo;
     }
 
@@ -135,10 +124,5 @@ public class UserService implements IUserService {
         role.setDuty(userVo.getDuty());
         user.setRole(role);
         return user;
-    }
-
-    public static void main(String[] args) {
-        IUserService iUserService = new UserService();
-        iUserService.queryUserByStudentName("534534543");
     }
 }

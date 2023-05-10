@@ -7,7 +7,7 @@ import java.util.List;
 
 public class book_GetConnection {
    public int executeUpdate(String sql,Object...params) throws SQLException {
-       Connection connection = tyut.selab.desktop.utils.Book_MysqlConnect.getConnection();
+       Connection connection = MysqlConnect.getConnection();
        PreparedStatement preparedStatement = connection.prepareStatement(sql);
       if(params !=null && params.length >0){
           for (int i = 1; i <= params.length; i++) {
@@ -16,13 +16,13 @@ public class book_GetConnection {
       }
        int rows = preparedStatement.executeUpdate();
       preparedStatement.close();
+
       Book_MysqlConnect.closeConnection();
        return rows;
    }
-
    public <T> List<T> executeQuery(Class<T> clazz,String sql,Object...params) throws SQLException, InstantiationException, IllegalAccessException, NoSuchFieldException, ClassNotFoundException {
        List<T> list = new ArrayList<>();
-       Connection connection = tyut.selab.desktop.utils.Book_MysqlConnect.getConnection();
+       Connection connection = MysqlConnect.getConnection();
        PreparedStatement preparedStatement = connection.prepareStatement(sql);
        if(params !=null && params.length >0){
            for (int i = 1; i <= params.length; i++) {
@@ -49,6 +49,7 @@ public class book_GetConnection {
            }
            list.add(t);
        }
+       MysqlConnect.closeConnection();
           return list;
    }
 }
